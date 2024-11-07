@@ -17,7 +17,7 @@ param appServiceAPIEnvVarENV =  'dev'
 
 // LAW
 param logAnalyticsWorkspaceName = 'devopps-law-dev'
-param logAnalyticsSkuName = 'Free'
+param logAnalyticsSkuName = 'PerGB2018' 
 param logAnalyticsRetentionDays = 30
 param appInsightsName = 'appInsights-dev'
 param appInsightsType = 'web'

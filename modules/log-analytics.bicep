@@ -16,7 +16,7 @@ param location string = resourceGroup().location
   'PerNode'
   'Standard'
 ])
-param skuName string = 'Free'
+param skuName string = 'PerGB2018'
 
 @description('Optional. Number of days data will be retained for.')
 @minValue(0)

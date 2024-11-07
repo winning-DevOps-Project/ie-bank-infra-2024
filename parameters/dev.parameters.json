@@ -27,7 +27,7 @@
             "value": "devopps-law-dev"
         },
         "logAnalyticsSkuName": {
-            "value": "Free"
+            "value": "PerGB2018"
         },
         "logAnalyticsRetentionDays": {
             "value": 30
