@@ -22,6 +22,15 @@
         },
         "location": {
             "value": "North Europe"
+        },
+        "logAnalyticsWorkspaceName": {
+            "value": "devopps-law-dev"
+        },
+        "logAnalyticsSkuName": {
+            "value": "Free"
+        },
+        "logAnalyticsRetentionDays": {
+            "value": 30
         }
     }
 }

@@ -44,6 +44,15 @@ param appServiceAPIDBHostFLASK_APP string
 @sys.description('The value for the environment variable FLASK_DEBUG')
 param appServiceAPIDBHostFLASK_DEBUG string
 
+@sys.description('Name of the Log Analytics workspace')
+param logAnalyticsWorkspaceName string
+@sys.description('SKU for the Log Analytics workspace')
+param logAnalyticsSkuName string 
+@sys.description('Retention period for data in Log Analytics workspace')
+@minValue(0)
+@maxValue(730)
+param logAnalyticsRetentionDays int 
+
 resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: postgreSQLServerName
   location: location
@@ -109,3 +118,20 @@ module appService 'modules/app-service.bicep' = {
 }
 
 output appServiceAppHostName string = appService.outputs.appServiceAppHostName
+
+// LAW
+module logAnalytics 'modules/log-analytics.bicep' = {
+  name: 'logAnalyticsWorkspaceDeployment'
+  params: {
+    name: logAnalyticsWorkspaceName
+    location: location
+    skuName: logAnalyticsSkuName
+    dataRetention: logAnalyticsRetentionDays
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+    tags: {
+      Environment: environmentType
+      Project: 'IE Bank'
+    }
+  }
+}
