@@ -6,19 +6,19 @@
             "value": "nonprod"
         },
         "postgreSQLServerName": {
-            "value": "aguadamillas-dbsrv-uat"
+            "value": "devopps-dbsrv-uat"
         },
         "postgreSQLDatabaseName": {
-            "value": "aguadamillas-db-uat"
+            "value": "devopps-db-uat"
         },
         "appServicePlanName": {
-            "value": "aguadamillas-asp-uat"
+            "value": "devopps-asp-uat"
         },
         "appServiceAPIAppName": {
-            "value": "aguadamillas-be-uat"
+            "value": "devopps-be-uat"
         },
         "appServiceAppName": {
-            "value": "aguadamillas-fe-uat"
+            "value": "devopps-fe-uat"
         },
         "location": {
             "value": "North Europe"
