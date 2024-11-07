@@ -19,3 +19,6 @@ param appServiceAPIEnvVarENV =  'uat'
 param logAnalyticsWorkspaceName = 'devopps-law-uat'
 param logAnalyticsSkuName = 'Free'
 param logAnalyticsRetentionDays = 30
+param appInsightsName = 'appInsights-uat'
+param appInsightsType = 'web'
+param appInsightsRetentionDays = 365

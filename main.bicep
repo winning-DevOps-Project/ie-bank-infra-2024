@@ -52,6 +52,12 @@ param logAnalyticsSkuName string
 @minValue(0)
 @maxValue(730)
 param logAnalyticsRetentionDays int 
+@description('The Application Insights name')
+param appInsightsName string
+@description('The Application Insights application type')
+param appInsightsType string 
+@description('The retention period for Application Insights in days')
+param appInsightsRetentionDays int
 
 resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: postgreSQLServerName
@@ -129,6 +135,22 @@ module logAnalytics 'modules/log-analytics.bicep' = {
     dataRetention: logAnalyticsRetentionDays
     publicNetworkAccessForIngestion: 'Enabled'
     publicNetworkAccessForQuery: 'Enabled'
+    tags: {
+      Environment: environmentType
+      Project: 'IE Bank'
+    }
+  }
+}
+
+
+module appInsights 'modules/app-insights.bicep' = {
+  name: 'appInsightsDeployment'
+  params: {
+    name: appInsightsName
+    applicationType: appInsightsType
+    workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId 
+    retentionInDays: appInsightsRetentionDays
+    location: location
     tags: {
       Environment: environmentType
       Project: 'IE Bank'
