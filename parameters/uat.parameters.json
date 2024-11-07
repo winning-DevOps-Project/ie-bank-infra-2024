@@ -24,7 +24,7 @@
             "value": "North Europe"
         }, 
         "logAnalyticsWorkspaceName": {
-            "value": "devopps-law-dev"
+            "value": "devopps-law-uat"
         },
         "logAnalyticsSkuName": {
             "value": "Free"
