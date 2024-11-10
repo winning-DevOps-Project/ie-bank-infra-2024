@@ -40,6 +40,12 @@
         },
         "appInsightsRetentionDays": {
             "value": 365
+        },
+        "keyVaultName": {
+            "value": "uat-keyvault"
+        },
+        "keyVaultSku": {
+            "value": "standard"
         }
+      }
     }
-}

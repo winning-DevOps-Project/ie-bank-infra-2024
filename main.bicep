@@ -58,6 +58,10 @@ param appInsightsName string
 param appInsightsType string 
 @description('The retention period for Application Insights in days')
 param appInsightsRetentionDays int
+@description('The Key Vault name')
+param keyVaultName string
+@description('The Key Vault SKU')
+param keyVaultSku string
 
 resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: postgreSQLServerName
@@ -151,6 +155,19 @@ module appInsights 'modules/app-insights.bicep' = {
     workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId 
     retentionInDays: appInsightsRetentionDays
     location: location
+    tags: {
+      Environment: environmentType
+      Project: 'IE Bank'
+    }
+  }
+}
+
+module keyVault 'modules/key-vault.bicep' = {
+  name: 'keyVaultDeployment'
+  params: {
+    name: keyVaultName
+    location: location
+    sku: keyVaultSku
     tags: {
       Environment: environmentType
       Project: 'IE Bank'
