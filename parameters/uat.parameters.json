@@ -22,6 +22,24 @@
         },
         "location": {
             "value": "North Europe"
+        }, 
+        "logAnalyticsWorkspaceName": {
+            "value": "devopps-law-uat"
+        },
+        "logAnalyticsSkuName": {
+            "value": "PerGB2018"
+        },
+        "logAnalyticsRetentionDays": {
+            "value": 30
+        },
+        "appInsightsName": {
+            "value": "appInsights-uat"
+        },
+        "appInsightsType": {
+            "value": "web"
+        },
+        "appInsightsRetentionDays": {
+            "value": 365
         }
     }
 }
