@@ -14,3 +14,11 @@ param appServiceAPIEnvVarDBPASS =  'github-secret-replaced-in-workflow'
 param appServiceAPIEnvVarDBHOST =  'devopps-dbsrv-dev.postgres.database.azure.com'
 param appServiceAPIEnvVarDBNAME =  'devopps-db-dev'
 param appServiceAPIEnvVarENV =  'dev'
+
+// LAW
+param logAnalyticsWorkspaceName = 'devopps-law-dev'
+param logAnalyticsSkuName = 'PerGB2018' 
+param logAnalyticsRetentionDays = 30
+param appInsightsName = 'appInsights-dev'
+param appInsightsType = 'web'
+param appInsightsRetentionDays = 365
