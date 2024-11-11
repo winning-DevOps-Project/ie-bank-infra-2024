@@ -40,6 +40,9 @@
         },
         "appInsightsRetentionDays": {
             "value": 365
+        },
+        "staticWebAppName": {
+            "value": "devopps-swa-uat"
         }
     }
 }

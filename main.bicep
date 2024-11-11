@@ -54,6 +54,8 @@ param frontendRepositoryBranch string = 'main'
 @sys.description('Frontend repository personal access token')
 @secure()
 param frontendRepositoryToken string = ''
+@sys.description('The name of the Static Web App')
+param staticWebAppName string
 
 // Azure Container Registry SKU
 @sys.allowed([
@@ -101,7 +103,7 @@ module containerRegistry 'modules/docker-registry.bicep' = {
 
 // Use outputs from the containerRegistry module
 module appServiceAPI 'modules/app-service-api.bicep' = {
-  name: 'appServiceAPI-${userAlias}'
+  name: appServiceAPIAppName
   params: {
     appServiceAPIAppName: appServiceAPIAppName
     appServicePlanId: appServicePlan.outputs.id
@@ -129,7 +131,7 @@ output adminPassword string = containerRegistry.outputs.adminPassword
 output appServiceAppHostName string = appServiceAPI.outputs.appServiceAppHostName
 
 module postgresDb 'modules/postgresql-db.bicep' = {
-  name: 'postgresDb-${userAlias}'
+  name: postgreSQLServerName
   params: {
     postgreSQLServerName: postgreSQLServerName
     location: location
@@ -145,7 +147,7 @@ output postgreSQLServerAdmin string = postgresDb.outputs.postgreSQLServerAdmin
 
 // Log Analytics Workspace and Application Insights
 module logAnalytics 'modules/log-analytics.bicep' = {
-  name: 'logAnalyticsWorkspaceDeployment-${userAlias}'
+  name: logAnalyticsWorkspaceName
   params: {
     name: logAnalyticsWorkspaceName
     location: location
@@ -161,7 +163,7 @@ module logAnalytics 'modules/log-analytics.bicep' = {
 }
 
 module appInsights 'modules/app-insights.bicep' = {
-  name: 'appInsightsDeployment-${userAlias}'
+  name: appInsightsName
   params: {
     name: appInsightsName
     applicationType: appInsightsType
@@ -176,9 +178,9 @@ module appInsights 'modules/app-insights.bicep' = {
 }
 
 module staticWebApp 'modules/static-web-app.bicep' = {
-  name: 'StaticWebApp-${userAlias}'
+  name: staticWebAppName
   params: {
-    name: appServiceAppName
+    name: staticWebAppName
     sku: 'Free'
     location: 'westeurope'
     repositoryToken: frontendRepositoryToken
