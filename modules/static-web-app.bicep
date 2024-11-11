@@ -17,8 +17,8 @@ param repositoryUrl string
 param branch string = 'main'
 @description('Static web app build properties')
 param buildProperties object = {
-  appLocation: 'frontend'
-  outputLocation: 'build'
+  appLocation: 'src'
+  outputLocation: 'dist'
 }
 
 resource staticSite 'Microsoft.Web/staticSites@2021-03-01' = {
