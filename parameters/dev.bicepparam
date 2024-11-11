@@ -5,7 +5,6 @@ param postgreSQLServerName = 'devopps-dbsrv-dev'
 param postgreSQLDatabaseName = 'devopps-db-dev'
 param appServicePlanName = 'devopps-asp-dev'
 param appServiceAPIAppName = 'devopps-be-dev'
-param appServiceAppName = 'devopps-fe-dev'
 param location = 'North Europe'
 param appServiceAPIDBHostFLASK_APP =  'iebank_api\\__init__.py'
 param appServiceAPIDBHostFLASK_DEBUG =  '1'
@@ -22,3 +21,11 @@ param logAnalyticsRetentionDays = 30
 param appInsightsName = 'appInsights-dev'
 param appInsightsType = 'web'
 param appInsightsRetentionDays = 365
+
+// Container Registry
+param containerRegistryName = 'DevoppsDevACR'
+
+// Static WebApp
+param staticWebAppName = 'devopps-swa-dev'
+
+

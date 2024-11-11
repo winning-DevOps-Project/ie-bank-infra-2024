@@ -43,6 +43,6 @@
         },
         "containerRegistryName": {
             "value": "DevoppsUatACR"
-        },
+        }
     }
 }
