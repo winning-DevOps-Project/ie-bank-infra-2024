@@ -82,7 +82,7 @@ param appInsightsRetentionDays int
 
 // Define App Service Plan using the app-service.bicep module
 module appServicePlan 'modules/app-service.bicep' = {
-  name: 'appServicePlan-${userAlias}'
+  name: appServicePlanName
   params: {
     appServicePlanName: appServicePlanName
     location: location
