@@ -50,7 +50,10 @@ param appServiceAPIDBHostFLASK_DEBUG string
 @sys.description('Frontend repository URL')
 param frontendRepositoryUrl string
 @sys.description('Frontend repository branch')
-param frontendRepositoryBranch string
+param frontendRepositoryBranch string = 'main'
+@sys.description('Frontend repository personal access token')
+@secure()
+param frontendRepositoryToken string = ''
 
 // Azure Container Registry SKU
 @sys.allowed([
@@ -178,7 +181,7 @@ module staticWebApp 'modules/static-web-app.bicep' = {
     name: appServiceAppName
     sku: 'nonprod'
     location: location
-    repositoryToken: ''
+    repositoryToken: frontendRepositoryToken
     repositoryUrl: frontendRepositoryUrl
     branch: frontendRepositoryBranch
   }

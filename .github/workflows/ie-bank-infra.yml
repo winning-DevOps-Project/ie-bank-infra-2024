@@ -39,7 +39,7 @@ jobs:
       - name: Create Azure Container Registry
         run: |
           az acr create --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
-                        --name ACR-${{ env.USER_ALIAS }} \
+                        --name acr-${{ env.USER_ALIAS }} \
                         --sku Standard \
                         --admin-enabled true
 
@@ -47,9 +47,9 @@ jobs:
       - name: Get ACR credentials
         id: acr_credentials
         run: |
-          echo "::set-output name=login_server::$(az acr show --name ACR-${{ env.USER_ALIAS }} --query "loginServer" -o tsv)"
-          echo "::set-output name=username::$(az acr credential show --name ACR-${{ env.USER_ALIAS }} --query "username" -o tsv)"
-          echo "::set-output name=password::$(az acr credential show --name ACR-${{ env.USER_ALIAS }} --query "passwords[0].value" -o tsv)"
+          echo "::set-output name=login_server::$(az acr show --name acr-${{ env.USER_ALIAS }} --query "loginServer" -o tsv)"
+          echo "::set-output name=username::$(az acr credential show --name acr-${{ env.USER_ALIAS }} --query "username" -o tsv)"
+          echo "::set-output name=password::$(az acr credential show --name acr-${{ env.USER_ALIAS }} --query "passwords[0].value" -o tsv)"
         
       # Run ARM template deployment with parameters
       - name: deploy
@@ -65,6 +65,7 @@ jobs:
             containerRegistryLoginServer='${{ steps.acr_credentials.outputs.login_server }}'
             containerRegistryUsername='${{ steps.acr_credentials.outputs.username }}'
             containerRegistryPassword='${{ steps.acr_credentials.outputs.password }}'
+            frontendRepositoryUrl='${{vars.FRONTEND_REPO_URL}}'
           deploymentName: ${{ env.USER_ALIAS }}-dev
 
   deploy-uat:
@@ -84,7 +85,7 @@ jobs:
       - name: Create Azure Container Registry
         run: |
           az acr create --resource-group ${{ env.RESOURCE_GROUP_UAT }} \
-                        --name ACR-${{ env.USER_ALIAS }} \
+                        --name acr-${{ env.USER_ALIAS }} \
                         --sku Standard \
                         --admin-enabled true
 
@@ -92,9 +93,9 @@ jobs:
       - name: Get ACR credentials
         id: acr_credentials
         run: |
-          echo "::set-output name=login_server::$(az acr show --name ACR-${{ env.USER_ALIAS }} --query "loginServer" -o tsv)"
-          echo "::set-output name=username::$(az acr credential show --name ACR-${{ env.USER_ALIAS }} --query "username" -o tsv)"
-          echo "::set-output name=password::$(az acr credential show --name ACR-${{ env.USER_ALIAS }} --query "passwords[0].value" -o tsv)"
+          echo "::set-output name=login_server::$(az acr show --name acr-${{ env.USER_ALIAS }} --query "loginServer" -o tsv)"
+          echo "::set-output name=username::$(az acr credential show --name acr-${{ env.USER_ALIAS }} --query "username" -o tsv)"
+          echo "::set-output name=password::$(az acr credential show --name acr-${{ env.USER_ALIAS }} --query "passwords[0].value" -o tsv)"
 
       # Run ARM template deployment with parameters
       - name: deploy

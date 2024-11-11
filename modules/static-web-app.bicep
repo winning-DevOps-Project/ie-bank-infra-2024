@@ -10,11 +10,11 @@ param sku string = 'nonprod'
 param location string = resourceGroup().location
 @secure()
 @description('GitHub repository personal access token')
-param repositoryToken string
+param repositoryToken string = ''
 @description('GitHub repository URL')
 param repositoryUrl string
 @description('Branch to deploy from')
-param branch string
+param branch string = 'main'
 @description('Static web app build properties')
 param buildProperties object = {
   appLocation: 'frontend'
