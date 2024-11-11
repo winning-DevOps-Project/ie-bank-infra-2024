@@ -12,33 +12,28 @@ param postgreSQLServerName string = 'ie-bank-db-server-dev'
 @minLength(3)
 @maxLength(24)
 param postgreSQLDatabaseName string = 'ie-bank-db'
-@sys.description('The App Service Plan name')
 @minLength(3)
 @maxLength(24)
-param appServicePlanName string = 'ie-bank-app-sp-dev'
-@sys.description('The API App name (backend)')
-@minLength(3)
-@maxLength(24)
-param appServiceAPIAppName string = 'ie-bank-api-dev'
+param backendContainerAPIName string
 @sys.description('The Azure location where the resources will be deployed')
 param location string = resourceGroup().location
 
 // Environment variables for the backend API
 @sys.description('The value for the environment variable ENV')
-param appServiceAPIEnvVarENV string
+param backendContainerAPIEnvVarENV string
 @sys.description('The value for the environment variable DBHOST')
-param appServiceAPIEnvVarDBHOST string
+param backendContainerAPIEnvVarDBHOST string
 @sys.description('The value for the environment variable DBNAME')
-param appServiceAPIEnvVarDBNAME string
+param backendContainerAPIEnvVarDBNAME string
 @sys.description('The value for the environment variable DBPASS')
 @secure()
-param appServiceAPIEnvVarDBPASS string
+param backendContainerAPIEnvVarDBPASS string
 @sys.description('The value for the environment variable DBUSER')
-param appServiceAPIDBHostDBUSER string
+param backendContainerAPIEnvVarDBUSER string
 @sys.description('The value for the environment variable FLASK_APP')
-param appServiceAPIDBHostFLASK_APP string
+param backendContainerAPIEnvVarFLASK_APP string
 @sys.description('The value for the environment variable FLASK_DEBUG')
-param appServiceAPIDBHostFLASK_DEBUG string
+param backendContainerAPIEnvVarFLASK_DEBUG string
 
 // Frontend repository details for Static Web App
 @sys.description('Frontend repository URL')
@@ -78,16 +73,6 @@ param appInsightsType string
 @description('The retention period for Application Insights in days')
 param appInsightsRetentionDays int
 
-// Define App Service Plan using the app-service.bicep module
-module appServicePlan 'modules/app-service.bicep' = {
-  name: appServicePlanName
-  params: {
-    appServicePlanName: appServicePlanName
-    location: location
-    environmentType: environmentType
-  }
-}
-
 module containerRegistry 'modules/docker-registry.bicep' = {
   name: containerRegistryName 
   params: {
@@ -97,33 +82,27 @@ module containerRegistry 'modules/docker-registry.bicep' = {
   }
 }
 
-// Use outputs from the containerRegistry module
-module appServiceAPI 'modules/app-service-api.bicep' = {
-  name: appServiceAPIAppName
+// Define Azure Container Instance for backend API
+module containerInstance 'modules/container-instance.bicep' = {
+  name: backendContainerAPIName
   params: {
-    appServiceAPIAppName: appServiceAPIAppName
-    appServicePlanId: appServicePlan.outputs.id
+    containerGroupName: backendContainerAPIName
+    containerImageName: 'ie-bank-api'
+    containerImageTag: 'latest'
+    location: location
     containerRegistryLoginServer: containerRegistry.outputs.registryLoginServer
     containerRegistryUsername: containerRegistry.outputs.adminUsername
     containerRegistryPassword: containerRegistry.outputs.adminPassword
-    containerImageName: 'ie-bank-api'
-    containerImageTag: 'latest'
-
-    // Environment variables
-    appServiceAPIEnvVarENV: appServiceAPIEnvVarENV
-    appServiceAPIEnvVarDBHOST: appServiceAPIEnvVarDBHOST
-    appServiceAPIEnvVarDBNAME: appServiceAPIEnvVarDBNAME
-    appServiceAPIEnvVarDBPASS: appServiceAPIEnvVarDBPASS
-    appServiceAPIDBHostDBUSER: appServiceAPIDBHostDBUSER
-    appServiceAPIDBHostFLASK_APP: appServiceAPIDBHostFLASK_APP
-    appServiceAPIDBHostFLASK_DEBUG: appServiceAPIDBHostFLASK_DEBUG
+    appServiceAPIEnvVarENV: backendContainerAPIEnvVarENV
+    appServiceAPIEnvVarDBHOST: backendContainerAPIEnvVarDBHOST
+    appServiceAPIEnvVarDBNAME: backendContainerAPIEnvVarDBNAME
+    appServiceAPIEnvVarDBPASS: backendContainerAPIEnvVarDBPASS
+    appServiceAPIEnvVarDBUSER: backendContainerAPIEnvVarDBUSER
+    appServiceAPIEnvVarFLASK_APP: backendContainerAPIEnvVarFLASK_APP
+    appServiceAPIEnvVarFLASK_DEBUG: backendContainerAPIEnvVarFLASK_DEBUG
   }
 }
 
-// Outputs for convenience
-output registryLoginServer string = containerRegistry.outputs.registryLoginServer
-output adminUsername string = containerRegistry.outputs.adminUsername
-output appServiceAppHostName string = appServiceAPI.outputs.appServiceAppHostName
 
 module postgresDb 'modules/postgresql-db.bicep' = {
   name: postgreSQLServerName

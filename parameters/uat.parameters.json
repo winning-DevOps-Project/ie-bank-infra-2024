@@ -11,10 +11,7 @@
         "postgreSQLDatabaseName": {
             "value": "devopps-db-uat"
         },
-        "appServicePlanName": {
-            "value": "devopps-asp-uat"
-        },
-        "appServiceAPIAppName": {
+        "backendContainerAPIName": {
             "value": "devopps-be-uat"
         },
         "location": {

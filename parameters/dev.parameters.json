@@ -11,10 +11,7 @@
         "postgreSQLDatabaseName": {
             "value": "devopps-db-dev"
         },
-        "appServicePlanName": {
-            "value": "devopps-asp-dev"
-        },
-        "appServiceAPIAppName": {
+        "backendContainerAPIName": {
             "value": "devopps-be-dev"
         },
         "location": {
@@ -43,6 +40,6 @@
         },
         "containerRegistryName": {
             "value": "DevoppsDevACR"
-        },
+        }
     }
 }
