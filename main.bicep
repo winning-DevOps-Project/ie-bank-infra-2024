@@ -180,7 +180,7 @@ module staticWebApp 'modules/static-web-app.bicep' = {
   params: {
     name: appServiceAppName
     sku: 'nonprod'
-    location: location
+    location: 'westeurope'
     repositoryToken: frontendRepositoryToken
     repositoryUrl: frontendRepositoryUrl
     branch: frontendRepositoryBranch
