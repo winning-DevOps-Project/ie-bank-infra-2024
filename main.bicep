@@ -4,8 +4,6 @@
   'prod'
 ])
 param environmentType string = 'nonprod'
-@sys.description('The user alias to add to the deployment name')
-param userAlias string = 'devopps-team'
 @sys.description('The PostgreSQL Server name')
 @minLength(3)
 @maxLength(24)
@@ -18,10 +16,6 @@ param postgreSQLDatabaseName string = 'ie-bank-db'
 @minLength(3)
 @maxLength(24)
 param appServicePlanName string = 'ie-bank-app-sp-dev'
-@sys.description('The Web App name (frontend)')
-@minLength(3)
-@maxLength(24)
-param appServiceAppName string = 'ie-bank-dev'
 @sys.description('The API App name (backend)')
 @minLength(3)
 @maxLength(24)
@@ -65,6 +59,8 @@ param staticWebAppName string
 ])
 @sys.description('The Azure Container Registry SKU')
 param acrSku string = 'Standard'
+@sys.description('The Azure Container Registry name')
+param containerRegistryName string
 
 // Log Analytics and App Insights configurations
 @sys.description('Name of the Log Analytics workspace')
@@ -93,9 +89,9 @@ module appServicePlan 'modules/app-service.bicep' = {
 }
 
 module containerRegistry 'modules/docker-registry.bicep' = {
-  name: 'acrdevopps' // The registry name is hardcoded, because the alias contains a - which is not allowed in the registry name
+  name: containerRegistryName 
   params: {
-    registryName: 'acrdevopps'
+    registryName: containerRegistryName
     location: location
     sku: acrSku
   }
@@ -127,7 +123,6 @@ module appServiceAPI 'modules/app-service-api.bicep' = {
 // Outputs for convenience
 output registryLoginServer string = containerRegistry.outputs.registryLoginServer
 output adminUsername string = containerRegistry.outputs.adminUsername
-output adminPassword string = containerRegistry.outputs.adminPassword
 output appServiceAppHostName string = appServiceAPI.outputs.appServiceAppHostName
 
 module postgresDb 'modules/postgresql-db.bicep' = {

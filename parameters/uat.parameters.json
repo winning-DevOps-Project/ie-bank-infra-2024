@@ -43,6 +43,9 @@
         },
         "staticWebAppName": {
             "value": "devopps-swa-uat"
-        }
+        },
+        "containerRegistryName": {
+            "value": "DevoppsUatACR"
+        },
     }
 }

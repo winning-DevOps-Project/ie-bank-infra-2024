@@ -44,5 +44,8 @@
         "staticWebAppName": {
             "value": "devopps-swa-dev"
         },
+        "containerRegistryName": {
+            "value": "DevoppsDevACR"
+        },
     }
 }
