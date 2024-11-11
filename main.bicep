@@ -91,9 +91,9 @@ module appServicePlan 'modules/app-service.bicep' = {
 }
 
 module containerRegistry 'modules/docker-registry.bicep' = {
-  name: 'acr${userAlias}'
+  name: 'acrdevopps' // The registry name is hardcoded, because the alias contains a - which is not allowed in the registry name
   params: {
-    registryName: 'acr${userAlias}'
+    registryName: 'acrdevopps'
     location: location
     sku: acrSku
   }
