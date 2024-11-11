@@ -1,11 +1,11 @@
 @description('Name of the static web app')
 param name string
 @allowed([
-  'prod'
-  'nonprod'
+  'Free'
+  'Standard'
 ])
 @description('The service tier')
-param sku string = 'nonprod'
+param sku string
 @description('Location of the resource')
 param location string = 'westeurope' 
 @secure()

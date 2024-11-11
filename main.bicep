@@ -179,7 +179,7 @@ module staticWebApp 'modules/static-web-app.bicep' = {
   name: 'StaticWebApp-${userAlias}'
   params: {
     name: appServiceAppName
-    sku: 'nonprod'
+    sku: 'Free'
     location: 'westeurope'
     repositoryToken: frontendRepositoryToken
     repositoryUrl: frontendRepositoryUrl
