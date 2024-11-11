@@ -93,7 +93,7 @@ module appServicePlan 'modules/app-service.bicep' = {
 module containerRegistry 'modules/docker-registry.bicep' = {
   name: 'containerRegistry-${userAlias}'
   params: {
-    registryName: 'ACR-${userAlias}'
+    registryName: 'acr${userAlias}'
     location: location
     sku: acrSku
   }
