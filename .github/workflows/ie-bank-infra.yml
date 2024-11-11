@@ -58,6 +58,7 @@ jobs:
           subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
           resourceGroupName: ${{ env.RESOURCE_GROUP_DEV }}
           template: ./main.bicep
+          parameters: ./parameters/dev.parameters.json
           parameters: |
             environmentType='nonprod'
             appServiceAPIEnvVarDBPASS='${{ secrets.DBPASS }}'
@@ -105,7 +106,8 @@ jobs:
           subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
           resourceGroupName: ${{ env.RESOURCE_GROUP_UAT }}
           template: ./main.bicep
-          parameters: |
+          parameters: ./parameters/uat.parameters.json
+          parametersOverride: |
             environmentType='nonprod'
             appServiceAPIEnvVarDBPASS='${{ secrets.DBPASS }}'
             appServiceAPIDBHostDBUSER='${{ secrets.DBUSER }}'
