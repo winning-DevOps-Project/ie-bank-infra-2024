@@ -17,9 +17,6 @@
         "appServiceAPIAppName": {
             "value": "devopps-be-uat"
         },
-        "appServiceAppName": {
-            "value": "devopps-fe-uat"
-        },
         "location": {
             "value": "North Europe"
         }, 

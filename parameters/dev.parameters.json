@@ -17,9 +17,6 @@
         "appServiceAPIAppName": {
             "value": "devopps-be-dev"
         },
-        "appServiceAppName": {
-            "value": "devopps-fe-dev"
-        },
         "location": {
             "value": "North Europe"
         },
