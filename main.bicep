@@ -83,25 +83,25 @@ module containerRegistry 'modules/docker-registry.bicep' = {
 }
 
 // Define Azure Container Instance for backend API
-module containerInstance 'modules/container-instance.bicep' = {
-  name: backendContainerAPIName
-  params: {
-    containerGroupName: backendContainerAPIName
-    containerImageName: 'ie-bank-api'
-    containerImageTag: 'latest'
-    location: location
-    containerRegistryLoginServer: containerRegistry.outputs.registryLoginServer
-    containerRegistryUsername: containerRegistry.outputs.adminUsername
-    containerRegistryPassword: containerRegistry.outputs.adminPassword
-    appServiceAPIEnvVarENV: backendContainerAPIEnvVarENV
-    appServiceAPIEnvVarDBHOST: backendContainerAPIEnvVarDBHOST
-    appServiceAPIEnvVarDBNAME: backendContainerAPIEnvVarDBNAME
-    appServiceAPIEnvVarDBPASS: backendContainerAPIEnvVarDBPASS
-    appServiceAPIEnvVarDBUSER: backendContainerAPIEnvVarDBUSER
-    appServiceAPIEnvVarFLASK_APP: backendContainerAPIEnvVarFLASK_APP
-    appServiceAPIEnvVarFLASK_DEBUG: backendContainerAPIEnvVarFLASK_DEBUG
-  }
-}
+// module containerInstance 'modules/container-instance.bicep' = {
+//   name: backendContainerAPIName
+//   params: {
+//     containerGroupName: backendContainerAPIName
+//     containerImageName: 'ie-bank-api'
+//     containerImageTag: 'latest'
+//     location: location
+//     containerRegistryLoginServer: containerRegistry.outputs.registryLoginServer
+//     containerRegistryUsername: containerRegistry.outputs.adminUsername
+//     containerRegistryPassword: containerRegistry.outputs.adminPassword
+//     appServiceAPIEnvVarENV: backendContainerAPIEnvVarENV
+//     appServiceAPIEnvVarDBHOST: backendContainerAPIEnvVarDBHOST
+//     appServiceAPIEnvVarDBNAME: backendContainerAPIEnvVarDBNAME
+//     appServiceAPIEnvVarDBPASS: backendContainerAPIEnvVarDBPASS
+//     appServiceAPIEnvVarDBUSER: backendContainerAPIEnvVarDBUSER
+//     appServiceAPIEnvVarFLASK_APP: backendContainerAPIEnvVarFLASK_APP
+//     appServiceAPIEnvVarFLASK_DEBUG: backendContainerAPIEnvVarFLASK_DEBUG
+//   }
+// }
 
 
 module postgresDb 'modules/postgresql-db.bicep' = {
