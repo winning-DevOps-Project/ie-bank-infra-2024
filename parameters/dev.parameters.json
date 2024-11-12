@@ -11,9 +11,6 @@
         "postgreSQLDatabaseName": {
             "value": "devopps-db-dev"
         },
-        "backendContainerAPIName": {
-            "value": "devopps-be-dev"
-        },
         "location": {
             "value": "North Europe"
         },
