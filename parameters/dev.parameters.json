@@ -27,7 +27,7 @@
             "value": 30
         },
         "appInsightsName": {
-            "value": "appInsights-dev"
+            "value": "devopps-insights-dev"
         },
         "appInsightsType": {
             "value": "web"

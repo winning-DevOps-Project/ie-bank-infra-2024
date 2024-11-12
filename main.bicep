@@ -12,28 +12,29 @@ param postgreSQLServerName string = 'ie-bank-db-server-dev'
 @minLength(3)
 @maxLength(24)
 param postgreSQLDatabaseName string = 'ie-bank-db'
-@minLength(3)
-@maxLength(24)
-param backendContainerAPIName string
-@sys.description('The Azure location where the resources will be deployed')
+
 param location string = resourceGroup().location
 
 // Environment variables for the backend API
-@sys.description('The value for the environment variable ENV')
-param backendContainerAPIEnvVarENV string
-@sys.description('The value for the environment variable DBHOST')
-param backendContainerAPIEnvVarDBHOST string
-@sys.description('The value for the environment variable DBNAME')
-param backendContainerAPIEnvVarDBNAME string
-@sys.description('The value for the environment variable DBPASS')
-@secure()
-param backendContainerAPIEnvVarDBPASS string
-@sys.description('The value for the environment variable DBUSER')
-param backendContainerAPIEnvVarDBUSER string
-@sys.description('The value for the environment variable FLASK_APP')
-param backendContainerAPIEnvVarFLASK_APP string
-@sys.description('The value for the environment variable FLASK_DEBUG')
-param backendContainerAPIEnvVarFLASK_DEBUG string
+// @minLength(3)
+// @maxLength(24)
+// param backendContainerAPIName string
+// @sys.description('The Azure location where the resources will be deployed')
+// @sys.description('The value for the environment variable ENV')
+// param backendContainerAPIEnvVarENV string
+// @sys.description('The value for the environment variable DBHOST')
+// param backendContainerAPIEnvVarDBHOST string
+// @sys.description('The value for the environment variable DBNAME')
+// param backendContainerAPIEnvVarDBNAME string
+// @sys.description('The value for the environment variable DBPASS')
+// @secure()
+// param backendContainerAPIEnvVarDBPASS string
+// @sys.description('The value for the environment variable DBUSER')
+// param backendContainerAPIEnvVarDBUSER string
+// @sys.description('The value for the environment variable FLASK_APP')
+// param backendContainerAPIEnvVarFLASK_APP string
+// @sys.description('The value for the environment variable FLASK_DEBUG')
+// param backendContainerAPIEnvVarFLASK_DEBUG string
 
 // Frontend repository details for Static Web App
 @sys.description('Frontend repository URL')
