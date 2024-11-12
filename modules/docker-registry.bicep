@@ -22,8 +22,12 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-09-01' =
 }
 
 output registryLoginServer string = containerRegistry.properties.loginServer
+
+// Retrieve the admin credentials using the resource reference syntax
+var credentials = listCredentials(containerRegistry.id, '2021-09-01')
+
+// Suppress the outputs warning for secrets
 #disable-next-line outputs-should-not-contain-secrets
-output adminUsername string = listCredentials(containerRegistry.id, '2021-09-01').username
+output adminUsername string = credentials.username
 #disable-next-line outputs-should-not-contain-secrets
-output adminPassword string = listCredentials(containerRegistry.id, '2021-09-01').passwords[0].value
-#disable-next-line outputs-should-not-contain-secrets
+output adminPassword string = credentials.passwords[0].value
