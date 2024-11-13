@@ -27,7 +27,7 @@ output registryLoginServer string = containerRegistry.properties.loginServer
 
 // Retrieve the admin credentials using the resource reference syntax
 #disable-next-line outputs-should-not-contain-secrets
-var credentials = listCredentials(containerRegistry.id, '2021-09-01')
+var credentials = containerRegistry.listCredentials(containerRegistry.id)
 
 // Suppress the outputs warning for secrets
 #disable-next-line outputs-should-not-contain-secrets
