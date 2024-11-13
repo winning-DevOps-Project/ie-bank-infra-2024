@@ -14,8 +14,8 @@ param containerRegistryUsername string
 @secure()
 param containerRegistryPassword string
 
-@description('The name of the Docker image to pull')
-param containerImageName string
+@description('The name of the Docker image to pull (default: hello-world)')
+param containerImageName string = 'hello-world' // Updated to default to 'hello-world'
 
 @description('The tag of the Docker image to pull')
 param containerImageTag string = 'latest'
@@ -51,7 +51,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2021-03-01'
       {
         name: containerGroupName
         properties: {
-          image: '${containerRegistryLoginServer}/${containerImageName}:${containerImageTag}'
+          image: '${containerRegistryLoginServer != '' ? '${containerRegistryLoginServer}/' : ''}${containerImageName}:${containerImageTag}'
           resources: {
             requests: {
               cpu: 1
