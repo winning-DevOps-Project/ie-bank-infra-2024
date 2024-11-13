@@ -73,6 +73,13 @@ param appInsightsName string
 param appInsightsType string 
 @description('The retention period for Application Insights in days')
 param appInsightsRetentionDays int
+@description('The Key Vault name')
+param keyVaultName string
+@description('The Key Vault SKU')
+param keyVaultSku string
+@description('List of object IDs to grant Contributor access to the Key Vault.')
+param keyVaultPrincipalIds array = []
+
 
 module containerRegistry 'modules/docker-registry.bicep' = {
   name: containerRegistryName 
@@ -161,5 +168,19 @@ module staticWebApp 'modules/static-web-app.bicep' = {
     repositoryToken: frontendRepositoryToken
     repositoryUrl: frontendRepositoryUrl
     branch: frontendRepositoryBranch
+  }
+}
+
+module keyVault 'modules/key-vault.bicep' = {
+  name: 'keyVaultDeployment'
+  params: {
+    name: keyVaultName
+    location: location
+    sku: keyVaultSku
+    principalIds: keyVaultPrincipalIds 
+    tags: {
+      Environment: environmentType
+      Project: 'IE Bank'
+    }
   }
 }

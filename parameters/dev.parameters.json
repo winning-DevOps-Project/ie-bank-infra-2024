@@ -37,6 +37,12 @@
         },
         "containerRegistryName": {
             "value": "DevoppsDevACR"
+        },
+        "keyVaultName": {
+            "value": "dev-keyvault"
+        },
+        "keyVaultSku": {
+            "value": "standard"
         }
+      }
     }
-}

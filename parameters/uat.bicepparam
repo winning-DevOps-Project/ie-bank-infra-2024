@@ -28,3 +28,6 @@ param containerRegistryName = 'DevoppsUatACR'
 //Static WebApp
 
 param staticWebAppName = 'devopps-swa-uat'
+
+param keyVaultName = 'uat-keyvault'
+param keyVaultSku = 'standard' 
