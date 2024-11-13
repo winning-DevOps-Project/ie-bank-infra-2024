@@ -22,5 +22,5 @@ param logAnalyticsRetentionDays = 30
 param appInsightsName = 'appInsights-uat'
 param appInsightsType = 'web'
 param appInsightsRetentionDays = 365
-param keyVaultName = 'uat-keyvault'
+param keyVaultName = 'devopps-keyvault-uat'
 param keyVaultSku = 'standard' 

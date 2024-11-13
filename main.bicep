@@ -64,6 +64,8 @@ param keyVaultName string
 param keyVaultSku string
 @description('List of object IDs to grant Contributor access to the Key Vault.')
 param keyVaultPrincipalIds array = []
+@description('Enable RBAC authorization for Key Vault (default: true).')
+param keyVaultEnableRbacAuthorization bool = true
 
 resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: postgreSQLServerName
@@ -170,7 +172,7 @@ module keyVault 'modules/key-vault.bicep' = {
     name: keyVaultName
     location: location
     sku: keyVaultSku
-    principalIds: keyVaultPrincipalIds 
+    enableRbacAuthorization: keyVaultEnableRbacAuthorization 
     tags: {
       Environment: environmentType
       Project: 'IE Bank'

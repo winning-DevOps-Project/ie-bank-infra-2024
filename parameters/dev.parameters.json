@@ -42,7 +42,7 @@
             "value": 365
         },
         "keyVaultName": {
-            "value": "dev-keyvault"
+            "value": "devopps-keyvault-dev"
         },
         "keyVaultSku": {
             "value": "standard"

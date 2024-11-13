@@ -7,6 +7,9 @@ metadata owner = 'Azure/module-maintainers'
 @maxLength(24)
 param name string
 
+@description('Enable RBAC authorization for Key Vault (default: true).')
+param enableRbacAuthorization bool = true
+
 @description('Optional. Location for all resources.')
 param location string = resourceGroup().location
 
@@ -42,6 +45,7 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
     enabledForDeployment: enableVaultForDeployment
     enabledForTemplateDeployment: enableVaultForTemplateDeployment
     enableSoftDelete: enableSoftDelete
+    enableRbacAuthorization: enableRbacAuthorization 
     tenantId: subscription().tenantId
     sku: {
       name: sku
