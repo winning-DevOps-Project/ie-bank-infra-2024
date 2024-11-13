@@ -29,6 +29,10 @@ param sku string = 'standard'
 @description('Optional. Resource tags.')
 param tags object?
 
+
+@description('Optional. List of object IDs to grant Contributor access to the Key Vault.')
+param principalIds array = []
+
 // Key Vault Resource
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: name
@@ -45,6 +49,18 @@ resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
     }
   }
 }
+
+// Add Contributor role assignments for specified object IDs
+resource keyVaultRoleAssignments 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = [
+  for (principalId, i) in principalIds: {
+    name: guid(keyVault.id, 'b24988ac-6180-42a0-ab88-20f7382dd24c', principalId)
+    properties: {
+      roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c') // Contributor Role
+      principalId: principalId
+    }
+    scope: keyVault
+  }
+]
 
 // Outputs
 @description('The resource ID of the key vault.')
