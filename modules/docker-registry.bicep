@@ -10,17 +10,16 @@ param location string = resourceGroup().location
 @description('SKU for the Azure Container Registry')
 param sku string = 'Standard'
 
-resource containerRegistry 'Microsoft.ContainerRegistry/registries@2021-09-01' = {
+resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
   name: registryName
   location: location
   sku: {
     name: sku
   }
   properties: {
-    adminUserEnabled: true // Enable admin user to facilitate authentication
+    adminUserEnabled: true
   }
 }
-
 
 #disable-next-line outputs-should-not-contain-secrets
 output registryLoginServer string = containerRegistry.properties.loginServer
