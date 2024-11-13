@@ -62,6 +62,8 @@ param appInsightsRetentionDays int
 param keyVaultName string
 @description('The Key Vault SKU')
 param keyVaultSku string
+@description('List of object IDs to grant Contributor access to the Key Vault.')
+param keyVaultPrincipalIds array = []
 
 resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: postgreSQLServerName
@@ -168,6 +170,7 @@ module keyVault 'modules/key-vault.bicep' = {
     name: keyVaultName
     location: location
     sku: keyVaultSku
+    principalIds: keyVaultPrincipalIds 
     tags: {
       Environment: environmentType
       Project: 'IE Bank'
