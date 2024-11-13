@@ -172,6 +172,7 @@ module keyVault 'modules/key-vault.bicep' = {
     name: keyVaultName
     location: location
     sku: keyVaultSku
+    principalIds: keyVaultPrincipalIds
     enableRbacAuthorization: keyVaultEnableRbacAuthorization 
     tags: {
       Environment: environmentType
