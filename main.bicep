@@ -73,6 +73,8 @@ param appInsightsName string
 param appInsightsType string 
 @description('The retention period for Application Insights in days')
 param appInsightsRetentionDays int
+@description('The Key Vault name')
+
 
 module containerRegistry 'modules/docker-registry.bicep' = {
   name: containerRegistryName 

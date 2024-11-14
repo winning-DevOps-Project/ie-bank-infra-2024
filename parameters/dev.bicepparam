@@ -26,5 +26,3 @@ param containerRegistryName = 'DevoppsDevACR'
 
 // Static WebApp
 param staticWebAppName = 'devopps-swa-dev'
-
-
