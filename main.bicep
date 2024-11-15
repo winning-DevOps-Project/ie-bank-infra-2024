@@ -28,6 +28,8 @@ param appServiceAppName string = 'ie-bank-dev'
 param appServiceAPIAppName string = 'ie-bank-api-dev'
 @sys.description('The Azure location where the resources will be deployed')
 param location string = resourceGroup().location
+
+// Environment variables for the backend API
 @sys.description('The value for the environment variable ENV')
 param appServiceAPIEnvVarENV string
 @sys.description('The value for the environment variable DBHOST')
@@ -44,6 +46,25 @@ param appServiceAPIDBHostFLASK_APP string
 @sys.description('The value for the environment variable FLASK_DEBUG')
 param appServiceAPIDBHostFLASK_DEBUG string
 
+// Frontend repository details for Static Web App
+@sys.description('Frontend repository URL')
+param frontendRepositoryUrl string
+@sys.description('Frontend repository branch')
+param frontendRepositoryBranch string = 'main'
+@sys.description('Frontend repository personal access token')
+@secure()
+param frontendRepositoryToken string = ''
+
+// Azure Container Registry SKU
+@sys.allowed([
+  'Basic'
+  'Standard'
+  'Premium'
+])
+@sys.description('The Azure Container Registry SKU')
+param acrSku string = 'Standard'
+
+// Log Analytics and App Insights configurations
 @sys.description('Name of the Log Analytics workspace')
 param logAnalyticsWorkspaceName string
 @sys.description('SKU for the Log Analytics workspace')
@@ -67,75 +88,72 @@ param keyVaultPrincipalIds array = []
 @description('Enable RBAC authorization for Key Vault (default: true).')
 param keyVaultEnableRbacAuthorization bool = true
 
-resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
-  name: postgreSQLServerName
-  location: location
-  sku: {
-    name: 'Standard_B1ms'
-    tier: 'Burstable'
-  }
-  properties: {
-    administratorLogin: 'iebankdbadmin'
-    administratorLoginPassword: 'IE.Bank.DB.Admin.Pa$$'
-    createMode: 'Default'
-    highAvailability: {
-      mode: 'Disabled'
-      standbyAvailabilityZone: ''
-    }
-    storage: {
-      storageSizeGB: 32
-    }
-    backup: {
-      backupRetentionDays: 7
-      geoRedundantBackup: 'Disabled'
-    }
-    version: '15'
-  }
-
-  resource postgresSQLServerFirewallRules 'firewallRules@2022-12-01' = {
-    name: 'AllowAllAzureServicesAndResourcesWithinAzureIps'
-    properties: {
-      endIpAddress: '0.0.0.0'
-      startIpAddress: '0.0.0.0'
-    }
-  }
-}
-
-resource postgresSQLDatabase 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2022-12-01' = {
-  name: postgreSQLDatabaseName
-  parent: postgresSQLServer
-  properties: {
-    charset: 'UTF8'
-    collation: 'en_US.UTF8'
-  }
-}
-
-module appService 'modules/app-service.bicep' = {
-  name: 'appService-${userAlias}'
+// Define App Service Plan using the app-service.bicep module
+module appServicePlan 'modules/app-service.bicep' = {
+  name: appServicePlanName
   params: {
+    appServicePlanName: appServicePlanName
     location: location
     environmentType: environmentType
-    appServiceAppName: appServiceAppName
+  }
+}
+
+module containerRegistry 'modules/docker-registry.bicep' = {
+  name: 'acrdevopps' // The registry name is hardcoded, because the alias contains a - which is not allowed in the registry name
+  params: {
+    registryName: 'acrdevopps'
+    location: location
+    sku: acrSku
+  }
+}
+
+// Use outputs from the containerRegistry module
+module appServiceAPI 'modules/app-service-api.bicep' = {
+  name: 'appServiceAPI-${userAlias}'
+  params: {
     appServiceAPIAppName: appServiceAPIAppName
-    appServicePlanName: appServicePlanName
-    appServiceAPIDBHostDBUSER: appServiceAPIDBHostDBUSER
-    appServiceAPIDBHostFLASK_APP: appServiceAPIDBHostFLASK_APP
-    appServiceAPIDBHostFLASK_DEBUG: appServiceAPIDBHostFLASK_DEBUG
+    appServicePlanId: appServicePlan.outputs.id
+    containerRegistryLoginServer: containerRegistry.outputs.registryLoginServer
+    containerRegistryUsername: containerRegistry.outputs.adminUsername
+    containerRegistryPassword: containerRegistry.outputs.adminPassword
+    containerImageName: 'ie-bank-api'
+    containerImageTag: 'latest'
+
+    // Environment variables
+    appServiceAPIEnvVarENV: appServiceAPIEnvVarENV
     appServiceAPIEnvVarDBHOST: appServiceAPIEnvVarDBHOST
     appServiceAPIEnvVarDBNAME: appServiceAPIEnvVarDBNAME
     appServiceAPIEnvVarDBPASS: appServiceAPIEnvVarDBPASS
-    appServiceAPIEnvVarENV: appServiceAPIEnvVarENV
+    appServiceAPIDBHostDBUSER: appServiceAPIDBHostDBUSER
+    appServiceAPIDBHostFLASK_APP: appServiceAPIDBHostFLASK_APP
+    appServiceAPIDBHostFLASK_DEBUG: appServiceAPIDBHostFLASK_DEBUG
   }
-  dependsOn: [
-    postgresSQLDatabase
-  ]
 }
 
-output appServiceAppHostName string = appService.outputs.appServiceAppHostName
+// Outputs for convenience
+output registryLoginServer string = containerRegistry.outputs.registryLoginServer
+output adminUsername string = containerRegistry.outputs.adminUsername
+output adminPassword string = containerRegistry.outputs.adminPassword
+output appServiceAppHostName string = appServiceAPI.outputs.appServiceAppHostName
 
-// LAW
+module postgresDb 'modules/postgresql-db.bicep' = {
+  name: 'postgresDb-${userAlias}'
+  params: {
+    postgreSQLServerName: postgreSQLServerName
+    location: location
+    postgreSQLDatabaseName: postgreSQLDatabaseName
+    administratorLoginPassword: 'IE.Bank.DB.Admin.Pa$$' // Replace with a secure value
+  }
+}
+
+// Outputs for PostgreSQL
+output postgreSQLServerName string = postgresDb.outputs.postgreSQLServerName
+output postgreSQLDatabaseName string = postgresDb.outputs.postgreSQLDatabaseName
+output postgreSQLServerAdmin string = postgresDb.outputs.postgreSQLServerAdmin
+
+// Log Analytics Workspace and Application Insights
 module logAnalytics 'modules/log-analytics.bicep' = {
-  name: 'logAnalyticsWorkspaceDeployment'
+  name: 'logAnalyticsWorkspaceDeployment-${userAlias}'
   params: {
     name: logAnalyticsWorkspaceName
     location: location
@@ -150,9 +168,8 @@ module logAnalytics 'modules/log-analytics.bicep' = {
   }
 }
 
-
 module appInsights 'modules/app-insights.bicep' = {
-  name: 'appInsightsDeployment'
+  name: 'appInsightsDeployment-${userAlias}'
   params: {
     name: appInsightsName
     applicationType: appInsightsType
@@ -163,6 +180,18 @@ module appInsights 'modules/app-insights.bicep' = {
       Environment: environmentType
       Project: 'IE Bank'
     }
+  }
+}
+
+module staticWebApp 'modules/static-web-app.bicep' = {
+  name: 'StaticWebApp-${userAlias}'
+  params: {
+    name: appServiceAppName
+    sku: 'Free'
+    location: 'westeurope'
+    repositoryToken: frontendRepositoryToken
+    repositoryUrl: frontendRepositoryUrl
+    branch: frontendRepositoryBranch
   }
 }
 
