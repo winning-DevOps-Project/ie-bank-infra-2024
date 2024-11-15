@@ -19,7 +19,7 @@ param enableVaultForDeployment bool = true
 param enableVaultForTemplateDeployment bool = true
 
 @description('Enable Key Vault\'s soft delete feature.')
-param enableSoftDelete bool = false
+param enableSoftDelete bool = true
 
 @description('Specifies the SKU for the vault.')
 param sku string = 'standard'
