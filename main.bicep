@@ -77,10 +77,8 @@ param appInsightsRetentionDays int
 param keyVaultName string
 @description('The Key Vault SKU')
 param keyVaultSku string
-@description('List of object IDs to grant Contributor access to the Key Vault.')
-param keyVaultPrincipalIds array = []
-@description('Enable RBAC authorization for Key Vault (default: true).')
-param keyVaultEnableRbacAuthorization bool = true
+@sys.description('The role assignments for the Key Vault')
+param keyVaultRoleAssignments array = []
 
 
 
@@ -90,6 +88,7 @@ module containerRegistry 'modules/docker-registry.bicep' = {
     registryName: containerRegistryName
     location: location
     sku: acrSku
+    keyVaultResourceId: keyVault.outputs.resourceId
   }
 }
 
@@ -180,11 +179,7 @@ module keyVault 'modules/key-vault.bicep' = {
     name: keyVaultName
     location: location
     sku: keyVaultSku
-    principalIds: keyVaultPrincipalIds
-    enableRbacAuthorization: keyVaultEnableRbacAuthorization 
-    tags: {
-      Environment: environmentType
-      Project: 'IE Bank'
-    }
+    roleAssignments: keyVaultRoleAssignments
+    enableVaultForDeployment: true
   }
 }
