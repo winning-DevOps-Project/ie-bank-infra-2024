@@ -74,6 +74,12 @@ param appInsightsType string
 @description('The retention period for Application Insights in days')
 param appInsightsRetentionDays int
 @description('The Key Vault name')
+param keyVaultName string
+@description('The Key Vault SKU')
+param keyVaultSku string
+@sys.description('The role assignments for the Key Vault')
+param keyVaultRoleAssignments array = []
+
 
 
 module containerRegistry 'modules/docker-registry.bicep' = {
@@ -82,7 +88,11 @@ module containerRegistry 'modules/docker-registry.bicep' = {
     registryName: containerRegistryName
     location: location
     sku: acrSku
+    keyVaultResourceId: keyVault.outputs.resourceId
   }
+  dependsOn: [
+    keyVault
+  ]
 }
 
 // Define Azure Container Instance for backend API
@@ -165,3 +175,16 @@ module staticWebApp 'modules/static-web-app.bicep' = {
     branch: frontendRepositoryBranch
   }
 }
+
+module keyVault 'modules/key-vault.bicep' = {
+  name: 'keyVaultDeployment'
+  params: {
+    name: keyVaultName
+    location: location
+    sku: keyVaultSku
+    roleAssignments: keyVaultRoleAssignments
+    enableVaultForDeployment: true
+  }
+}
+
+output keyVaultUri string = keyVault.outputs.keyVaultUri
