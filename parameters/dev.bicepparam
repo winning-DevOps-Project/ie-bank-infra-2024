@@ -24,3 +24,4 @@ param appInsightsType = 'web'
 param appInsightsRetentionDays = 365
 param keyVaultName = 'devopps-keyvault-dev'
 param keyVaultSku = 'standard' 
+
