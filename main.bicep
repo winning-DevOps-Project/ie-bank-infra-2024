@@ -90,6 +90,9 @@ module containerRegistry 'modules/docker-registry.bicep' = {
     sku: acrSku
     keyVaultResourceId: keyVault.outputs.resourceId
   }
+  dependsOn: [
+    keyVault
+  ]
 }
 
 // Define Azure Container Instance for backend API
@@ -183,3 +186,5 @@ module keyVault 'modules/key-vault.bicep' = {
     enableVaultForDeployment: true
   }
 }
+
+output keyVaultUri string = keyVault.outputs.keyVaultUri

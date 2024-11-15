@@ -84,4 +84,4 @@ for (roleAssignment, index) in (roleAssignments ?? []): {
 output resourceId string = keyVault.id
 
 @description('The URI of the key vault.')
-output uri string = keyVault.properties.vaultUri
+output keyVaultUri string = keyVault.properties.vaultUri
