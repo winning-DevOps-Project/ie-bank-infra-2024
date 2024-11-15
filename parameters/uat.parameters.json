@@ -11,15 +11,6 @@
         "postgreSQLDatabaseName": {
             "value": "devopps-db-uat"
         },
-        "appServicePlanName": {
-            "value": "devopps-asp-uat"
-        },
-        "appServiceAPIAppName": {
-            "value": "devopps-be-uat"
-        },
-        "appServiceAppName": {
-            "value": "devopps-fe-uat"
-        },
         "location": {
             "value": "North Europe"
         }, 
@@ -33,13 +24,19 @@
             "value": 30
         },
         "appInsightsName": {
-            "value": "appInsights-uat"
+            "value": "devopps-insights-uat"
         },
         "appInsightsType": {
             "value": "web"
         },
         "appInsightsRetentionDays": {
             "value": 365
+        },
+        "staticWebAppName": {
+            "value": "devopps-swa-uat"
+        },
+        "containerRegistryName": {
+            "value": "DevoppsUatACR"
         },
         "keyVaultName": {
             "value": "devopps-keyvault-uat"

@@ -11,15 +11,6 @@
         "postgreSQLDatabaseName": {
             "value": "devopps-db-dev"
         },
-        "appServicePlanName": {
-            "value": "devopps-asp-dev"
-        },
-        "appServiceAPIAppName": {
-            "value": "devopps-be-dev"
-        },
-        "appServiceAppName": {
-            "value": "devopps-fe-dev"
-        },
         "location": {
             "value": "North Europe"
         },
@@ -33,13 +24,19 @@
             "value": 30
         },
         "appInsightsName": {
-            "value": "appInsights-dev"
+            "value": "devopps-insights-dev"
         },
         "appInsightsType": {
             "value": "web"
         },
         "appInsightsRetentionDays": {
             "value": 365
+        },
+        "staticWebAppName": {
+            "value": "devopps-swa-dev"
+        },
+        "containerRegistryName": {
+            "value": "DevoppsDevACR"
         },
         "keyVaultName": {
             "value": "devopps-keyvault-dev"

@@ -4,8 +4,6 @@
   'prod'
 ])
 param environmentType string = 'nonprod'
-@sys.description('The user alias to add to the deployment name')
-param userAlias string = 'devopps-team'
 @sys.description('The PostgreSQL Server name')
 @minLength(3)
 @maxLength(24)
@@ -14,37 +12,29 @@ param postgreSQLServerName string = 'ie-bank-db-server-dev'
 @minLength(3)
 @maxLength(24)
 param postgreSQLDatabaseName string = 'ie-bank-db'
-@sys.description('The App Service Plan name')
-@minLength(3)
-@maxLength(24)
-param appServicePlanName string = 'ie-bank-app-sp-dev'
-@sys.description('The Web App name (frontend)')
-@minLength(3)
-@maxLength(24)
-param appServiceAppName string = 'ie-bank-dev'
-@sys.description('The API App name (backend)')
-@minLength(3)
-@maxLength(24)
-param appServiceAPIAppName string = 'ie-bank-api-dev'
-@sys.description('The Azure location where the resources will be deployed')
+
 param location string = resourceGroup().location
 
 // Environment variables for the backend API
-@sys.description('The value for the environment variable ENV')
-param appServiceAPIEnvVarENV string
-@sys.description('The value for the environment variable DBHOST')
-param appServiceAPIEnvVarDBHOST string
-@sys.description('The value for the environment variable DBNAME')
-param appServiceAPIEnvVarDBNAME string
-@sys.description('The value for the environment variable DBPASS')
-@secure()
-param appServiceAPIEnvVarDBPASS string
-@sys.description('The value for the environment variable DBUSER')
-param appServiceAPIDBHostDBUSER string
-@sys.description('The value for the environment variable FLASK_APP')
-param appServiceAPIDBHostFLASK_APP string
-@sys.description('The value for the environment variable FLASK_DEBUG')
-param appServiceAPIDBHostFLASK_DEBUG string
+// @minLength(3)
+// @maxLength(24)
+// param backendContainerAPIName string
+// @sys.description('The Azure location where the resources will be deployed')
+// @sys.description('The value for the environment variable ENV')
+// param backendContainerAPIEnvVarENV string
+// @sys.description('The value for the environment variable DBHOST')
+// param backendContainerAPIEnvVarDBHOST string
+// @sys.description('The value for the environment variable DBNAME')
+// param backendContainerAPIEnvVarDBNAME string
+// @sys.description('The value for the environment variable DBPASS')
+// @secure()
+// param backendContainerAPIEnvVarDBPASS string
+// @sys.description('The value for the environment variable DBUSER')
+// param backendContainerAPIEnvVarDBUSER string
+// @sys.description('The value for the environment variable FLASK_APP')
+// param backendContainerAPIEnvVarFLASK_APP string
+// @sys.description('The value for the environment variable FLASK_DEBUG')
+// param backendContainerAPIEnvVarFLASK_DEBUG string
 
 // Frontend repository details for Static Web App
 @sys.description('Frontend repository URL')
@@ -54,6 +44,8 @@ param frontendRepositoryBranch string = 'main'
 @sys.description('Frontend repository personal access token')
 @secure()
 param frontendRepositoryToken string = ''
+@sys.description('The name of the Static Web App')
+param staticWebAppName string
 
 // Azure Container Registry SKU
 @sys.allowed([
@@ -63,6 +55,8 @@ param frontendRepositoryToken string = ''
 ])
 @sys.description('The Azure Container Registry SKU')
 param acrSku string = 'Standard'
+@sys.description('The Azure Container Registry name')
+param containerRegistryName string
 
 // Log Analytics and App Insights configurations
 @sys.description('Name of the Log Analytics workspace')
@@ -88,56 +82,41 @@ param keyVaultPrincipalIds array = []
 @description('Enable RBAC authorization for Key Vault (default: true).')
 param keyVaultEnableRbacAuthorization bool = true
 
-// Define App Service Plan using the app-service.bicep module
-module appServicePlan 'modules/app-service.bicep' = {
-  name: appServicePlanName
-  params: {
-    appServicePlanName: appServicePlanName
-    location: location
-    environmentType: environmentType
-  }
-}
+
 
 module containerRegistry 'modules/docker-registry.bicep' = {
-  name: 'acrdevopps' // The registry name is hardcoded, because the alias contains a - which is not allowed in the registry name
+  name: containerRegistryName 
   params: {
-    registryName: 'acrdevopps'
+    registryName: containerRegistryName
     location: location
     sku: acrSku
   }
 }
 
-// Use outputs from the containerRegistry module
-module appServiceAPI 'modules/app-service-api.bicep' = {
-  name: 'appServiceAPI-${userAlias}'
-  params: {
-    appServiceAPIAppName: appServiceAPIAppName
-    appServicePlanId: appServicePlan.outputs.id
-    containerRegistryLoginServer: containerRegistry.outputs.registryLoginServer
-    containerRegistryUsername: containerRegistry.outputs.adminUsername
-    containerRegistryPassword: containerRegistry.outputs.adminPassword
-    containerImageName: 'ie-bank-api'
-    containerImageTag: 'latest'
+// Define Azure Container Instance for backend API
+// module containerInstance 'modules/container-instance.bicep' = {
+//   name: backendContainerAPIName
+//   params: {
+//     containerGroupName: backendContainerAPIName
+//     containerImageName: 'ie-bank-api'
+//     containerImageTag: 'latest'
+//     location: location
+//     containerRegistryLoginServer: containerRegistry.outputs.registryLoginServer
+//     containerRegistryUsername: containerRegistry.outputs.adminUsername
+//     containerRegistryPassword: containerRegistry.outputs.adminPassword
+//     appServiceAPIEnvVarENV: backendContainerAPIEnvVarENV
+//     appServiceAPIEnvVarDBHOST: backendContainerAPIEnvVarDBHOST
+//     appServiceAPIEnvVarDBNAME: backendContainerAPIEnvVarDBNAME
+//     appServiceAPIEnvVarDBPASS: backendContainerAPIEnvVarDBPASS
+//     appServiceAPIEnvVarDBUSER: backendContainerAPIEnvVarDBUSER
+//     appServiceAPIEnvVarFLASK_APP: backendContainerAPIEnvVarFLASK_APP
+//     appServiceAPIEnvVarFLASK_DEBUG: backendContainerAPIEnvVarFLASK_DEBUG
+//   }
+// }
 
-    // Environment variables
-    appServiceAPIEnvVarENV: appServiceAPIEnvVarENV
-    appServiceAPIEnvVarDBHOST: appServiceAPIEnvVarDBHOST
-    appServiceAPIEnvVarDBNAME: appServiceAPIEnvVarDBNAME
-    appServiceAPIEnvVarDBPASS: appServiceAPIEnvVarDBPASS
-    appServiceAPIDBHostDBUSER: appServiceAPIDBHostDBUSER
-    appServiceAPIDBHostFLASK_APP: appServiceAPIDBHostFLASK_APP
-    appServiceAPIDBHostFLASK_DEBUG: appServiceAPIDBHostFLASK_DEBUG
-  }
-}
-
-// Outputs for convenience
-output registryLoginServer string = containerRegistry.outputs.registryLoginServer
-output adminUsername string = containerRegistry.outputs.adminUsername
-output adminPassword string = containerRegistry.outputs.adminPassword
-output appServiceAppHostName string = appServiceAPI.outputs.appServiceAppHostName
 
 module postgresDb 'modules/postgresql-db.bicep' = {
-  name: 'postgresDb-${userAlias}'
+  name: postgreSQLServerName
   params: {
     postgreSQLServerName: postgreSQLServerName
     location: location
@@ -153,7 +132,7 @@ output postgreSQLServerAdmin string = postgresDb.outputs.postgreSQLServerAdmin
 
 // Log Analytics Workspace and Application Insights
 module logAnalytics 'modules/log-analytics.bicep' = {
-  name: 'logAnalyticsWorkspaceDeployment-${userAlias}'
+  name: logAnalyticsWorkspaceName
   params: {
     name: logAnalyticsWorkspaceName
     location: location
@@ -169,7 +148,7 @@ module logAnalytics 'modules/log-analytics.bicep' = {
 }
 
 module appInsights 'modules/app-insights.bicep' = {
-  name: 'appInsightsDeployment-${userAlias}'
+  name: appInsightsName
   params: {
     name: appInsightsName
     applicationType: appInsightsType
@@ -184,9 +163,9 @@ module appInsights 'modules/app-insights.bicep' = {
 }
 
 module staticWebApp 'modules/static-web-app.bicep' = {
-  name: 'StaticWebApp-${userAlias}'
+  name: staticWebAppName
   params: {
-    name: appServiceAppName
+    name: staticWebAppName
     sku: 'Free'
     location: 'westeurope'
     repositoryToken: frontendRepositoryToken
