@@ -5,6 +5,9 @@
         "environmentType": {
             "value": "nonprod"
         },
+        "location": {
+            "value": "North Europe"
+        },
         "postgreSQLServerName": {
             "value": "devopps-dbsrv-dev"
         },
@@ -14,20 +17,17 @@
         "appServicePlanName": {
             "value": "devopps-asp-dev"
         },
-        "appServiceAPIAppName": {
-            "value": "devopps-be-dev"
+        "appServicePlanSku": {
+            "value": "B1"
         },
         "appServiceAppName": {
-            "value": "devopps-fe-dev"
-        },
-        "location": {
-            "value": "North Europe"
+            "value": "devopps-be-dev"
         },
         "logAnalyticsWorkspaceName": {
             "value": "devopps-law-dev"
         },
         "logAnalyticsSkuName": {
-            "value": "PerGB2018"
+            "value": "Free"
         },
         "logAnalyticsRetentionDays": {
             "value": 30
@@ -46,6 +46,12 @@
         },
         "keyVaultSku": {
             "value": "standard"
+        },
+        "staticWebAppName": {
+            "value": "devopps-swa-dev"
+        },
+        "containerRegistryName": {
+            "value": "DevoppsDevACR"
         }
-      }
     }
+}
