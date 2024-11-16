@@ -59,64 +59,36 @@ param keyVaultRoleAssignments array = []
 
 
 
-module appServicePlan 'modules/app-service-plan.bicep' = {
-  name: appServicePlanName
+module containerRegistry 'modules/docker-registry.bicep' = {
+  name: containerRegistryName 
   params: {
+    registryName: containerRegistryName
     location: location
-    appServicePlanName: appServicePlanName
-    sku: appServicePlanSku
+    sku: acrSku
   }
 }
 
 
-module appServiceBackend 'modules/app-service.bicep' = {
-  name: 'appServiceBackend-deployment'
+module keyVault 'modules/key-vault.bicep' = {
+  name: keyVaultName
   params: {
+    name: keyVaultName
     location: location
-    name: appServiceBackendName
-    appServicePlanId: appServicePlan.outputs.id
-    dockerRegistryName: containerRegistryName
-    dockerRegistryServerUserName: containerRegistry.outputs.adminUsername
-    dockerRegistryServerPassword: containerRegistry.outputs.adminPassword
-    dockerRegistryImageName: backendDockerImageName
-    dockerRegistryImageVersion: backendDockerImageVersion
-    appSettings: backendAppSettings
-    appCommandLine: ''
-    // keyVaultUri: keyVault.outputs.keyVaultUri // Optional
-    // databasePasswordKey: 'databasePassword' // Optional
+    sku: keyVaultSku
+    roleAssignments: keyVaultRoleAssignments
+    enableVaultForDeployment: true
   }
-  dependsOn: [
-    appServicePlan
-    containerRegistry
-    keyVault // Optional
-  ]
 }
-  
 
-  module containerRegistry 'modules/docker-registry.bicep' = {
-    name: containerRegistryName 
-    params: {
-      registryName: containerRegistryName
-      location: location
-      sku: acrSku
-    }
+module postgresDb 'modules/postgresql-db.bicep' = {
+  name: postgreSQLServerName
+  params: {
+    postgreSQLServerName: postgreSQLServerName
+    location: location
+    postgreSQLDatabaseName: postgreSQLDatabaseName
+    administratorLoginPassword: 'IE.Bank.DB.Admin.Pa$$' // Replace with a secure value
   }
-
-
-  module postgresDb 'modules/postgresql-db.bicep' = {
-    name: postgreSQLServerName
-    params: {
-      postgreSQLServerName: postgreSQLServerName
-      location: location
-      postgreSQLDatabaseName: postgreSQLDatabaseName
-      administratorLoginPassword: 'IE.Bank.DB.Admin.Pa$$' // Replace with a secure value
-    }
-  }
-
-// Outputs for PostgreSQL
-output postgreSQLServerName string = postgresDb.outputs.postgreSQLServerName
-output postgreSQLDatabaseName string = postgresDb.outputs.postgreSQLDatabaseName
-output postgreSQLServerAdmin string = postgresDb.outputs.postgreSQLServerAdmin
+}
 
 // Log Analytics Workspace and Application Insights
 module logAnalytics 'modules/log-analytics.bicep' = {
@@ -150,6 +122,40 @@ module appInsights 'modules/app-insights.bicep' = {
   }
 }
 
+module appServicePlan 'modules/app-service-plan.bicep' = {
+  name: appServicePlanName
+  params: {
+    location: location
+    appServicePlanName: appServicePlanName
+    sku: appServicePlanSku
+  }
+}
+
+
+module appServiceBackend 'modules/app-service.bicep' = {
+  name: 'appServiceBackend-deployment'
+  params: {
+    location: location
+    name: appServiceBackendName
+    appServicePlanId: appServicePlan.outputs.id
+    dockerRegistryName: containerRegistryName
+    dockerRegistryServerUserName: containerRegistry.outputs.adminUsername
+    dockerRegistryServerPassword: containerRegistry.outputs.adminPassword
+    dockerRegistryImageName: backendDockerImageName
+    dockerRegistryImageVersion: backendDockerImageVersion
+    appSettings: backendAppSettings
+    appCommandLine: ''
+    // keyVaultUri: keyVault.outputs.keyVaultUri // Optional
+    // databasePasswordKey: 'databasePassword' // Optional
+  }
+  dependsOn: [
+    appServicePlan
+    containerRegistry
+    keyVault // Optional
+  ]
+}
+
+
 module staticWebApp 'modules/static-web-app.bicep' = {
   name: staticWebAppName
   params: {
@@ -162,15 +168,9 @@ module staticWebApp 'modules/static-web-app.bicep' = {
   }
 }
 
-module keyVault 'modules/key-vault.bicep' = {
-  name: 'keyVaultDeployment'
-  params: {
-    name: keyVaultName
-    location: location
-    sku: keyVaultSku
-    roleAssignments: keyVaultRoleAssignments
-    enableVaultForDeployment: true
-  }
-}
 
 output keyVaultUri string = keyVault.outputs.keyVaultUri
+// Outputs for PostgreSQL
+output postgreSQLServerName string = postgresDb.outputs.postgreSQLServerName
+output postgreSQLDatabaseName string = postgresDb.outputs.postgreSQLDatabaseName
+output postgreSQLServerAdmin string = postgresDb.outputs.postgreSQLServerAdmin
