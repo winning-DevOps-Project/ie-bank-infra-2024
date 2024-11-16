@@ -6,12 +6,19 @@ param postgreSQLServerName string = 'ie-bank-db-server-dev'
 param postgreSQLDatabaseName string = 'ie-bank-db'
 @sys.description('The App Service Plan name')
 param appServicePlanName string = 'ie-bank-app-sp-dev'
-@sys.description('The App Service name')
-param appServiceAppName string 
 @sys.description('The App Service Plan SKU')
 param appServicePlanSku string
 @sys.description('The Azure location where the resources will be deployed')
 param location string = resourceGroup().location
+param appServiceBackendName string = 'backend-service' // Name of the backend app
+
+
+param backendDockerImageName string = 'backend-image'
+param backendDockerImageVersion string = 'latest'
+
+// App Settings (environment variables)
+param backendAppSettings array = []
+
 
 // Frontend repository details for Static Web App
 @sys.description('Frontend repository URL')
@@ -61,25 +68,30 @@ module appServicePlan 'modules/app-service-plan.bicep' = {
   }
 }
 
-  
-  module appServiceApp 'modules/app-service.bicep' = {
-    name: appServiceAppName
-    params: {
-      location: location
-      name: 'backend-app'
-      appServicePlanId: appServicePlan.outputs.id
-      dockerRegistryName: 'myRegistry'
-      dockerRegistryServerUserName: 'myRegistryUser'
-      dockerRegistryServerPassword: 'myRegistryPassword'
-      dockerRegistryImageName: 'myImage'
-      dockerRegistryImageVersion: 'latest'
-      appSettings: []
-      appCommandLine: ''
-      // keyVaultUri: keyVault.outputs.keyVaultUri // Pass Key Vault URI from Key Vault module
-      // databasePasswordKey: 'databasePassword' // Pass the secret key name
-    }
-  }
 
+module appServiceBackend 'modules/app-service.bicep' = {
+  name: 'appServiceBackend-deployment'
+  params: {
+    location: location
+    name: appServiceBackendName
+    appServicePlanId: appServicePlan.outputs.id
+    dockerRegistryName: containerRegistryName
+    dockerRegistryServerUserName: containerRegistry.outputs.adminUsername
+    dockerRegistryServerPassword: containerRegistry.outputs.adminPassword
+    dockerRegistryImageName: backendDockerImageName
+    dockerRegistryImageVersion: backendDockerImageVersion
+    appSettings: backendAppSettings
+    appCommandLine: ''
+    // keyVaultUri: keyVault.outputs.keyVaultUri // Optional
+    // databasePasswordKey: 'databasePassword' // Optional
+  }
+  dependsOn: [
+    appServicePlan
+    containerRegistry
+    keyVault // Optional
+  ]
+}
+  
 
   module containerRegistry 'modules/docker-registry.bicep' = {
     name: containerRegistryName 

@@ -12,7 +12,16 @@ param appServicePlanName = 'devopps-asp-dev'
 param appServicePlanSku = 'B1'
 
 // app service
-param appServiceAppName = 'devopps-be-dev' // Name of the backend app
+// param appServiceAppName = 'devopps-be-dev' // Name of the backend app
+// param appServiceWebsiteBeAppSettings = [
+//   { name: 'ENV', value: 'dev' }
+//   { name: 'DBHOST', value: 'aguadamillas-dbsrv-dev.postgres.database.azure.com' }
+//   { name: 'DBNAME', value: 'aguadamillas-db-dev' }
+//   { name: 'DBPASS', value: 'IE.Bank.DB.Admin.Pa$$' }
+//   { name: 'DBUSER', value: 'iebankdbadmin' }
+//   { name: 'FLASK_DEBUG', value: '1' }
+//   { name: 'SCM_DO_BUILD_DURING_DEPLOYMENT', value: 'true' }
+]
 // param dockerRegistryName = 'devoppsregistry'
 // param dockerRegistryImageName = 'iebank-backend'
 // param dockerRegistryImageVersion = 'latest'
