@@ -29,9 +29,14 @@ param containerRegistryName string
 param adminUsernameSecretName string 
 param adminPasswordSecretName0 string
 param adminPasswordSecretName1 string
+
+// @description('The PostgreSQL Server name')
+// param postgreSQLServerName string = 'ie-bank-db-server-dev'
+// param administratorLogin string = 'iebankdbadmin'
+// @secure()
+// param administratorLoginPassword string
+
 // param appServiceBackendName string = 'backend-service' // Name of the backend app
-
-
 // param backendDockerImageName string = 'backend-image'
 // param backendDockerImageVersion string = 'latest'
 
@@ -96,6 +101,15 @@ module containerRegistry 'modules/docker-registry.bicep' = {
   ]  
 }
 
+// module postgresSQLServer 'modules/postgresql-server.bicep' = {
+//   name: postgreSQLServerName
+//   params: {
+//     location: location
+//     administratorLogin: administratorLogin
+//     administratorLoginPassword: administratorLoginPassword
+//     postgreSQLServerName: postgreSQLServerName
+//   }
+// }
 
 // module postgresDb 'modules/postgresql-db.bicep' = {
 //   name: postgreSQLServerName

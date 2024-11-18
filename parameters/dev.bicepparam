@@ -74,3 +74,9 @@ param containerRegistryName = 'DevoppsDevACR'
 param adminPasswordSecretName0 = 'adminPasswordSecretName0'
 param adminPasswordSecretName1 = 'adminPasswordSecretName1'
 param adminUsernameSecretName = 'adminUsernameSecretName'
+
+
+// postgresql server
+// param postgreSQLServerName = 'devopps-dbsrv-dev'
+// param administratorLogin = 'iebankdbadmin'
+// param administratorLoginPassword = '' 
