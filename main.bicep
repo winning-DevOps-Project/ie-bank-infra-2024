@@ -8,8 +8,27 @@
 // param appServicePlanName string = 'ie-bank-app-sp-dev'
 // @sys.description('The App Service Plan SKU')
 // param appServicePlanSku string
+
+
 @sys.description('The Azure location where the resources will be deployed')
 param location string = resourceGroup().location
+// Key Vault
+@description('The Key Vault name')
+param keyVaultName string
+@description('The Key Vault SKU')
+param keyVaultSku string
+@sys.description('The role assignments for the Key Vault')
+param keyVaultRoleAssignments array = []
+// Azure Container Registry SKU
+@sys.description('The Azure Container Registry SKU')
+param acrSku string = 'Standard'
+@sys.description('The Azure Container Registry name')
+param containerRegistryName string
+@description('The resource ID of the key vault.')
+
+param adminUsernameSecretName string 
+param adminPasswordSecretName0 string
+param adminPasswordSecretName1 string
 // param appServiceBackendName string = 'backend-service' // Name of the backend app
 
 
@@ -31,11 +50,6 @@ param location string = resourceGroup().location
 // @sys.description('The name of the Static Web App')
 // param staticWebAppName string
 
-// // Azure Container Registry SKU
-// @sys.description('The Azure Container Registry SKU')
-// param acrSku string = 'Standard'
-// @sys.description('The Azure Container Registry name')
-// param containerRegistryName string
 
 // // Log Analytics and App Insights configurations
 // @sys.description('Name of the Log Analytics workspace')
@@ -50,12 +64,7 @@ param location string = resourceGroup().location
 // param appInsightsType string 
 // @description('The retention period for Application Insights in days')
 // param appInsightsRetentionDays int
-@description('The Key Vault name')
-param keyVaultName string
-@description('The Key Vault SKU')
-param keyVaultSku string
-@sys.description('The role assignments for the Key Vault')
-param keyVaultRoleAssignments array = []
+
 
 
 
@@ -71,14 +80,22 @@ module keyVault 'modules/key-vault.bicep' = {
 }
 
 
-// module containerRegistry 'modules/docker-registry.bicep' = {
-//   name: containerRegistryName 
-//   params: {
-//     registryName: containerRegistryName
-//     location: location
-//     sku: acrSku
-//   }
-// }
+module containerRegistry 'modules/docker-registry.bicep' = {
+  name: containerRegistryName 
+  params: {
+    keyVaultResourceId: keyVault.outputs.resourceId
+    keyVaultSecreNameAdminUsername: adminUsernameSecretName
+    keyVaultSecreNameAdminPassword0: adminPasswordSecretName0
+    keyVaultSecreNameAdminPassword1: adminPasswordSecretName1
+    registryName: containerRegistryName
+    location: location
+    sku: acrSku
+  }
+  dependsOn: [
+    keyVault 
+  ]  
+}
+
 
 // module postgresDb 'modules/postgresql-db.bicep' = {
 //   name: postgreSQLServerName

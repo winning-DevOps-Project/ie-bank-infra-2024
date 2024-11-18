@@ -63,11 +63,28 @@ for (roleAssignment, index) in (roleAssignments ?? []): {
 }
 ]
 
-// resource keyVaultSecretDatabasePassword 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
-//   name: 'databasePassword' // Secret name
+// // Secrets
+// resource secretAdminUserName 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+//   name: adminUsernameSecretName
 //   parent: keyVault
 //   properties: {
-//     value: databasePassword
+//     value: adminUsername
+//   }
+// }
+
+// resource secretAdminUserPassword0 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+//   name: adminPasswordSecretName0
+//   parent: keyVault
+//   properties: {
+//     value: adminPassword0
+//   }
+// }
+
+// resource secretAdminUserPassword1 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+//   name: adminPasswordSecretName1
+//   parent: keyVault
+//   properties: {
+//     value: adminPassword1
 //   }
 // }
 

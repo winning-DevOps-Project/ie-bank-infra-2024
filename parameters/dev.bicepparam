@@ -60,12 +60,14 @@ param location = 'North Europe'
 // param appInsightsType = 'web'
 // param appInsightsRetentionDays = 365
 
+// //static website
+// param staticWebAppName = 'devopps-swa-dev'
+
+
 //KeyVault
 param keyVaultName = 'devopps-keyvault-dev'
 param keyVaultSku = 'standard' 
 
-// //static website
-// param staticWebAppName = 'devopps-swa-dev'
 
-// // Container Registry
-// param containerRegistryName = 'DevoppsDevACR'
+// Container Registry
+param containerRegistryName = 'DevoppsDevACR'
