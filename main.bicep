@@ -214,8 +214,3 @@ module postgresSQLDatabase 'modules/postgresql-db.bicep' = {
 // }
 
 
-// output keyVaultUri string = keyVault.outputs.keyVaultUri
-// // Outputs for PostgreSQL
-// output postgreSQLServerName string = postgresDb.outputs.postgreSQLServerName
-// output postgreSQLDatabaseName string = postgresDb.outputs.postgreSQLDatabaseName
-// output postgreSQLServerAdmin string = postgresDb.outputs.postgreSQLServerAdmin
