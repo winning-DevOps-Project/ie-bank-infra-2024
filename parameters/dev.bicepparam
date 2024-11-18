@@ -1,8 +1,6 @@
 using '../main.bicep'
 
 // param environmentType = 'nonprod'
-param location = 'North Europe'
-
 // // posgtresql
 // param postgreSQLServerName = 'devopps-dbsrv-dev'
 // param postgreSQLDatabaseName = 'devopps-db-dev'
@@ -63,6 +61,7 @@ param location = 'North Europe'
 // //static website
 // param staticWebAppName = 'devopps-swa-dev'
 
+param location = 'North Europe'
 
 //KeyVault
 param keyVaultName = 'devopps-keyvault-dev'
