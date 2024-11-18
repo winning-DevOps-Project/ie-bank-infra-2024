@@ -6,9 +6,9 @@ param location string = resourceGroup().location
 param sku string = 'Standard'
 param keyVaultResourceId string
 param keyVaultSecreNameAdminUsername string
-#disable-next-line outputs-should-not-contain-secrets
+#disable-next-line secure-secrets-in-params
 param keyVaultSecreNameAdminPassword0 string
-#disable-next-line outputs-should-not-contain-secrets
+#disable-next-line secure-secrets-in-params
 param keyVaultSecreNameAdminPassword1 string
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
