@@ -71,3 +71,6 @@ param keyVaultSku = 'standard'
 
 // Container Registry
 param containerRegistryName = 'DevoppsDevACR'
+param adminPasswordSecretName0 = 'adminPasswordSecretName0'
+param adminPasswordSecretName1 = 'adminPasswordSecretName1'
+param adminUsernameSecretName = 'adminUsernameSecretName'
