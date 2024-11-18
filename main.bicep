@@ -42,12 +42,12 @@ param adminPasswordSecretName0 string
 param adminPasswordSecretName1 string
 
 @description('The PostgreSQL Server name')
-param postgreSQLServerName string = 'ie-bank-db-server-dev'
+param postgreSQLServerName string = 'devopps-dbsrv-dev'
 param administratorLogin string = 'iebankdbadmin'
 @secure()
 param administratorLoginPassword string
 @description('The PostgreSQL Database name')
-param postgreSQLDatabaseName string = 'ie-bank-db'
+param postgreSQLDatabaseName string  = 'devopps-db-dev'
 
 // param appServiceBackendName string = 'backend-service' // Name of the backend app
 // param backendDockerImageName string = 'backend-image'
