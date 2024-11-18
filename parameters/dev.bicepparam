@@ -80,3 +80,6 @@ param adminUsernameSecretName = 'adminUsernameSecretName'
 param postgreSQLServerName = 'devopps-dbsrv-dev'
 param administratorLogin = 'iebankdbadmin'
 param administratorLoginPassword = '' 
+
+// postgresql server
+param postgreSQLDatabaseName = 'devopps-db-dev'

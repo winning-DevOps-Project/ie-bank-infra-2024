@@ -46,6 +46,8 @@ param postgreSQLServerName string = 'ie-bank-db-server-dev'
 param administratorLogin string = 'iebankdbadmin'
 @secure()
 param administratorLoginPassword string
+@description('The PostgreSQL Database name')
+param postgreSQLDatabaseName string = 'ie-bank-db'
 
 // param appServiceBackendName string = 'backend-service' // Name of the backend app
 // param backendDockerImageName string = 'backend-image'
@@ -122,15 +124,16 @@ module postgresSQLServer 'modules/postgresql-server.bicep' = {
   }
 }
 
-// module postgresDb 'modules/postgresql-db.bicep' = {
-//   name: postgreSQLServerName
-//   params: {
-//     postgreSQLServerName: postgreSQLServerName
-//     location: location
-//     postgreSQLDatabaseName: postgreSQLDatabaseName
-//     administratorLoginPassword: 'IE.Bank.DB.Admin.Pa$$' // Replace with a secure value
-//   }
-// }
+module postgresDb 'modules/postgresql-db.bicep' = {
+  name: postgreSQLServerName
+  params: {
+    postgreSQLDatabaseName: postgreSQLDatabaseName
+    serverName: postgreSQLServerName
+  }
+  dependsOn: [
+    postgresSQLServer
+  ]
+}
 
 // // Log Analytics Workspace and Application Insights
 // module logAnalytics 'modules/log-analytics.bicep' = {
