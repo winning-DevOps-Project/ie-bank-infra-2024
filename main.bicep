@@ -125,7 +125,7 @@ module postgresSQLServer 'modules/postgresql-server.bicep' = {
 }
 
 module postgresDb 'modules/postgresql-db.bicep' = {
-  name: postgreSQLServerName
+  name: postgreSQLDatabaseName 
   params: {
     postgreSQLDatabaseName: postgreSQLDatabaseName
     serverName: postgreSQLServerName
