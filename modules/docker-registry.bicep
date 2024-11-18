@@ -6,7 +6,9 @@ param location string = resourceGroup().location
 param sku string = 'Standard'
 param keyVaultResourceId string
 param keyVaultSecreNameAdminUsername string
+#disable-next-line outputs-should-not-contain-secrets
 param keyVaultSecreNameAdminPassword0 string
+#disable-next-line outputs-should-not-contain-secrets
 param keyVaultSecreNameAdminPassword1 string
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
@@ -38,6 +40,7 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' =
 resource adminCredentialsKeyVault 'Microsoft.KeyVault/vaults@2021-10-01' existing = if (!empty(keyVaultResourceId)) {
   name: last(split((!empty(keyVaultResourceId) ? keyVaultResourceId : 'dummyVault'), '/'))!
 }
+
 
 // create a secret to store the container registry admin username
 resource secretAdminUserName 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = if (!empty(keyVaultSecreNameAdminUsername)) {
