@@ -21,3 +21,4 @@ resource appServicePlan 'Microsoft.Web/serverFarms@2022-03-01' = {
 output id string = appServicePlan.id
 output name string = appServicePlanName
 // This module is for creating an App Service Plan that hosts web apps.
+ 
