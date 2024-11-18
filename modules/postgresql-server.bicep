@@ -47,3 +47,4 @@ resource firewallRule 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2
 // Outputs
 output postgreSQLServerName string = postgresSQLServer.name
 output postgreSQLServerAdmin string = administratorLogin
+ 
