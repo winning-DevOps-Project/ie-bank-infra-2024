@@ -1,11 +1,7 @@
 using '../main.bicep'
 
 // param environmentType = 'nonprod'
-param location = 'North Europe'
-
 // // posgtresql
-// param postgreSQLServerName = 'devopps-dbsrv-uat'
-// param postgreSQLDatabaseName = 'devopps-db-uat'
 
 // // app service plan
 // param appServicePlanName = 'devopps-asp-uat'
@@ -40,13 +36,28 @@ param location = 'North Europe'
 // param appInsightsType = 'web'
 // param appInsightsRetentionDays = 365
 
-//KeyVault
-param keyVaultName = 'devopps-keyvault-uat'
-param keyVaultSku = 'standard' 
-
 // //static website
 // param staticWebAppName = 'devopps-swa-uat'
 
-// // Container Registry
-// param containerRegistryName = 'DevoppsUatACR'
 
+param location = 'North Europe'
+
+//KeyVault
+param keyVaultName = 'devopps-kv-uat'
+param keyVaultSku = 'standard' 
+param enableSoftDelete = true
+
+// Container Registry
+param containerRegistryName = 'DevoppsUatACR'
+param adminPasswordSecretName0 = 'adminPasswordSecretName0'
+param adminPasswordSecretName1 = 'adminPasswordSecretName1'
+param adminUsernameSecretName = 'adminUsernameSecretName'
+
+
+// postgresql server
+param postgreSQLServerName = 'devopps-dbsrv-uat'
+param administratorLogin = 'iebankdbadmin'
+param administratorLoginPassword = '' 
+
+// postgresql server
+param postgreSQLDatabaseName = 'devopps-db-uat'

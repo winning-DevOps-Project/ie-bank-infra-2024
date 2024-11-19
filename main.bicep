@@ -17,6 +17,7 @@ param location string = resourceGroup().location
 param keyVaultName string
 @description('The Key Vault SKU')
 param keyVaultSku string
+param enableSoftDelete bool 
 @sys.description('The role assignments for the Key Vault')
 param keyVaultRoleAssignments array = [
   {
@@ -94,6 +95,7 @@ module keyVault 'modules/key-vault.bicep' = {
     sku: keyVaultSku
     roleAssignments: keyVaultRoleAssignments
     enableVaultForDeployment: true
+    enableSoftDelete: enableSoftDelete
   }
 }
 

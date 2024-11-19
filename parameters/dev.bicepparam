@@ -1,9 +1,6 @@
 using '../main.bicep'
 
 // param environmentType = 'nonprod'
-// // posgtresql
-// param postgreSQLServerName = 'devopps-dbsrv-dev'
-// param postgreSQLDatabaseName = 'devopps-db-dev'
 
 // // app service plan
 // param appServicePlanName = 'devopps-asp-dev'
@@ -64,8 +61,9 @@ using '../main.bicep'
 param location = 'North Europe'
 
 //KeyVault
-param keyVaultName = 'devopps-keyvault-dev'
+param keyVaultName = 'devopps-kv-dev'
 param keyVaultSku = 'standard' 
+param enableSoftDelete  = false
 
 
 // Container Registry
