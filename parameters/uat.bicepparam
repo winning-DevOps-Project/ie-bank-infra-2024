@@ -49,15 +49,29 @@ param enableSoftDelete = true
 
 // Container Registry
 param containerRegistryName = 'DevoppsUatACR'
-param adminPasswordSecretName0 = 'adminPasswordSecretName0'
-param adminPasswordSecretName1 = 'adminPasswordSecretName1'
-param adminUsernameSecretName = 'adminUsernameSecretName'
 
 
 // postgresql server
 param postgreSQLServerName = 'devopps-dbsrv-uat'
-param administratorLogin = 'iebankdbadmin'
-param administratorLoginPassword = '' 
+
 
 // postgresql server
 param postgreSQLDatabaseName = 'devopps-db-uat'
+
+// App service plan
+param appServicePlanName = 'devopps-asp-uat'
+param appServicePlanSku = 'B1'
+
+// be 
+param appServiceWebsiteBEName = 'devopps-be-uat' 
+param dockerRegistryImageName = 'devopps-backend'
+param dockerRegistryImageVersion = 'latest'
+param appServiceBeAppSettings = [
+  { name: 'ENV', value: 'uat' }
+  { name: 'DBHOST', value: 'devopps-dbsrv-dev.postgres.database.azure.com' }
+  { name: 'DBNAME', value: 'devopps-db-dev' }
+  { name: 'DBUSER', value: 'devoppsbe-dev' }
+  { name: 'FLASK_DEBUG', value: '1' }
+  { name: 'SCM_DO_BUILD_DURING_DEPLOYMENT', value: 'true' }
+  ]
+

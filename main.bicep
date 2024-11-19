@@ -4,10 +4,6 @@
 // param postgreSQLServerName string = 'ie-bank-db-server-dev'
 // @sys.description('The PostgreSQL Database name')
 // param postgreSQLDatabaseName string = 'ie-bank-db'
-// @sys.description('The App Service Plan name')
-// param appServicePlanName string = 'ie-bank-app-sp-dev'
-// @sys.description('The App Service Plan SKU')
-// param appServicePlanSku string
 
 
 @sys.description('The Azure location where the resources will be deployed')
@@ -36,23 +32,25 @@ param keyVaultRoleAssignments array = [
 param acrSku string = 'Standard'
 @sys.description('The Azure Container Registry name')
 param containerRegistryName string
-@description('The resource ID of the key vault.')
 
-param adminUsernameSecretName string 
-param adminPasswordSecretName0 string
-param adminPasswordSecretName1 string
-
+// PostgreSQL
 @description('The PostgreSQL Server name')
-param postgreSQLServerName string = 'devopps-dbsrv-dev'
-param administratorLogin string = 'iebankdbadmin'
-@secure()
-param administratorLoginPassword string
+param postgreSQLServerName string 
 @description('The PostgreSQL Database name')
-param postgreSQLDatabaseName string  = 'devopps-db-dev'
+param postgreSQLDatabaseName string  
 
-// param appServiceBackendName string = 'backend-service' // Name of the backend app
-// param backendDockerImageName string = 'backend-image'
-// param backendDockerImageVersion string = 'latest'
+// App Service
+param appServiceWebsiteBEName string 
+@sys.description('The App Service Plan name')
+param appServicePlanName string 
+@sys.description('The App Service Plan SKU')
+param appServicePlanSku string
+param dockerRegistryImageName string
+param dockerRegistryImageVersion string 
+var adminPasswordSecretName0 = 'adminPasswordSecretName0'
+var adminPasswordSecretName1 = 'adminPasswordSecretName1'
+var adminUsernameSecretName = 'adminUsernameSecretName'
+param appServiceBeAppSettings array 
 
 // // App Settings (environment variables)
 // param backendAppSettings array = []
@@ -116,14 +114,51 @@ module containerRegistry 'modules/docker-registry.bicep' = {
   ]  
 }
 
+module appServicePlan 'modules/app-service-plan.bicep' = {
+  name: appServicePlanName
+  params: {
+    location: location
+    appServicePlanName: appServicePlanName
+    sku: appServicePlanSku
+  }
+}
+
+resource keyVaultReference 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
+  name: keyVaultName
+  }
+  
+  module appServiceBE 'modules/app-service.bicep' = {
+    name: appServiceWebsiteBEName
+    params: {
+    name: appServiceWebsiteBEName
+    location: location
+    appServicePlanId: appServicePlan.outputs.id
+    appCommandLine: ''
+    appSettings: appServiceBeAppSettings
+    dockerRegistryName: containerRegistryName
+    dockerRegistryServerUserName: keyVaultReference.getSecret(adminUsernameSecretName)
+    dockerRegistryServerPassword: keyVaultReference.getSecret(adminPasswordSecretName0)
+    dockerRegistryImageName: dockerRegistryImageName
+    dockerRegistryImageVersion: dockerRegistryImageVersion
+    }
+    dependsOn: [
+    appServicePlan
+    containerRegistry
+    keyVault
+    ]
+    }
+
 module postgresSQLServer 'modules/postgresql-server.bicep' = {
   name: postgreSQLServerName
   params: {
     location: location
-    administratorLogin: administratorLogin
-    administratorLoginPassword: administratorLoginPassword
+    postgreSQLAdminServicePrincipalObjectId: appServiceBE.outputs.systemAssignedIdentityPrincipalId
+    postgreSQLAdminServicePrincipalName: appServiceWebsiteBEName
     postgreSQLServerName: postgreSQLServerName
   }
+  dependsOn: [
+    appServiceBE
+  ]
 }
 
 module postgresSQLDatabase 'modules/postgresql-db.bicep' = {
@@ -169,14 +204,6 @@ module postgresSQLDatabase 'modules/postgresql-db.bicep' = {
 //   }
 // }
 
-// module appServicePlan 'modules/app-service-plan.bicep' = {
-//   name: appServicePlanName
-//   params: {
-//     location: location
-//     appServicePlanName: appServicePlanName
-//     sku: appServicePlanSku
-//   }
-// }
 
 
 // module appServiceBackend 'modules/app-service.bicep' = {
