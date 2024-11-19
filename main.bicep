@@ -206,29 +206,6 @@ module postgresSQLDatabase 'modules/postgresql-db.bicep' = {
 
 
 
-// module appServiceBackend 'modules/app-service.bicep' = {
-//   name: 'appServiceBackend-deployment'
-//   params: {
-//     location: location
-//     name: appServiceBackendName
-//     appServicePlanId: appServicePlan.outputs.id
-//     dockerRegistryName: containerRegistryName
-//     dockerRegistryServerUserName: containerRegistry.outputs.adminUsername
-//     dockerRegistryServerPassword: containerRegistry.outputs.adminPassword
-//     dockerRegistryImageName: backendDockerImageName
-//     dockerRegistryImageVersion: backendDockerImageVersion
-//     appSettings: backendAppSettings
-//     appCommandLine: ''
-//     // keyVaultUri: keyVault.outputs.keyVaultUri // Optional
-//     // databasePasswordKey: 'databasePassword' // Optional
-//   }
-//   dependsOn: [
-//     appServicePlan
-//     containerRegistry
-//     keyVault // Optional
-//   ]
-// }
-
 
 // module staticWebApp 'modules/static-web-app.bicep' = {
 //   name: staticWebAppName
