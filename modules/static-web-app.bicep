@@ -23,6 +23,9 @@ resource staticSite 'Microsoft.Web/staticSites@2021-03-01' = {
   sku: {
     name: sku
   }
+  properties: {
+    allowConfigFileUpdates: false
+  }
 }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2021-06-01-preview' existing = {
