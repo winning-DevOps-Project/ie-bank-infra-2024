@@ -1,167 +1,216 @@
-@sys.description('The environment type (nonprod or prod)')
-@allowed([
-  'nonprod'
-  'prod'
-])
-param environmentType string = 'nonprod'
-@sys.description('The PostgreSQL Server name')
-@minLength(3)
-@maxLength(24)
-param postgreSQLServerName string = 'ie-bank-db-server-dev'
-@sys.description('The PostgreSQL Database name')
-@minLength(3)
-@maxLength(24)
-param postgreSQLDatabaseName string = 'ie-bank-db'
+// @sys.description('The environment type (nonprod or prod)')
+// param environmentType string = 'nonprod'
+// @sys.description('The PostgreSQL Server name')
+// param postgreSQLServerName string = 'ie-bank-db-server-dev'
+// @sys.description('The PostgreSQL Database name')
+// param postgreSQLDatabaseName string = 'ie-bank-db'
+// @sys.description('The App Service Plan name')
+// param appServicePlanName string = 'ie-bank-app-sp-dev'
+// @sys.description('The App Service Plan SKU')
+// param appServicePlanSku string
 
+
+@sys.description('The Azure location where the resources will be deployed')
 param location string = resourceGroup().location
-
-// Environment variables for the backend API
-// @minLength(3)
-// @maxLength(24)
-// param backendContainerAPIName string
-// @sys.description('The Azure location where the resources will be deployed')
-// @sys.description('The value for the environment variable ENV')
-// param backendContainerAPIEnvVarENV string
-// @sys.description('The value for the environment variable DBHOST')
-// param backendContainerAPIEnvVarDBHOST string
-// @sys.description('The value for the environment variable DBNAME')
-// param backendContainerAPIEnvVarDBNAME string
-// @sys.description('The value for the environment variable DBPASS')
-// @secure()
-// param backendContainerAPIEnvVarDBPASS string
-// @sys.description('The value for the environment variable DBUSER')
-// param backendContainerAPIEnvVarDBUSER string
-// @sys.description('The value for the environment variable FLASK_APP')
-// param backendContainerAPIEnvVarFLASK_APP string
-// @sys.description('The value for the environment variable FLASK_DEBUG')
-// param backendContainerAPIEnvVarFLASK_DEBUG string
-
-// Frontend repository details for Static Web App
-@sys.description('Frontend repository URL')
-param frontendRepositoryUrl string
-@sys.description('Frontend repository branch')
-param frontendRepositoryBranch string = 'main'
-@sys.description('Frontend repository personal access token')
-@secure()
-param frontendRepositoryToken string = ''
-@sys.description('The name of the Static Web App')
-param staticWebAppName string
-
+// Key Vault
+@description('The Key Vault name')
+param keyVaultName string
+@description('The Key Vault SKU')
+param keyVaultSku string
+@sys.description('The role assignments for the Key Vault')
+param keyVaultRoleAssignments array = [
+  {
+    principalId: '25d8d697-c4a2-479f-96e0-15593a830ae5' // BCSAI2024-DEVOPS-STUDENTS-A-SP
+    roleDefinitionIdOrName: 'Key Vault Secrets User'
+    principalType: 'ServicePrincipal'
+    }
+    {
+      principalId: 'a03130df-486f-46ea-9d5c-70522fe056de' // BCSAI2024-DEVOPS-STUDENTS-A
+      roleDefinitionIdOrName: 'Key Vault Administrator'
+      principalType: 'Group'
+      }
+]
 // Azure Container Registry SKU
-@sys.allowed([
-  'Basic'
-  'Standard'
-  'Premium'
-])
 @sys.description('The Azure Container Registry SKU')
 param acrSku string = 'Standard'
 @sys.description('The Azure Container Registry name')
 param containerRegistryName string
+@description('The resource ID of the key vault.')
 
-// Log Analytics and App Insights configurations
-@sys.description('Name of the Log Analytics workspace')
-param logAnalyticsWorkspaceName string
-@sys.description('SKU for the Log Analytics workspace')
-param logAnalyticsSkuName string 
-@sys.description('Retention period for data in Log Analytics workspace')
-@minValue(0)
-@maxValue(730)
-param logAnalyticsRetentionDays int 
-@description('The Application Insights name')
-param appInsightsName string
-@description('The Application Insights application type')
-param appInsightsType string 
-@description('The retention period for Application Insights in days')
-param appInsightsRetentionDays int
-@description('The Key Vault name')
+param adminUsernameSecretName string 
+param adminPasswordSecretName0 string
+param adminPasswordSecretName1 string
+
+@description('The PostgreSQL Server name')
+param postgreSQLServerName string = 'devopps-dbsrv-dev'
+param administratorLogin string = 'iebankdbadmin'
+@secure()
+param administratorLoginPassword string
+@description('The PostgreSQL Database name')
+param postgreSQLDatabaseName string  = 'devopps-db-dev'
+
+// param appServiceBackendName string = 'backend-service' // Name of the backend app
+// param backendDockerImageName string = 'backend-image'
+// param backendDockerImageVersion string = 'latest'
+
+// // App Settings (environment variables)
+// param backendAppSettings array = []
+
+
+// // Frontend repository details for Static Web App
+// @sys.description('Frontend repository URL')
+// param frontendRepositoryUrl string
+// @sys.description('Frontend repository branch')
+// param frontendRepositoryBranch string = 'main'
+// @sys.description('Frontend repository personal access token')
+// @secure()
+// param frontendRepositoryToken string = ''
+// @sys.description('The name of the Static Web App')
+// param staticWebAppName string
+
+
+// // Log Analytics and App Insights configurations
+// @sys.description('Name of the Log Analytics workspace')
+// param logAnalyticsWorkspaceName string
+// @sys.description('SKU for the Log Analytics workspace')
+// param logAnalyticsSkuName string 
+// @sys.description('Retention period for data in Log Analytics workspace')
+// param logAnalyticsRetentionDays int 
+// @description('The Application Insights name')
+// param appInsightsName string
+// @description('The Application Insights application type')
+// param appInsightsType string 
+// @description('The retention period for Application Insights in days')
+// param appInsightsRetentionDays int
+
+
+
+
+module keyVault 'modules/key-vault.bicep' = {
+  name: keyVaultName
+  params: {
+    name: keyVaultName
+    location: location
+    sku: keyVaultSku
+    roleAssignments: keyVaultRoleAssignments
+    enableVaultForDeployment: true
+  }
+}
 
 
 module containerRegistry 'modules/docker-registry.bicep' = {
   name: containerRegistryName 
   params: {
+    keyVaultResourceId: keyVault.outputs.resourceId
+    keyVaultSecreNameAdminUsername: adminUsernameSecretName
+    keyVaultSecreNameAdminPassword0: adminPasswordSecretName0
+    keyVaultSecreNameAdminPassword1: adminPasswordSecretName1
     registryName: containerRegistryName
     location: location
     sku: acrSku
   }
+  dependsOn: [
+    keyVault 
+  ]  
 }
 
-// Define Azure Container Instance for backend API
-// module containerInstance 'modules/container-instance.bicep' = {
-//   name: backendContainerAPIName
+module postgresSQLServer 'modules/postgresql-server.bicep' = {
+  name: postgreSQLServerName
+  params: {
+    location: location
+    administratorLogin: administratorLogin
+    administratorLoginPassword: administratorLoginPassword
+    postgreSQLServerName: postgreSQLServerName
+  }
+}
+
+module postgresSQLDatabase 'modules/postgresql-db.bicep' = {
+  name: postgreSQLDatabaseName 
+  params: {
+    postgreSQLDatabaseName: postgreSQLDatabaseName
+    serverName: postgresSQLServer.outputs.postgreSQLServerName 
+  }
+  dependsOn: [
+    postgresSQLServer
+  ]
+}
+
+// // Log Analytics Workspace and Application Insights
+// module logAnalytics 'modules/log-analytics.bicep' = {
+//   name: logAnalyticsWorkspaceName
 //   params: {
-//     containerGroupName: backendContainerAPIName
-//     containerImageName: 'ie-bank-api'
-//     containerImageTag: 'latest'
+//     name: logAnalyticsWorkspaceName
 //     location: location
-//     containerRegistryLoginServer: containerRegistry.outputs.registryLoginServer
-//     containerRegistryUsername: containerRegistry.outputs.adminUsername
-//     containerRegistryPassword: containerRegistry.outputs.adminPassword
-//     appServiceAPIEnvVarENV: backendContainerAPIEnvVarENV
-//     appServiceAPIEnvVarDBHOST: backendContainerAPIEnvVarDBHOST
-//     appServiceAPIEnvVarDBNAME: backendContainerAPIEnvVarDBNAME
-//     appServiceAPIEnvVarDBPASS: backendContainerAPIEnvVarDBPASS
-//     appServiceAPIEnvVarDBUSER: backendContainerAPIEnvVarDBUSER
-//     appServiceAPIEnvVarFLASK_APP: backendContainerAPIEnvVarFLASK_APP
-//     appServiceAPIEnvVarFLASK_DEBUG: backendContainerAPIEnvVarFLASK_DEBUG
+//     skuName: logAnalyticsSkuName
+//     dataRetention: logAnalyticsRetentionDays
+//     publicNetworkAccessForIngestion: 'Enabled'
+//     publicNetworkAccessForQuery: 'Enabled'
+//     tags: {
+//       Environment: environmentType
+//       Project: 'IE Bank'
+//     }
+//   }
+// }
+
+// module appInsights 'modules/app-insights.bicep' = {
+//   name: appInsightsName
+//   params: {
+//     name: appInsightsName
+//     applicationType: appInsightsType
+//     workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId 
+//     retentionInDays: appInsightsRetentionDays
+//     location: location
+//     tags: {
+//       Environment: environmentType
+//       Project: 'IE Bank'
+//     }
+//   }
+// }
+
+// module appServicePlan 'modules/app-service-plan.bicep' = {
+//   name: appServicePlanName
+//   params: {
+//     location: location
+//     appServicePlanName: appServicePlanName
+//     sku: appServicePlanSku
 //   }
 // }
 
 
-module postgresDb 'modules/postgresql-db.bicep' = {
-  name: postgreSQLServerName
-  params: {
-    postgreSQLServerName: postgreSQLServerName
-    location: location
-    postgreSQLDatabaseName: postgreSQLDatabaseName
-    administratorLoginPassword: 'IE.Bank.DB.Admin.Pa$$' // Replace with a secure value
-  }
-}
+// module appServiceBackend 'modules/app-service.bicep' = {
+//   name: 'appServiceBackend-deployment'
+//   params: {
+//     location: location
+//     name: appServiceBackendName
+//     appServicePlanId: appServicePlan.outputs.id
+//     dockerRegistryName: containerRegistryName
+//     dockerRegistryServerUserName: containerRegistry.outputs.adminUsername
+//     dockerRegistryServerPassword: containerRegistry.outputs.adminPassword
+//     dockerRegistryImageName: backendDockerImageName
+//     dockerRegistryImageVersion: backendDockerImageVersion
+//     appSettings: backendAppSettings
+//     appCommandLine: ''
+//     // keyVaultUri: keyVault.outputs.keyVaultUri // Optional
+//     // databasePasswordKey: 'databasePassword' // Optional
+//   }
+//   dependsOn: [
+//     appServicePlan
+//     containerRegistry
+//     keyVault // Optional
+//   ]
+// }
 
-// Outputs for PostgreSQL
-output postgreSQLServerName string = postgresDb.outputs.postgreSQLServerName
-output postgreSQLDatabaseName string = postgresDb.outputs.postgreSQLDatabaseName
-output postgreSQLServerAdmin string = postgresDb.outputs.postgreSQLServerAdmin
 
-// Log Analytics Workspace and Application Insights
-module logAnalytics 'modules/log-analytics.bicep' = {
-  name: logAnalyticsWorkspaceName
-  params: {
-    name: logAnalyticsWorkspaceName
-    location: location
-    skuName: logAnalyticsSkuName
-    dataRetention: logAnalyticsRetentionDays
-    publicNetworkAccessForIngestion: 'Enabled'
-    publicNetworkAccessForQuery: 'Enabled'
-    tags: {
-      Environment: environmentType
-      Project: 'IE Bank'
-    }
-  }
-}
+// module staticWebApp 'modules/static-web-app.bicep' = {
+//   name: staticWebAppName
+//   params: {
+//     name: staticWebAppName
+//     sku: 'Free'
+//     location: 'westeurope'
+//     repositoryToken: frontendRepositoryToken
+//     repositoryUrl: frontendRepositoryUrl
+//     branch: frontendRepositoryBranch
+//   }
+// }
 
-module appInsights 'modules/app-insights.bicep' = {
-  name: appInsightsName
-  params: {
-    name: appInsightsName
-    applicationType: appInsightsType
-    workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId 
-    retentionInDays: appInsightsRetentionDays
-    location: location
-    tags: {
-      Environment: environmentType
-      Project: 'IE Bank'
-    }
-  }
-}
 
-module staticWebApp 'modules/static-web-app.bicep' = {
-  name: staticWebAppName
-  params: {
-    name: staticWebAppName
-    sku: 'Free'
-    location: 'westeurope'
-    repositoryToken: frontendRepositoryToken
-    repositoryUrl: frontendRepositoryUrl
-    branch: frontendRepositoryBranch
-  }
-}
