@@ -102,3 +102,5 @@ param appServiceBeAppSettings = [
   { name: 'SCM_DO_BUILD_DURING_DEPLOYMENT', value: 'true' }
   ]
 
+// Static Web App
+param staticWebAppName = 'devopps-swa-dev'

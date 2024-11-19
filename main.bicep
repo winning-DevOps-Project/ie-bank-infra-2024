@@ -45,16 +45,9 @@ param appServiceBeAppSettings array
 // param backendAppSettings array = []
 
 
-// // Frontend repository details for Static Web App
-// @sys.description('Frontend repository URL')
-// param frontendRepositoryUrl string
-// @sys.description('Frontend repository branch')
-// param frontendRepositoryBranch string = 'main'
-// @sys.description('Frontend repository personal access token')
-// @secure()
-// param frontendRepositoryToken string = ''
-// @sys.description('The name of the Static Web App')
-// param staticWebAppName string
+// Frontend repository details for Static Web App
+@sys.description('The name of the Static Web App')
+param staticWebAppName string
 
 
 // // Log Analytics and App Insights configurations
@@ -161,6 +154,17 @@ module postgresSQLDatabase 'modules/postgresql-db.bicep' = {
   ]
 }
 
+module staticWebApp 'modules/static-web-app.bicep' = {
+  name: staticWebAppName
+  params: {
+    name: staticWebAppName
+    sku: 'Free'
+    keyVaultResourceId: keyVault.outputs.resourceId
+    keyVaultSecretName: 'SWATokenSecret'
+  }
+}
+
+
 // // Log Analytics Workspace and Application Insights
 // module logAnalytics 'modules/log-analytics.bicep' = {
 //   name: logAnalyticsWorkspaceName
@@ -192,20 +196,4 @@ module postgresSQLDatabase 'modules/postgresql-db.bicep' = {
 //     }
 //   }
 // }
-
-
-
-
-// module staticWebApp 'modules/static-web-app.bicep' = {
-//   name: staticWebAppName
-//   params: {
-//     name: staticWebAppName
-//     sku: 'Free'
-//     location: 'westeurope'
-//     repositoryToken: frontendRepositoryToken
-//     repositoryUrl: frontendRepositoryUrl
-//     branch: frontendRepositoryBranch
-//   }
-// }
-
 
