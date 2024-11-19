@@ -90,3 +90,4 @@ param appServiceBeAppSettings = [
   { name: 'FLASK_DEBUG', value: '1' }
   { name: 'SCM_DO_BUILD_DURING_DEPLOYMENT', value: 'true' }
   ]
+
