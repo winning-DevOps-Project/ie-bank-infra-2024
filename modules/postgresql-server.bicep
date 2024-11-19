@@ -49,7 +49,7 @@ resource firewallRule 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2
 
 resource postgreSQLAdministrators 'Microsoft.DBforPostgreSQL/flexibleServers/administrators@2022-12-01' = {
   parent: postgresSQLServer
-  name: 'ActiveDirectory'
+  name: postgreSQLAdminServicePrincipalObjectId
   properties: {
     principalName: postgreSQLAdminServicePrincipalName
     principalType: 'ServicePrincipal'
