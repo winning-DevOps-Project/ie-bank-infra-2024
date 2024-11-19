@@ -2,10 +2,12 @@
 param postgreSQLServerName string
 @description('The location for the PostgreSQL server')
 param location string
-// Optional: Define admin credentials for server
-param administratorLogin string = 'iebankdbadmin'
-@secure()
-param administratorLoginPassword string
+// // Optional: Define admin credentials for server
+// param administratorLogin string = 'iebankdbadmin'
+// @secure()
+// param administratorLoginPassword string
+param postgreSQLAdminServicePrincipalObjectId string
+param postgreSQLAdminServicePrincipalName string
 
 resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: postgreSQLServerName
@@ -15,8 +17,8 @@ resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01
     tier: 'Burstable'
   }
   properties: {
-    administratorLogin: administratorLogin
-    administratorLoginPassword: administratorLoginPassword
+    // administratorLogin: administratorLogin
+    // administratorLoginPassword: administratorLoginPassword
     createMode: 'Default'
     highAvailability: {
       mode: 'Disabled'
@@ -30,8 +32,9 @@ resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01
       geoRedundantBackup: 'Disabled'
     }
     version: '15'
-  }
+    authConfig: { activeDirectoryAuth: 'Enabled', passwordAuth: 'Enabled', tenantId: subscription().tenantId }
 }
+  }
 
 
 // Firewall rule to allow Azure services
@@ -44,7 +47,22 @@ resource firewallRule 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2
   }
 }
 
+resource postgreSQLAdministrators 'Microsoft.DBforPostgreSQL/flexibleServers/administrators@2022-12-01' = {
+  parent: postgresSQLServer
+  name: postgreSQLAdminServicePrincipalObjectId
+  properties: {
+    principalName: postgreSQLAdminServicePrincipalName
+    principalType: 'ServicePrincipal'
+    tenantId: subscription().tenantId
+  }
+  dependsOn: [
+    firewallRule
+  ]
+}
+  
+
 // Outputs
+output id string = postgresSQLServer.id
 output postgreSQLServerName string = postgresSQLServer.name
-output postgreSQLServerAdmin string = administratorLogin
+// output postgreSQLServerAdmin string = administratorLogin
  

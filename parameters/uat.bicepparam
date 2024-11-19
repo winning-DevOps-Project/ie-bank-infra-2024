@@ -1,11 +1,7 @@
 using '../main.bicep'
 
 // param environmentType = 'nonprod'
-param location = 'North Europe'
-
 // // posgtresql
-// param postgreSQLServerName = 'devopps-dbsrv-uat'
-// param postgreSQLDatabaseName = 'devopps-db-uat'
 
 // // app service plan
 // param appServicePlanName = 'devopps-asp-uat'
@@ -40,13 +36,48 @@ param location = 'North Europe'
 // param appInsightsType = 'web'
 // param appInsightsRetentionDays = 365
 
-//KeyVault
-param keyVaultName = 'devopps-keyvault-uat'
-param keyVaultSku = 'standard' 
-
 // //static website
 // param staticWebAppName = 'devopps-swa-uat'
 
-// // Container Registry
-// param containerRegistryName = 'DevoppsUatACR'
+
+param location = 'North Europe'
+
+//KeyVault
+param keyVaultName = 'devopps-kv-uat'
+param keyVaultSku = 'standard' 
+param enableSoftDelete = true
+param keyVaultRoleAssignments  = [
+{
+    principalId: '25d8d697-c4a2-479f-96e0-15593a830ae5' // BCSAI2024-DEVOPS-STUDENTS-A-SP
+    roleDefinitionIdOrName: 'Key Vault Reader'
+    principalType: 'ServicePrincipal'
+    }
+]
+// Container Registry
+param containerRegistryName = 'DevoppsUatACR'
+
+
+// postgresql server
+param postgreSQLServerName = 'devopps-dbsrv-uat'
+
+
+// postgresql server
+param postgreSQLDatabaseName = 'devopps-db-uat'
+
+// App service plan
+param appServicePlanName = 'devopps-asp-uat'
+param appServicePlanSku = 'B1'
+
+// be 
+param appServiceWebsiteBEName = 'devopps-be-uat' 
+param dockerRegistryImageName = 'devopps-backend'
+param dockerRegistryImageVersion = 'latest'
+param appServiceBeAppSettings = [
+  { name: 'ENV', value: 'uat' }
+  { name: 'DBHOST', value: 'devopps-dbsrv-dev.postgres.database.azure.com' }
+  { name: 'DBNAME', value: 'devopps-db-uat' }
+  { name: 'DBUSER', value: 'devoppsbe-uat' }
+  { name: 'FLASK_DEBUG', value: '1' }
+  { name: 'SCM_DO_BUILD_DURING_DEPLOYMENT', value: 'true' }
+  ]
 
