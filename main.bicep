@@ -51,7 +51,7 @@ var adminPasswordSecretName0 = 'adminPasswordSecretName0'
 var adminPasswordSecretName1 = 'adminPasswordSecretName1'
 var adminUsernameSecretName = 'adminUsernameSecretName'
 param appServiceBeAppSettings array 
-
+// param postgreSQLAdminServicePrincipalObjectId string
 // // App Settings (environment variables)
 // param backendAppSettings array = []
 
