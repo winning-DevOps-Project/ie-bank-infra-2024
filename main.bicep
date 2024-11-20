@@ -43,7 +43,7 @@ param appServiceBeAppSettings array
 // param postgreSQLAdminServicePrincipalObjectId string
 // // App Settings (environment variables)
 // param backendAppSettings array = []
-param administratorLogin string = 'iebankdbadmin'
+
 
 // Frontend repository details for Static Web App
 @sys.description('The name of the Static Web App')
@@ -134,7 +134,6 @@ module postgresSQLServer 'modules/postgresql-server.bicep' = {
   name: postgreSQLServerName
   params: {
     location: location
-    administratorLogin: administratorLogin
     postgreSQLAdminServicePrincipalObjectId: appServiceBE.outputs.systemAssignedIdentityPrincipalId
     postgreSQLAdminServicePrincipalName: appServiceWebsiteBEName
     postgreSQLServerName: postgreSQLServerName
