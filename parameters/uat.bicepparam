@@ -76,7 +76,7 @@ param appServiceBeAppSettings = [
   { name: 'ENV', value: 'uat' }
   { name: 'DBHOST', value: 'devopps-dbsrv-dev.postgres.database.azure.com' }
   { name: 'DBNAME', value: 'devopps-db-uat' }
-  { name: 'DBUSER', value: 'devoppsbe-uat' }
+  { name: 'DBUSER', value: 'devopps-be-uat' }
   { name: 'FLASK_DEBUG', value: '1' }
   { name: 'SCM_DO_BUILD_DURING_DEPLOYMENT', value: 'true' }
   ]
