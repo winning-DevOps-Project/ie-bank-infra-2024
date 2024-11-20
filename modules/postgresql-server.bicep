@@ -3,7 +3,7 @@ param postgreSQLServerName string
 @description('The location for the PostgreSQL server')
 param location string
 // // Optional: Define admin credentials for server
-// param administratorLogin string = 'iebankdbadmin'
+
 // @secure()
 // param administratorLoginPassword string
 param postgreSQLAdminServicePrincipalObjectId string
@@ -17,7 +17,7 @@ resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01
     tier: 'Burstable'
   }
   properties: {
-    // administratorLogin: administratorLogin
+    //administratorLogin: administratorLogin
     // administratorLoginPassword: administratorLoginPassword
     createMode: 'Default'
     highAvailability: {
@@ -32,7 +32,7 @@ resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01
       geoRedundantBackup: 'Disabled'
     }
     version: '15'
-    authConfig: { activeDirectoryAuth: 'Enabled', passwordAuth: 'Enabled', tenantId: subscription().tenantId }
+    authConfig: { activeDirectoryAuth: 'Enabled', passwordAuth: 'Disabled', tenantId: subscription().tenantId }
 }
   }
 
