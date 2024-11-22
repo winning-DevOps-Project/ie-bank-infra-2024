@@ -83,11 +83,11 @@ resource acrDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-previe
     ]
     logs: [
       {
-        category: 'ContainerRegistryRepositoryEvent'
+        category: 'ContainerRegistryLoginEvents'  
         enabled: true
       }
       {
-        category: 'ContainerRegistryLoginEvent'
+        category: 'ContainerRegistryRepositoryEvents'  
         enabled: true
       }
     ]

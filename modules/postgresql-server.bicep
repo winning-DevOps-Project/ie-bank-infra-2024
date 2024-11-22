@@ -3,11 +3,11 @@ param postgreSQLServerName string
 @description('The location for the PostgreSQL server')
 param location string
 // // Optional: Define admin credentials for server
-
 // @secure()
 // param administratorLoginPassword string
 param postgreSQLAdminServicePrincipalObjectId string
 param postgreSQLAdminServicePrincipalName string
+// param workspaceResourceId string
 
 resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: postgreSQLServerName
@@ -59,7 +59,34 @@ resource postgreSQLAdministrators 'Microsoft.DBforPostgreSQL/flexibleServers/adm
     firewallRule
   ]
 }
-  
+ 
+// resource postgreSQLDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+//   name: 'PostgreSQLServerDiagnostic'
+//   scope: postgresSQLServer
+//   properties: {
+//     workspaceId: workspaceResourceId
+//     metrics: [
+//       {
+//         category: 'AllMetrics'
+//         enabled: true
+//         retentionPolicy: {
+//           enabled: true
+//           days: 365
+//         }
+//       }
+//     ]
+//     logs: [
+//       {
+//         category: 'PostgreSQLLogs'
+//         enabled: true
+//         retentionPolicy: {
+//           enabled: true
+//           days: 365
+//         }
+//       }
+//     ]
+//   }
+// }
 
 // Outputs
 output id string = postgresSQLServer.id
