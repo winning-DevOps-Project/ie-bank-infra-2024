@@ -161,6 +161,7 @@ module postgresSQLServer 'modules/postgresql-server.bicep' = {
     postgreSQLAdminServicePrincipalObjectId: appServiceBE.outputs.systemAssignedIdentityPrincipalId
     postgreSQLAdminServicePrincipalName: appServiceWebsiteBEName
     postgreSQLServerName: postgreSQLServerName
+    workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
   }
   dependsOn: [
     appServiceBE

@@ -7,7 +7,7 @@ param location string
 // param administratorLoginPassword string
 param postgreSQLAdminServicePrincipalObjectId string
 param postgreSQLAdminServicePrincipalName string
-// param workspaceResourceId string
+param workspaceResourceId string
 
 resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: postgreSQLServerName
@@ -60,33 +60,45 @@ resource postgreSQLAdministrators 'Microsoft.DBforPostgreSQL/flexibleServers/adm
   ]
 }
  
-// resource postgreSQLDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
-//   name: 'PostgreSQLServerDiagnostic'
-//   scope: postgresSQLServer
-//   properties: {
-//     workspaceId: workspaceResourceId
-//     metrics: [
-//       {
-//         category: 'AllMetrics'
-//         enabled: true
-//         retentionPolicy: {
-//           enabled: true
-//           days: 365
-//         }
-//       }
-//     ]
-//     logs: [
-//       {
-//         category: 'PostgreSQLLogs'
-//         enabled: true
-//         retentionPolicy: {
-//           enabled: true
-//           days: 365
-//         }
-//       }
-//     ]
-//   }
-// }
+resource postgreSQLDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  name: 'PostgreSQLServerDiagnostic'
+  scope: postgresSQLServer
+  properties: {
+    workspaceId: workspaceResourceId
+    metrics: [
+      {
+        category: 'AllMetrics'
+        enabled: true
+      }
+    ]
+    logs: [
+      {
+        category: 'PostgreSQLLogs'
+        enabled: true
+      }
+      {
+        category: 'PostgreSQLFlexSessions'
+        enabled: true
+      }
+      {
+        category: 'PostgreSQLFlexQueryStoreRuntime'
+        enabled: true
+      }
+      {
+        category: 'PostgreSQLFlexQueryStoreWaitStats'
+        enabled: true
+      }
+      {
+        category: 'PostgreSQLFlexTableStats'
+        enabled: true
+      }
+      {
+        category: 'PostgreSQLFlexDatabaseXacts'
+        enabled: true
+      }
+    ]
+  }
+}
 
 // Outputs
 output id string = postgresSQLServer.id
