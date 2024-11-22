@@ -131,20 +131,12 @@ resource keyVaultDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-p
       {
         category: 'AllMetrics'
         enabled: true
-        retentionPolicy: {
-          enabled: true
-          days: 365
-        }
       }
     ]
     logs: [
       {
         category: 'AuditEvent'
         enabled: true
-        retentionPolicy: {
-          enabled: true
-          days: 365
-        }
       }
     ]
   }
