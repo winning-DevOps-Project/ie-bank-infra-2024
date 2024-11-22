@@ -50,21 +50,43 @@ param appServiceBeAppSettings array
 param staticWebAppName string
 
 
-// // Log Analytics and App Insights configurations
-// @sys.description('Name of the Log Analytics workspace')
-// param logAnalyticsWorkspaceName string
-// @sys.description('SKU for the Log Analytics workspace')
-// param logAnalyticsSkuName string 
-// @sys.description('Retention period for data in Log Analytics workspace')
-// param logAnalyticsRetentionDays int 
-// @description('The Application Insights name')
-// param appInsightsName string
-// @description('The Application Insights application type')
-// param appInsightsType string 
-// @description('The retention period for Application Insights in days')
-// param appInsightsRetentionDays int
+// Log Analytics and App Insights configurations
+@sys.description('Name of the Log Analytics workspace')
+param logAnalyticsWorkspaceName string
+@sys.description('SKU for the Log Analytics workspace')
+param logAnalyticsSkuName string 
+@sys.description('Retention period for data in Log Analytics workspace')
+param logAnalyticsRetentionDays int 
+
+@description('The Application Insights name')
+param appInsightsName string
+@description('The Application Insights application type')
+param appInsightsType string 
+@description('The retention period for Application Insights in days')
+param appInsightsRetentionDays int
 
 
+ // Log Analytics Workspace and Application Insights
+module logAnalytics 'modules/log-analytics.bicep' = {
+  name: logAnalyticsWorkspaceName
+  params: {
+    name: logAnalyticsWorkspaceName
+    location: location
+    skuName: logAnalyticsSkuName
+    dataRetention: logAnalyticsRetentionDays
+  }
+}
+
+module appInsights 'modules/app-insights.bicep' = {
+  name: appInsightsName
+  params: {
+    name: appInsightsName
+    applicationType: appInsightsType
+    workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId 
+    retentionInDays: appInsightsRetentionDays
+    location: location
+  }
+}
 
 
 module keyVault 'modules/key-vault.bicep' = {
@@ -165,35 +187,6 @@ module staticWebApp 'modules/static-web-app.bicep' = {
 }
 
 
-// // Log Analytics Workspace and Application Insights
-// module logAnalytics 'modules/log-analytics.bicep' = {
-//   name: logAnalyticsWorkspaceName
-//   params: {
-//     name: logAnalyticsWorkspaceName
-//     location: location
-//     skuName: logAnalyticsSkuName
-//     dataRetention: logAnalyticsRetentionDays
-//     publicNetworkAccessForIngestion: 'Enabled'
-//     publicNetworkAccessForQuery: 'Enabled'
-//     tags: {
-//       Environment: environmentType
-//       Project: 'IE Bank'
-//     }
-//   }
-// }
 
-// module appInsights 'modules/app-insights.bicep' = {
-//   name: appInsightsName
-//   params: {
-//     name: appInsightsName
-//     applicationType: appInsightsType
-//     workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId 
-//     retentionInDays: appInsightsRetentionDays
-//     location: location
-//     tags: {
-//       Environment: environmentType
-//       Project: 'IE Bank'
-//     }
-//   }
-// }
+
 

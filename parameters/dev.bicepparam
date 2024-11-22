@@ -2,9 +2,6 @@ using '../main.bicep'
 
 // param environmentType = 'nonprod'
 
-// // app service plan
-// param appServicePlanName = 'devopps-asp-dev'
-// param appServicePlanSku = 'B1'
 
 // // app service
 // // param appServiceAppName = 'devopps-be-dev' // Name of the backend app
@@ -45,18 +42,6 @@ using '../main.bicep'
 // param appServiceAPIEnvVarDBNAME =  'devopps-db-dev'
 // param appServiceAPIEnvVarENV =  'dev'
 
-// LAW
-// param logAnalyticsWorkspaceName = 'devopps-law-dev'
-// param logAnalyticsSkuName = 'Free' 
-// param logAnalyticsRetentionDays = 30
-
-// //Insights
-// param appInsightsName = 'appInsights-dev'
-// param appInsightsType = 'web'
-// param appInsightsRetentionDays = 365
-
-// //static website
-// param staticWebAppName = 'devopps-swa-dev'
 
 param location = 'North Europe'
 
@@ -104,3 +89,13 @@ param appServiceBeAppSettings = [
 
 // Static Web App
 param staticWebAppName = 'devopps-swa-dev'
+
+// LAW
+param logAnalyticsWorkspaceName = 'devopps-law-dev'
+param logAnalyticsRetentionDays = 30
+param logAnalyticsSkuName = 'PerGB2018'
+
+// Insights
+param appInsightsName = 'devopps-insights-dev'
+param appInsightsType = 'web'
+param appInsightsRetentionDays = 90
