@@ -136,16 +136,18 @@ resource keyVaultReference 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
   module appServiceBE 'modules/app-service.bicep' = {
     name: appServiceWebsiteBEName
     params: {
-    name: appServiceWebsiteBEName
-    location: location
-    appServicePlanId: appServicePlan.outputs.id
-    appCommandLine: ''
-    appSettings: appServiceBeAppSettings
-    dockerRegistryName: containerRegistryName
-    dockerRegistryServerUserName: keyVaultReference.getSecret(adminUsernameSecretName)
-    dockerRegistryServerPassword: keyVaultReference.getSecret(adminPasswordSecretName0)
-    dockerRegistryImageName: dockerRegistryImageName
-    dockerRegistryImageVersion: dockerRegistryImageVersion
+      name: appServiceWebsiteBEName
+      location: location
+      appServicePlanId: appServicePlan.outputs.id
+      appCommandLine: ''
+      appSettings: appServiceBeAppSettings
+      dockerRegistryName: containerRegistryName
+      dockerRegistryServerUserName: keyVaultReference.getSecret(adminUsernameSecretName)
+      dockerRegistryServerPassword: keyVaultReference.getSecret(adminPasswordSecretName0)
+      dockerRegistryImageName: dockerRegistryImageName
+      dockerRegistryImageVersion: dockerRegistryImageVersion
+      appInsightsConnectionString: appInsights.outputs.appInsightsConnectionString
+      appInsightsInstrumentationKey: appInsights.outputs.appInsightsInstrumentationKey
     }
     dependsOn: [
     appServicePlan
@@ -188,8 +190,5 @@ module staticWebApp 'modules/static-web-app.bicep' = {
     keyVaultSecretName: 'SWATokenSecret'
   }
 }
-
-
-
 
 

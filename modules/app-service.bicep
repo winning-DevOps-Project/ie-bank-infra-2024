@@ -10,6 +10,15 @@ param dockerRegistryImageName string
 param dockerRegistryImageVersion string = 'latest'
 param appSettings array = []
 param appCommandLine string = ''
+param appInsightsInstrumentationKey string
+param appInsightsConnectionString string
+
+var appInsigthsSettings = [
+{ name: 'APPINSIGHTS_INSTRUMENTATIONKEY', value: appInsightsInstrumentationKey }
+{ name: 'APPLICATIONINSIGHTS_CONNECTION_STRING', value: appInsightsConnectionString }
+{ name: 'ApplicationInsightsAgent_EXTENSION_VERSION', value: '~3' }
+{ name: 'XDT_MicrosoftApplicationInsights_NodeJS', value:'1' }
+]
 
 var dockerAppSettings = [
   { name: 'DOCKER_REGISTRY_SERVER_URL', value: 'https://${dockerRegistryName}.azurecr.io' }
@@ -29,7 +38,7 @@ resource appServiceApp 'Microsoft.Web/sites@2022-03-01' = {
       alwaysOn: false
       ftpsState: 'FtpsOnly'
       appCommandLine: appCommandLine
-      appSettings: union(appSettings, dockerAppSettings)
+      appSettings: union(appSettings, dockerAppSettings, appInsigthsSettings)
     }
   }
 }
