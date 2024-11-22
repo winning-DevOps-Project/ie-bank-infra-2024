@@ -148,6 +148,7 @@ resource keyVaultReference 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
       dockerRegistryImageVersion: dockerRegistryImageVersion
       appInsightsConnectionString: appInsights.outputs.appInsightsConnectionString
       appInsightsInstrumentationKey: appInsights.outputs.appInsightsInstrumentationKey
+      workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
     }
     dependsOn: [
     appServicePlan
