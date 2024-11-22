@@ -113,6 +113,7 @@ module containerRegistry 'modules/docker-registry.bicep' = {
     registryName: containerRegistryName
     location: location
     sku: acrSku
+    workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
   }
   dependsOn: [
     keyVault 

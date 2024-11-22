@@ -11,6 +11,8 @@ param keyVaultSecreNameAdminUsername string
 param keyVaultSecreNameAdminPassword0 string
 #disable-next-line secure-secrets-in-params
 param keyVaultSecreNameAdminPassword1 string
+@description('Log Analytics Workspace Resource ID for diagnostic settings')
+param workspaceResourceId string
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
   name: registryName
@@ -67,5 +69,29 @@ resource secretAdminUserPassword1 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
 }
 }
 
+
+resource acrDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  name: 'ContainerRegistryDiagnostic'
+  scope: containerRegistry
+  properties: {
+    workspaceId: workspaceResourceId
+    metrics: [
+      {
+        category: 'AllMetrics'
+        enabled: true
+      }
+    ]
+    logs: [
+      {
+        category: 'ContainerRegistryRepositoryEvent'
+        enabled: true
+      }
+      {
+        category: 'ContainerRegistryLoginEvent'
+        enabled: true
+      }
+    ]
+  }
+}
 
 output registryLoginServer string = containerRegistry.properties.loginServer
