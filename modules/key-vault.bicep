@@ -84,6 +84,8 @@ var builtInRoleNames = {
     '18d7d88d-d35e-4fb5-a5c3-7773c20a72d9'
   )
 }
+@description('The shared Log Analytics Workspace Resource ID for diagnostics')
+param workspaceResourceId string
 
 // Key Vault Resource
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
@@ -120,6 +122,33 @@ for (roleAssignment, index) in (roleAssignments ?? []): {
 }
 ]
 
+resource keyVaultDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  name: 'KeyVaultDiagnostic'
+  scope: keyVault
+  properties: {
+    workspaceId: workspaceResourceId
+    metrics: [
+      {
+        category: 'AllMetrics'
+        enabled: true
+        retentionPolicy: {
+          enabled: true
+          days: 365
+        }
+      }
+    ]
+    logs: [
+      {
+        category: 'AuditEvent'
+        enabled: true
+        retentionPolicy: {
+          enabled: true
+          days: 365
+        }
+      }
+    ]
+  }
+}
 
 // Outputs
 @description('The resource ID of the key vault.')

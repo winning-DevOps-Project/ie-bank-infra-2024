@@ -66,6 +66,7 @@ param appInsightsType string
 param appInsightsRetentionDays int
 
 
+
  // Log Analytics Workspace and Application Insights
 module logAnalytics 'modules/log-analytics.bicep' = {
   name: logAnalyticsWorkspaceName
@@ -98,9 +99,9 @@ module keyVault 'modules/key-vault.bicep' = {
     roleAssignments: keyVaultRoleAssignments
     enableVaultForDeployment: true
     enableSoftDelete: enableSoftDelete
+    workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
   }
 }
-
 
 module containerRegistry 'modules/docker-registry.bicep' = {
   name: containerRegistryName 
