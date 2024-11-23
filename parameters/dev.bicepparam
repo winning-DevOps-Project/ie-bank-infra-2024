@@ -99,3 +99,4 @@ param logAnalyticsSkuName = 'PerGB2018'
 param appInsightsName = 'devopps-insights-dev'
 param appInsightsType = 'web'
 param appInsightsRetentionDays = 90
+ 
