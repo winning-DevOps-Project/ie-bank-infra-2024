@@ -34,6 +34,15 @@ resource appServiceApp 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(appServiceApp.id, 'Contributor')
+  scope: appServiceApp
+  properties: {
+    principalId: appServiceApp.identity.principalId 
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
+  }
+}
+
 output appServiceAppHostName string = appServiceApp.properties.defaultHostName
 output systemAssignedIdentityPrincipalId string = appServiceApp.identity.principalId
 
