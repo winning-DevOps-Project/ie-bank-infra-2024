@@ -50,22 +50,53 @@ param appServiceBeAppSettings array
 param staticWebAppName string
 
 
-// // Log Analytics and App Insights configurations
-// @sys.description('Name of the Log Analytics workspace')
-// param logAnalyticsWorkspaceName string
-// @sys.description('SKU for the Log Analytics workspace')
-// param logAnalyticsSkuName string 
-// @sys.description('Retention period for data in Log Analytics workspace')
-// param logAnalyticsRetentionDays int 
-// @description('The Application Insights name')
-// param appInsightsName string
-// @description('The Application Insights application type')
-// param appInsightsType string 
-// @description('The retention period for Application Insights in days')
-// param appInsightsRetentionDays int
+// Log Analytics and App Insights configurations
+@sys.description('Name of the Log Analytics workspace')
+param logAnalyticsWorkspaceName string
+@sys.description('SKU for the Log Analytics workspace')
+param logAnalyticsSkuName string 
+@sys.description('Retention period for data in Log Analytics workspace')
+param logAnalyticsRetentionDays int 
+
+@description('The Application Insights name')
+param appInsightsName string
+@description('The Application Insights application type')
+param appInsightsType string 
+@description('The retention period for Application Insights in days')
+param appInsightsRetentionDays int
 
 
 
+ // Log Analytics Workspace and Application Insights
+module logAnalytics 'modules/log-analytics.bicep' = {
+  name: logAnalyticsWorkspaceName
+  params: {
+    name: logAnalyticsWorkspaceName
+    location: location
+    skuName: logAnalyticsSkuName
+    dataRetention: logAnalyticsRetentionDays
+  }
+}
+
+module appInsights 'modules/app-insights.bicep' = {
+  name: appInsightsName
+  params: {
+    name: appInsightsName
+    applicationType: appInsightsType
+    workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId 
+    retentionInDays: appInsightsRetentionDays
+    location: location
+  }
+}
+
+module workbook 'modules/workbook.bicep' = {
+  name: 'devopsWorkbook'
+  params: {
+    sourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
+    location: location
+    appInsightsId: appInsights.outputs.appInsightsId
+  }
+}
 
 module keyVault 'modules/key-vault.bicep' = {
   name: keyVaultName
@@ -76,9 +107,9 @@ module keyVault 'modules/key-vault.bicep' = {
     roleAssignments: keyVaultRoleAssignments
     enableVaultForDeployment: true
     enableSoftDelete: enableSoftDelete
+    workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
   }
 }
-
 
 module containerRegistry 'modules/docker-registry.bicep' = {
   name: containerRegistryName 
@@ -90,6 +121,7 @@ module containerRegistry 'modules/docker-registry.bicep' = {
     registryName: containerRegistryName
     location: location
     sku: acrSku
+    workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
   }
   dependsOn: [
     keyVault 
@@ -112,16 +144,19 @@ resource keyVaultReference 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
   module appServiceBE 'modules/app-service.bicep' = {
     name: appServiceWebsiteBEName
     params: {
-    name: appServiceWebsiteBEName
-    location: location
-    appServicePlanId: appServicePlan.outputs.id
-    appCommandLine: ''
-    appSettings: appServiceBeAppSettings
-    dockerRegistryName: containerRegistryName
-    dockerRegistryServerUserName: keyVaultReference.getSecret(adminUsernameSecretName)
-    dockerRegistryServerPassword: keyVaultReference.getSecret(adminPasswordSecretName0)
-    dockerRegistryImageName: dockerRegistryImageName
-    dockerRegistryImageVersion: dockerRegistryImageVersion
+      name: appServiceWebsiteBEName
+      location: location
+      appServicePlanId: appServicePlan.outputs.id
+      appCommandLine: ''
+      appSettings: appServiceBeAppSettings
+      dockerRegistryName: containerRegistryName
+      dockerRegistryServerUserName: keyVaultReference.getSecret(adminUsernameSecretName)
+      dockerRegistryServerPassword: keyVaultReference.getSecret(adminPasswordSecretName0)
+      dockerRegistryImageName: dockerRegistryImageName
+      dockerRegistryImageVersion: dockerRegistryImageVersion
+      appInsightsConnectionString: appInsights.outputs.appInsightsConnectionString
+      appInsightsInstrumentationKey: appInsights.outputs.appInsightsInstrumentationKey
+      workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
     }
     dependsOn: [
     appServicePlan
@@ -137,6 +172,7 @@ module postgresSQLServer 'modules/postgresql-server.bicep' = {
     postgreSQLAdminServicePrincipalObjectId: appServiceBE.outputs.systemAssignedIdentityPrincipalId
     postgreSQLAdminServicePrincipalName: appServiceWebsiteBEName
     postgreSQLServerName: postgreSQLServerName
+    workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
   }
   dependsOn: [
     appServiceBE
@@ -164,36 +200,4 @@ module staticWebApp 'modules/static-web-app.bicep' = {
   }
 }
 
-
-// // Log Analytics Workspace and Application Insights
-// module logAnalytics 'modules/log-analytics.bicep' = {
-//   name: logAnalyticsWorkspaceName
-//   params: {
-//     name: logAnalyticsWorkspaceName
-//     location: location
-//     skuName: logAnalyticsSkuName
-//     dataRetention: logAnalyticsRetentionDays
-//     publicNetworkAccessForIngestion: 'Enabled'
-//     publicNetworkAccessForQuery: 'Enabled'
-//     tags: {
-//       Environment: environmentType
-//       Project: 'IE Bank'
-//     }
-//   }
-// }
-
-// module appInsights 'modules/app-insights.bicep' = {
-//   name: appInsightsName
-//   params: {
-//     name: appInsightsName
-//     applicationType: appInsightsType
-//     workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId 
-//     retentionInDays: appInsightsRetentionDays
-//     location: location
-//     tags: {
-//       Environment: environmentType
-//       Project: 'IE Bank'
-//     }
-//   }
-// }
 

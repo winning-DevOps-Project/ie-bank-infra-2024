@@ -3,8 +3,6 @@ using '../main.bicep'
 // param environmentType = 'nonprod'
 // // posgtresql
 
-// // app service plan
-// param appServicePlanName = 'devopps-asp-uat'
 
 // // app service
 // param appServiceBackendName = 'devopps-be-uat' // Name of the backend App Service
@@ -26,18 +24,7 @@ using '../main.bicep'
 // param appServiceAPIEnvVarDBNAME =  'devopps-db-uat'
 // param appServiceAPIEnvVarENV =  'uat'
 
-// //LAW
-// param logAnalyticsWorkspaceName = 'devopps-law-uat'
-// param logAnalyticsSkuName = 'PerGB2018'
-// param logAnalyticsRetentionDays = 30
 
-// //Insights
-// param appInsightsName = 'appInsights-uat'
-// param appInsightsType = 'web'
-// param appInsightsRetentionDays = 365
-
-// //static website
-// param staticWebAppName = 'devopps-swa-uat'
 
 
 param location = 'North Europe'
@@ -55,7 +42,6 @@ param keyVaultRoleAssignments  = [
 ]
 // Container Registry
 param containerRegistryName = 'DevoppsUatACR'
-
 
 // postgresql server
 param postgreSQLServerName = 'devopps-dbsrv-uat'
@@ -83,3 +69,14 @@ param appServiceBeAppSettings = [
 
 // Static Web App
 param staticWebAppName = 'devopps-swa-uat'
+
+
+// LAW
+param logAnalyticsWorkspaceName = 'devopps-law-uat'
+param logAnalyticsRetentionDays = 30
+param logAnalyticsSkuName = 'PerGB2018'
+
+// Insights
+param appInsightsName = 'devopps-insights-uat'
+param appInsightsType = 'web'
+param appInsightsRetentionDays = 90
