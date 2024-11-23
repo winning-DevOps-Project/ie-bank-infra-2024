@@ -89,6 +89,14 @@ module appInsights 'modules/app-insights.bicep' = {
   }
 }
 
+module workbook 'modules/workbook.bicep' = {
+  name: 'devopsWorkbook'
+  params: {
+    sourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
+    location: location
+    appInsightsId: appInsights.outputs.appInsightsId
+  }
+}
 
 module keyVault 'modules/key-vault.bicep' = {
   name: keyVaultName
