@@ -76,7 +76,7 @@ param postgreSQLDatabaseName = 'devopps-db-dev'
 param appServicePlanName = 'devopps-asp-dev'
 param appServicePlanSku = 'B1'
 param appServiceWebsiteBEName = 'devopps-be-dev'
-param dockerRegistryImageName = 'devops-backend'
+param dockerRegistryImageName = 'devopps-backend'
 param dockerRegistryImageVersion = 'latest'
 param appServiceBeAppSettings = [
   { name: 'ENV', value: 'dev' }
