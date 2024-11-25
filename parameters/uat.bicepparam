@@ -60,7 +60,7 @@ param dockerRegistryImageName = 'devopps-backend'
 param dockerRegistryImageVersion = 'latest'
 param appServiceBeAppSettings = [
   { name: 'ENV', value: 'uat' }
-  { name: 'DBHOST', value: 'devopps-dbsrv-dev.postgres.database.azure.com' }
+  { name: 'DBHOST', value: 'devopps-dbsrv-uat.postgres.database.azure.com' }
   { name: 'DBNAME', value: 'devopps-db-uat' }
   { name: 'DBUSER', value: 'devopps-be-uat' }
   { name: 'FLASK_DEBUG', value: '1' }
