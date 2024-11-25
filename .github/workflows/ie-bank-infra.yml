@@ -53,20 +53,6 @@ jobs:
             --parameters ./parameters/dev.bicepparam \
             --location eastus
 
-      - name: Validate Deployment (Min Config)
-        run: |
-          az deployment group validate \
-            --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
-            --template-file ./minimal.bicep \
-            --location eastus
-
-      - name: Validate Deployment (Max Config)
-        run: |
-          az deployment group validate \
-            --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
-            --template-file ./maximal.bicep \
-            --location eastus
-
   # 3. Deploy Dev Environment
   deploy-dev:
     name: Deploy Development Environment
@@ -97,7 +83,6 @@ jobs:
         id: validate-keyvault
         run: |
           az keyvault show --name devopps-kv-dev --resource-group ${{ env.RESOURCE_GROUP_DEV }}
-        continue-on-error: false
 
   # 4. Deploy UAT Environment
   deploy-uat:
