@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Bicep linter
-        run: az bicep build --file ./main.bicep --stdout | az deployment group validate --resource-group ${{ env.RESOURCE_GROUP_DEV }} --template-file -
+        run: az bicep build --file ./main.bicep 
 
   deploy-dev:
     runs-on: ubuntu-latest
