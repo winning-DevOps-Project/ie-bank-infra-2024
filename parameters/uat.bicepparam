@@ -70,7 +70,7 @@ param appServiceBeAppSettings = [
 // Static Web App
 param staticWebAppName = 'devopps-swa-uat'
 
-
+ 
 // LAW
 param logAnalyticsWorkspaceName = 'devopps-law-uat'
 param logAnalyticsRetentionDays = 30
