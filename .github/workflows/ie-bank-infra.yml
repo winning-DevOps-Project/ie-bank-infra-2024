@@ -16,70 +16,112 @@ env:
   USER_ALIAS: devopps-team
 
 jobs:
-  build:
+  # 1. Static Validation Stage
+  static-validation:
+    name: Static Validation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run Bicep linter
-        run: az bicep build --file ./main.bicep 
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-  deploy-dev:
+      - name: Run Bicep Linter
+        run: |
+          for file in $(find . -name '*.bicep'); do
+            echo "Linting $file..."
+            az bicep build --file "$file" || exit 1
+          done
+
+      - name: Security Scan with Checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          framework: bicep
+
+  # 2. Deployment Validation Stage
+  deployment-validation:
+    name: Deployment Validation
+    needs: static-validation
     runs-on: ubuntu-latest
-    needs: build
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Validate Deployment (Dev)
+        run: |
+          az deployment group validate \
+            --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
+            --template-file ./main.bicep \
+            --parameters ./parameters/dev.bicepparam \
+            --location eastus
+
+      - name: Validate Deployment (Min Config)
+        run: |
+          az deployment group validate \
+            --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
+            --template-file ./minimal.bicep \
+            --location eastus
+
+      - name: Validate Deployment (Max Config)
+        run: |
+          az deployment group validate \
+            --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
+            --template-file ./maximal.bicep \
+            --location eastus
+
+  # 3. Deploy Dev Environment
+  deploy-dev:
+    name: Deploy Development Environment
+    needs: deployment-validation
+    runs-on: ubuntu-latest
     environment:
       name: 'Development'
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: azure/login@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Login to Azure
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      # Run ARM template deployment with parameters
-      - name: deploy
+
+      - name: Deploy to Dev
         uses: azure/arm-deploy@v2
         with:
           subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
           resourceGroupName: ${{ env.RESOURCE_GROUP_DEV }}
           template: ./main.bicep
-          parameters: ./parameters/dev.bicepparam 
-          #administratorLoginPassword=${{ secrets.DB_ADMIN_PASSWORD }}
-          #frontendRepositoryUrl=https://github.com/DavidVart/ie-bank-fe-2024-final environmentType=nonprod # backendContainerAPIEnvVarDBPASS='${{ secrets.DBPASS }}' backendContainerAPIEnvVarDBUSER='${{ secrets.DBUSER }}' backendContainerAPIEnvVarDBHOST='${{ vars.DBHOST }}' backendContainerAPIEnvVarDBNAME='${{ vars.DBNAME }}' backendContainerAPIEnvVarENV='${{ vars.ENV }}' backendContainerAPIEnvVarFLASK_APP='${{ vars.FLASK_APP }}' backendContainerAPIEnvVarFLASK_DEBUG='${{ vars.FLASK_DEBUG }}'
-
+          parameters: ./parameters/dev.bicepparam
           deploymentName: ${{ env.USER_ALIAS }}-dev
-      
-      # Unit Test: Validate Key Vault Exists
-      - name: Test Key Vault Deployment
-        id: test-vault
+
+      - name: Validate Key Vault Exists
+        id: validate-keyvault
         run: |
           az keyvault show --name devopps-kv-dev --resource-group ${{ env.RESOURCE_GROUP_DEV }}
-        continue-on-error: true
+        continue-on-error: false
 
-        
-
+  # 4. Deploy UAT Environment
   deploy-uat:
+    name: Deploy UAT Environment
     if: (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main') || github.ref == 'refs/heads/main'
+    needs: deploy-dev
     runs-on: ubuntu-latest
-    needs: [build, deploy-dev]
     environment:
       name: 'UAT'
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: azure/login@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Login to Azure
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Run ARM template deployment with parameters
-      - name: deploy
+      - name: Deploy to UAT
         uses: azure/arm-deploy@v2
         with:
           subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
           resourceGroupName: ${{ env.RESOURCE_GROUP_UAT }}
           template: ./main.bicep
-          parameters: ./parameters/uat.bicepparam  # backendContainerAPIEnvVarDBPASS='${{ secrets.DBPASS }}' backendContainerAPIEnvVarDBUSER='${{ secrets.DBUSER }}' backendContainerAPIEnvVarDBHOST='${{ vars.DBHOST }}' backendContainerAPIEnvVarDBNAME='${{ vars.DBNAME }}' backendContainerAPIEnvVarVarENV='${{ vars.ENV }}' backendContainerAPIEnvVarFLASK_APP='${{ vars.FLASK_APP }}' backendContainerAPIEnvVarFLASK_DEBUG='${{ vars.FLASK_DEBUG }}'
-          # frontendRepositoryUrl=https://github.com/DavidVart/ie-bank-fe-2024-final
-          
+          parameters: ./parameters/uat.bicepparam
           deploymentName: ${{ env.USER_ALIAS }}-uat
-      
- 
-  
