@@ -87,6 +87,9 @@ module appInsights 'modules/app-insights.bicep' = {
     retentionInDays: appInsightsRetentionDays
     location: location
   }
+  dependsOn: [
+    logAnalytics
+  ]
 }
 
 module workbook 'modules/workbook.bicep' = {
@@ -96,6 +99,10 @@ module workbook 'modules/workbook.bicep' = {
     location: location
     appInsightsId: appInsights.outputs.appInsightsId
   }
+  dependsOn: [
+    logAnalytics
+    appInsights
+  ]
 }
 
 module keyVault 'modules/key-vault.bicep' = {
@@ -162,6 +169,7 @@ resource keyVaultReference 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
     appServicePlan
     containerRegistry
     keyVault
+    appInsights
     ]
     }
 
@@ -198,6 +206,9 @@ module staticWebApp 'modules/static-web-app.bicep' = {
     keyVaultResourceId: keyVault.outputs.resourceId
     keyVaultSecretName: 'SWATokenSecret'
   }
+  dependsOn: [
+    keyVault
+  ]
 }
 
 
