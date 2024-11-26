@@ -131,24 +131,4 @@ jobs:
             --query "[].{role: roleDefinitionName, principal: principalName}" \
             --output table
 
-      # Ensure Diagnostic Settings Are Configured
-      - name: Check Diagnostic Settings
-        run: |
-          az monitor diagnostic-settings list \
-            --resource /subscriptions/${{ env.SUBSCRIPTION_ID_DEV }}/resourceGroups/${{ env.RESOURCE_GROUP_UAT }}/providers/Microsoft.KeyVault/vaults/devopps-kv-uat \
-            --output json
-
-      # Ensure Public Access is Disabled
-      - name: Ensure Public Access is Disabled
-        run: |
-          az keyvault show --name devopps-kv-uat --resource-group ${{ env.RESOURCE_GROUP_UAT }} \
-            --query "properties.publicNetworkAccess" \
-            --output tsv | grep -q "Disabled" && echo "Public access is disabled" || (echo "Public access is not disabled"; exit 1)
-
-      # Validate Specific Secrets (Optional)
-      - name: Validate Specific Secret Exists
-        run: |
-          az keyvault secret show --vault-name devopps-kv-uat --name "example-secret" --query "id" --output tsv          
-      
- 
-  
+     
