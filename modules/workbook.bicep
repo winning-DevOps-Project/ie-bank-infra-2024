@@ -11,6 +11,14 @@ var workbookSerializedData = '''
       "type": "textblock",
       "content": {
         "json": {
+          "value": "Hello, welcome to Devopps Workbook!"
+        }
+      }
+    },
+    {
+      "type": "textblock",
+      "content": {
+        "json": {
           "value": "Application Insights Resource ID: APPINSIGHTSPLACEHOLDER"
         }
       }
