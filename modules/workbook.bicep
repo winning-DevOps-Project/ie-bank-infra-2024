@@ -28,7 +28,7 @@ var workbookSerializedData = '''
 '''
 
 resource DevopsWorkbook 'Microsoft.Insights/workbooks@2022-04-01' = {
-  name: guid('sampleWorkbook', resourceGroup().id)
+  name: guid('DevoppsWorkbook', resourceGroup().id)
   location: location
   kind:'shared'
   properties: {
