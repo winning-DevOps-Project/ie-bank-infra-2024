@@ -2,6 +2,10 @@ name: ie-bank-infra
 
 on:
   workflow_dispatch:
+    workflow_run:
+      workflows: ["Key Vault Testing"]
+      types:
+        - completed
   push:
       paths-ignore:
         - 'scripts/**'
@@ -74,3 +78,4 @@ jobs:
           
           deploymentName: ${{ env.USER_ALIAS }}-uat
 
+ 
