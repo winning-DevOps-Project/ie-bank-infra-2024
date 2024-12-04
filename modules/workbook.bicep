@@ -85,6 +85,62 @@ var workbookSerializedData = '''
     {
       "type": 1,
       "content": {
+        "json": "### HTTP Request Duration for Static Web App"
+      },
+      "name": "http-duration-header"
+    },
+    {
+      "type": 10,
+      "content": {
+        "chartId": "workbook151617",
+        "version": "MetricsItem/2.0",
+        "size": 0,
+        "chartType": 2,
+        "resourceType": "microsoft.web/staticsites",
+        "metricScope": 0,
+        "resourceIds": [
+          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.Web/staticSites/devopps-swa-dev"
+        ],
+        "timeContext": {
+          "durationMs": 2592000000
+        },
+        "metrics": [
+          {
+            "namespace": "microsoft.web/staticsites",
+            "metric": "microsoft.web/staticsites--RequestDuration",
+            "aggregation": 4,
+            "splitBy": null
+          }
+        ],
+        "title": "HTTP Request Duration (30 Days)",
+        "gridFormatType": 1,
+        "tileSettings": {
+          "titleContent": {
+            "formatOptions": {
+              "thresholdsOptions": "icons",
+              "thresholdsGrid": [
+                {
+                  "operator": "<=",
+                  "thresholdValue": 200,
+                  "representation": "success"
+                },
+                {
+                  "operator": "Default",
+                  "representation": "critical"
+                }
+              ]
+            }
+          }
+        },
+        "gridSettings": {
+          "rowLimit": 10000
+        }
+      },
+      "name": "http-duration-metric"
+    },
+    {
+      "type": 1,
+      "content": {
         "json": "### Key Vault Availability (Last 7 Days)"
       },
       "name": "kv-header"
