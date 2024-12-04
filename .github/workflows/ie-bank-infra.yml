@@ -99,3 +99,5 @@ jobs:
           parameters: ./parameters/prod.bicepparam  
                   
           deploymentName: ${{ env.USER_ALIAS }}-prod
+
+    
