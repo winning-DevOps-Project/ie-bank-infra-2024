@@ -18,7 +18,7 @@ jobs:
 
       - name: Run Bicep Linter
         run: |
-          az bicep build --file ./keyvault.bicep
+          az bicep build --file ./key-vault.bicep
 
   test-keyvault:
     name: Validate and Dry Run Key Vault
@@ -32,7 +32,7 @@ jobs:
         run: |
           az deployment group what-if \
             --resource-group my-main-resource-group \
-            --template-file ./keyvault.bicep \
+            --template-file ./key-vault.bicep \
             --parameters \
               name="test-keyvault" \
               location="eastus" \
