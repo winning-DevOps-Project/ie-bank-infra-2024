@@ -236,7 +236,71 @@ var workbookSerializedData = '''
     {
       "type": 1,
       "content": {
-        "json": "### SLO Status Explanation\n\n**Static Web App Availability:**\n✅ **Meeting SLO (>=99.99%)**: Excellent availability\n⚠️ **Warning (>=99.9% and <99.99%)**: Needs attention\n❌ **Critical (<99.9%)**: Immediate action required\n\n**Key Vault Availability:**\n✅ **Meeting SLO (>=99.9%)**: Good availability\n❌ **Not Meeting SLO (<99.9%)**: Immediate attention required\n\n**Application Insights Data Availability:**\n✅ **Meeting SLO (>=99.9%)**: Data is available and accessible\n❌ **Not Meeting SLO (<99.9%)**: Data availability issues"
+        "json": "### Security Monitoring (Unauthorized Access Attempts)"
+      },
+      "name": "security-header"
+    },
+    {
+      "type": 10,
+      "content": {
+        "chartId": "workbook121314",
+        "version": "MetricsItem/2.0",
+        "size": 0,
+        "chartType": 2,
+        "metricScope": 0,
+        "resourceIds": [
+          "${sourceId}"
+        ],
+        "timeContext": {
+          "durationMs": 2592000000,
+          "endTime": null,
+          "createdTime": "2024-03-20T10:00:00.000Z",
+          "isInitialTime": true,
+          "grain": 1,
+          "useDashboardTimeRange": false
+        },
+        "metrics": [
+          {
+            "resourceMetadata": {
+              "id": "${sourceId}"
+            },
+            "name": "SecurityEvent",
+            "aggregationType": 4,
+            "namespace": "microsoft.security/insights",
+            "metricVisualization": {
+              "displayName": "Failed Login Attempts",
+              "color": "#FF0000"
+            }
+          }
+        ],
+        "title": "Security Monitoring (30 Days)",
+        "visualization": "linechart",
+        "gridFormatType": 1,
+        "tileSettings": {
+          "titleContent": {
+            "formatOptions": {
+              "thresholdsOptions": "icons",
+              "thresholdsGrid": [
+                {
+                  "operator": "<=",
+                  "thresholdValue": 0,
+                  "representation": "success"
+                },
+                {
+                  "operator": "Default",
+                  "representation": "critical"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "name": "security-metrics"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "### SLO Status Explanation\n\n**Static Web App Availability:**\n✅ **Meeting SLO (>=99.99%)**: Excellent availability\n⚠️ **Warning (>=99.9% and <99.99%)**: Needs attention\n❌ **Critical (<99.9%)**: Immediate action required\n\n**Key Vault Availability:**\n✅ **Meeting SLO (>=99.9%)**: Good availability\n❌ **Not Meeting SLO (<99.9%)**: Immediate attention required\n\n**Application Insights Data Availability:**\n✅ **Meeting SLO (>=99.9%)**: Data is available and accessible\n❌ **Not Meeting SLO (<99.9%)**: Data availability issues\n\n**Security Monitoring:**\n✅ **No Unauthorized Access Attempts**: Secure\n❌ **Unauthorized Access Detected**: Immediate action required"
       },
       "name": "status-explanation"
     }
