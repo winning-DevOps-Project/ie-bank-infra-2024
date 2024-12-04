@@ -2,39 +2,42 @@
 param sourceId string
 @sys.description('The location of the resource')
 param location string
-param appInsightsId string
+//param appInsightsId string
+
 var workbookSerializedData = '''
 {
-  "version": "1.0",
+  "version": "Notebook/1.0",
   "items": [
     {
-      "type": "textblock",
+      "type": 1,
       "content": {
-        "json": {
-          "value": "Hello, welcome to Devopps Workbook!"
-        }
-      }
+        "json": "## Hello, welcome to Devopps Workbook!"
+      },
+      "name": "text - 1"
     },
     {
-      "type": "textblock",
+      "type": 1,
       "content": {
-        "json": {
-          "value": "Application Insights Resource ID: APPINSIGHTSPLACEHOLDER"
-        }
-      }
+        "json": "Application Insights Resource ID: ${appInsightsId}"
+      },
+      "name": "text - 2"
     }
-  ]
+  ],
+  "styleSettings": {},
+  "fromTemplateId": "sentinel-UserWorkbook",
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
 }
 '''
 
 resource DevopsWorkbook 'Microsoft.Insights/workbooks@2022-04-01' = {
   name: guid('DevoppsWorkbook', resourceGroup().id)
   location: location
-  kind:'shared'
+  kind: 'shared'
   properties: {
     category: 'workbook'
     displayName: 'Devopps Workbook'
-    serializedData: replace(workbookSerializedData, 'APPINSIGHTSPLACEHOLDER', appInsightsId )
+    serializedData: workbookSerializedData
     sourceId: sourceId
+    version: '1.0'
   }
 }

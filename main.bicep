@@ -97,7 +97,7 @@ module workbook 'modules/workbook.bicep' = {
   params: {
     sourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
     location: location
-    appInsightsId: appInsights.outputs.appInsightsId
+    //appInsightsId: appInsights.outputs.appInsightsId
   }
   dependsOn: [
     logAnalytics
