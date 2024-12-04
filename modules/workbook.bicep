@@ -172,34 +172,23 @@ var workbookSerializedData = '''
         "version": "MetricsItem/2.0",
         "size": 0,
         "chartType": 2,
+        "resourceType": "microsoft.insights/components",
         "metricScope": 0,
         "resourceIds": [
-          "${sourceId}"
+          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.Insights/components/devopps-insights-dev"
         ],
         "timeContext": {
-          "durationMs": 2592000000,
-          "endTime": null,
-          "createdTime": "2024-03-20T10:00:00.000Z",
-          "isInitialTime": true,
-          "grain": 1,
-          "useDashboardTimeRange": false
+          "durationMs": 2592000000
         },
         "metrics": [
           {
-            "resourceMetadata": {
-              "id": "${sourceId}"
-            },
-            "name": "DataAvailability",
-            "aggregationType": 4,
-            "namespace": "microsoft.insights/components",
-            "metricVisualization": {
-              "displayName": "Data Availability",
-              "color": "#47BF4F"
-            }
+            "namespace": "microsoft.insights/components/kusto",
+            "metric": "microsoft.insights/components/kusto-Availability-availabilityResults/availabilityPercentage",
+            "aggregation": 4,
+            "splitBy": null
           }
         ],
         "title": "Application Insights Data Availability (30 Days)",
-        "visualization": "linechart",
         "gridFormatType": 1,
         "tileSettings": {
           "titleContent": {
@@ -218,6 +207,9 @@ var workbookSerializedData = '''
               ]
             }
           }
+        },
+        "gridSettings": {
+          "rowLimit": 10000
         }
       },
       "name": "ai-metrics"
@@ -225,9 +217,9 @@ var workbookSerializedData = '''
     {
       "type": 1,
       "content": {
-        "json": "### Security Monitoring (Unauthorized Access Attempts)"
+        "json": "### Failed requests count in the last 30 days"
       },
-      "name": "security-header"
+      "name": "failed-requests"
     },
     {
       "type": 10,
@@ -236,34 +228,23 @@ var workbookSerializedData = '''
         "version": "MetricsItem/2.0",
         "size": 0,
         "chartType": 2,
+        "resourceType": "microsoft.insights/components",
         "metricScope": 0,
         "resourceIds": [
-          "${sourceId}"
+          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.Insights/components/devopps-insights-dev"
         ],
         "timeContext": {
-          "durationMs": 2592000000,
-          "endTime": null,
-          "createdTime": "2024-03-20T10:00:00.000Z",
-          "isInitialTime": true,
-          "grain": 1,
-          "useDashboardTimeRange": false
+          "durationMs": 2592000000
         },
         "metrics": [
           {
-            "resourceMetadata": {
-              "id": "${sourceId}"
-            },
-            "name": "SecurityEvent",
-            "aggregationType": 4,
-            "namespace": "microsoft.security/insights",
-            "metricVisualization": {
-              "displayName": "Failed Login Attempts",
-              "color": "#FF0000"
-            }
+            "namespace": "microsoft.insights/components/kusto",
+            "metric": "microsoft.insights/components/kusto-Failures-requests/failed",
+            "aggregation": 1,
+            "splitBy": null
           }
         ],
         "title": "Security Monitoring (30 Days)",
-        "visualization": "linechart",
         "gridFormatType": 1,
         "tileSettings": {
           "titleContent": {
@@ -272,7 +253,7 @@ var workbookSerializedData = '''
               "thresholdsGrid": [
                 {
                   "operator": "<=",
-                  "thresholdValue": 0,
+                  "thresholdValue": 5,
                   "representation": "success"
                 },
                 {
@@ -282,14 +263,17 @@ var workbookSerializedData = '''
               ]
             }
           }
+        },
+        "gridSettings": {
+          "rowLimit": 10000
         }
       },
-      "name": "security-metrics"
+      "name": "requests-metrics"
     },
     {
       "type": 1,
       "content": {
-        "json": "### SLO Status Explanation\n\n**Static Web App Availability:**\n✅ **Meeting SLO (>=99.99%)**: Excellent availability\n⚠️ **Warning (>=99.9% and <99.99%)**: Needs attention\n❌ **Critical (<99.9%)**: Immediate action required\n\n**Key Vault Availability:**\n✅ **Meeting SLO (>=99.9%)**: Good availability\n❌ **Not Meeting SLO (<99.9%)**: Immediate attention required\n\n**Application Insights Data Availability:**\n✅ **Meeting SLO (>=99.9%)**: Data is available and accessible\n❌ **Not Meeting SLO (<99.9%)**: Data availability issues\n\n**Security Monitoring:**\n✅ **No Unauthorized Access Attempts**: Secure\n❌ **Unauthorized Access Detected**: Immediate action required"
+        "json": "### SLO Status Explanation\n\n**Static Web App Availability:**\n✅ **Meeting SLO (>=99.99%)**: Excellent availability\n⚠️ **Warning (>=99.9% and <99.99%)**: Needs attention\n❌ **Critical (<99.9%)**: Immediate action required\n\n**Key Vault Availability:**\n✅ **Meeting SLO (>=99.9%)**: Good availability\n❌ **Not Meeting SLO (<99.9%)**: Immediate attention required\n\n**Application Insights Data Availability:**\n✅ **Meeting SLO (>=99.9%)**: Data is available and accessible\n❌ **Not Meeting SLO (<99.9%)**: Data availability issues\n\n**Security Monitoring:**\n✅ **No failed requests**: Secure\n❌ **Too many failed requests at the same time(more than 5)**: Immediate action required"
       },
       "name": "status-explanation"
     }
