@@ -12,7 +12,7 @@ env:
   RESOURCE_GROUP_DEV: BCSAI2024-DEVOPS-STUDENTS-A-DEV
   RESOURCE_GROUP_UAT: BCSAI2024-DEVOPS-STUDENTS-A-UAT
   RESOURCE_GROUP_PROD: BCSAI2024-DEVOPS-STUDENTS-A-PROD
-  
+
 jobs:
   build:
     name: Build and Lint Key Vault Bicep
@@ -37,7 +37,7 @@ jobs:
         run: |
           az deployment group what-if \
             --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
-            --template-file ./keyvault.bicep \
+            --template-file ./key-vault.bicep \
             --parameters \
               name="test-keyvault" \
               location="eastus" \
