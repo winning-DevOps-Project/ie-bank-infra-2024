@@ -17,9 +17,16 @@ var workbookSerializedData = '''
     {
       "type": 1,
       "content": {
-        "json": "## Static Web App Availability Monitoring"
+        "json": "## SLO Monitoring Dashboard"
       },
       "name": "slo-header"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "### Static Web App Availability (Target: 99.99%)"
+      },
+      "name": "swa-header"
     },
     {
       "type": 10,
@@ -81,15 +88,6 @@ var workbookSerializedData = '''
                 }
               ]
             }
-          },
-          "leftContent": {
-            "columnMatch": "Value",
-            "formatter": 2,
-            "formatOptions": {
-              "min": 99,
-              "max": 100,
-              "palette": "redGreen"
-            }
           }
         }
       },
@@ -98,7 +96,83 @@ var workbookSerializedData = '''
     {
       "type": 1,
       "content": {
-        "json": "### Availability Status Explanation\n\n✅ **Meeting SLO (>=99.99%)**: Excellent availability, meeting our target\n\n⚠️ **Warning (>=99.9% and <99.99%)**: Availability is good but below target\n\n❌ **Critical (<99.9%)**: Immediate attention required"
+        "json": "### Key Vault Availability (Last 7 Days)"
+      },
+      "name": "kv-header"
+    },
+    {
+      "type": 10,
+      "content": {
+        "chartId": "workbook5678",
+        "version": "MetricsItem/2.0",
+        "size": 0,
+        "chartType": 2,
+        "metricScope": 0,
+        "resourceIds": [
+          "${sourceId}"
+        ],
+        "timeContext": {
+          "durationMs": 604800000,
+          "endTime": null,
+          "createdTime": "2024-03-20T10:00:00.000Z",
+          "isInitialTime": true,
+          "grain": 1,
+          "useDashboardTimeRange": false
+        },
+        "metrics": [
+          {
+            "resourceMetadata": {
+              "id": "${sourceId}"
+            },
+            "name": "Availability",
+            "aggregationType": 4,
+            "namespace": "microsoft.keyvault/vaults",
+            "metricVisualization": {
+              "displayName": "Overall Vault Availability",
+              "color": "#47BF4F"
+            }
+          },
+          {
+            "resourceMetadata": {
+              "id": "${sourceId}"
+            },
+            "name": "ServiceApiLatency",
+            "aggregationType": 4,
+            "namespace": "microsoft.keyvault/vaults",
+            "metricVisualization": {
+              "displayName": "Overall Vault Latency",
+              "color": "#FF9900"
+            }
+          }
+        ],
+        "title": "Key Vault Performance (7 Days)",
+        "visualization": "linechart",
+        "gridFormatType": 1,
+        "tileSettings": {
+          "titleContent": {
+            "formatOptions": {
+              "thresholdsOptions": "icons",
+              "thresholdsGrid": [
+                {
+                  "operator": ">=",
+                  "thresholdValue": 99.9,
+                  "representation": "success"
+                },
+                {
+                  "operator": "Default",
+                  "representation": "critical"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "name": "keyvault-metrics"
+    },
+    {
+      "type": 1,
+      "content": {
+        "json": "### SLO Status Explanation\n\n**Static Web App Availability:**\n✅ **Meeting SLO (>=99.99%)**: Excellent availability\n⚠️ **Warning (>=99.9% and <99.99%)**: Needs attention\n❌ **Critical (<99.9%)**: Immediate action required\n\n**Key Vault Availability:**\n✅ **Meeting SLO (>=99.9%)**: Good availability\n❌ **Not Meeting SLO (<99.9%)**: Immediate attention required"
       },
       "name": "status-explanation"
     }
