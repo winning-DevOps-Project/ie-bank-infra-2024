@@ -35,37 +35,23 @@ var workbookSerializedData = '''
         "version": "MetricsItem/2.0",
         "size": 0,
         "chartType": 2,
+        "resourceType": "microsoft.web/staticsites",
         "metricScope": 0,
         "resourceIds": [
-          "${sourceId}"
+          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.Web/staticSites/devopps-swa-dev"
         ],
         "timeContext": {
-          "durationMs": 2592000000,
-          "endTime": null,
-          "createdTime": "2024-03-20T10:00:00.000Z",
-          "isInitialTime": true,
-          "grain": 1,
-          "useDashboardTimeRange": false
+          "durationMs": 2592000000
         },
         "metrics": [
           {
-            "resourceMetadata": {
-              "id": "${sourceId}"
-            },
-            "name": "Availability",
-            "aggregationType": 4,
             "namespace": "microsoft.web/staticsites",
-            "metricVisualization": {
-              "displayName": "Availability",
-              "color": "#47BF4F"
-            }
+            "metric": "microsoft.web/staticsites--SiteHits",
+            "aggregation": 7,
+            "splitBy": null
           }
         ],
         "title": "Static Web App Availability (30 Days)",
-        "gridSettings": {
-          "rowLimit": 10000
-        },
-        "visualization": "linechart",
         "gridFormatType": 1,
         "tileSettings": {
           "titleContent": {
@@ -89,6 +75,9 @@ var workbookSerializedData = '''
               ]
             }
           }
+        },
+        "gridSettings": {
+          "rowLimit": 10000
         }
       },
       "name": "availability-metric"
