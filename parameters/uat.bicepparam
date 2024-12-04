@@ -42,17 +42,19 @@ param keyVaultRoleAssignments  = [
 ]
 // Container Registry
 param containerRegistryName = 'DevoppsUatACR'
+param acrSku = 'Basic'
 
 // postgresql server
 param postgreSQLServerName = 'devopps-dbsrv-uat'
-
+param SerskuName = 'Standard_B1ms'
+param SerskuTier = 'Burstable'
 
 // postgresql server
 param postgreSQLDatabaseName = 'devopps-db-uat'
 
 // App service plan
 param appServicePlanName = 'devopps-asp-uat'
-param appServicePlanSku = 'B1'
+param appServicePlanSku = 'F1'
 
 // be 
 param appServiceWebsiteBEName = 'devopps-be-uat' 
@@ -69,7 +71,7 @@ param appServiceBeAppSettings = [
 
 // Static Web App
 param staticWebAppName = 'devopps-swa-uat'
-
+param swaSku = 'Free'
  
 // LAW
 param logAnalyticsWorkspaceName = 'devopps-law-uat'

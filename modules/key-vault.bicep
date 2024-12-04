@@ -22,7 +22,7 @@ param enableVaultForTemplateDeployment bool = true
 param enableSoftDelete bool 
 
 @description('Specifies the SKU for the vault.')
-param sku string = 'standard'
+param sku string
 
 param roleAssignments array = []
 

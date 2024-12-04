@@ -9,12 +9,15 @@ param postgreSQLAdminServicePrincipalObjectId string
 param postgreSQLAdminServicePrincipalName string
 param workspaceResourceId string
 
+param SerskuName string = 'Standard_B1ms'
+param SerskuTier string = 'Burstable'
+
 resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: postgreSQLServerName
   location: location
   sku: {
-    name: 'Standard_B1ms'
-    tier: 'Burstable'
+    name: SerskuName
+    tier: SerskuTier
   }
   properties: {
     //administratorLogin: administratorLogin
