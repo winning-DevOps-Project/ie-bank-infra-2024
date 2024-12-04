@@ -37,7 +37,7 @@ jobs:
         run: |
           az deployment group what-if \
             --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
-            --template-file ./key-vault.bicep \
+            --template-file ./modules/key-vault.bicep \
             --parameters \
               name="test-keyvault" \
               location="eastus" \
