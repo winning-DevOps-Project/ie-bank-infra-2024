@@ -47,35 +47,7 @@ jobs:
 
           deploymentName: ${{ env.USER_ALIAS }}-dev
       
-      # Unit Test: Validate Key Vault Deployment and Configuration
-      - name: Test Key Vault Deployment
-        id: test-vault
-        run: |
-          az keyvault show --name devopps-kv-dev --resource-group ${{ env.RESOURCE_GROUP_DEV }}
-        continue-on-error: false
-
-      # Validate Key Vault Properties
-      - name: Verify Key Vault Properties
-        run: |
-          az keyvault show --name devopps-kv-dev --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
-            --query "{location: location, enabledForDeployment: properties.enabledForDeployment, enabledForTemplateDeployment: properties.enabledForTemplateDeployment, publicNetworkAccess: properties.publicNetworkAccess}" \
-            --output json
-
-      # Validate Key Vault Access Policies
-      - name: Validate Key Vault Access Policies
-        run: |
-          az keyvault show --name devopps-kv-dev --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
-            --query "properties.accessPolicies[].{principalId: principalId, permissions: permissions}" \
-            --output json
-
-      # Validate RBAC Permissions
-      - name: Validate Key Vault RBAC Permissions
-        run: |
-          az role assignment list \
-            --scope /subscriptions/${{ env.SUBSCRIPTION_ID_DEV }}/resourceGroups/${{ env.RESOURCE_GROUP_DEV }}/providers/Microsoft.KeyVault/vaults/devopps-kv-dev \
-            --query "[].{role: roleDefinitionName, principal: principalName}" \
-            --output table
-              
+   
 
   deploy-uat:
     if: (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main') || github.ref == 'refs/heads/main'
@@ -102,33 +74,3 @@ jobs:
           
           deploymentName: ${{ env.USER_ALIAS }}-uat
 
-      # Unit Test: Validate Key Vault Deployment and Configuration
-      - name: Test Key Vault Deployment
-        id: test-vault
-        run: |
-          az keyvault show --name devopps-kv-uat --resource-group ${{ env.RESOURCE_GROUP_UAT }}
-        continue-on-error: false
-
-      # Validate Key Vault Properties
-      - name: Verify Key Vault Properties
-        run: |
-          az keyvault show --name devopps-kv-uat --resource-group ${{ env.RESOURCE_GROUP_UAT }} \
-            --query "{location: location, enabledForDeployment: properties.enabledForDeployment, enabledForTemplateDeployment: properties.enabledForTemplateDeployment, publicNetworkAccess: properties.publicNetworkAccess}" \
-            --output json
-
-      # Validate Key Vault Access Policies
-      - name: Validate Key Vault Access Policies
-        run: |
-          az keyvault show --name devopps-kv-uat --resource-group ${{ env.RESOURCE_GROUP_UAT }} \
-            --query "properties.accessPolicies[].{principalId: principalId, permissions: permissions}" \
-            --output json
-
-      # Validate RBAC Permissions
-      - name: Validate Key Vault RBAC Permissions
-        run: |
-          az role assignment list \
-            --scope /subscriptions/${{ env.SUBSCRIPTION_ID_DEV }}/resourceGroups/${{ env.RESOURCE_GROUP_UAT }}/providers/Microsoft.KeyVault/vaults/devopps-kv-uat \
-            --query "[].{role: roleDefinitionName, principal: principalName}" \
-            --output table
-
-     

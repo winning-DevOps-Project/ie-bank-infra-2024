@@ -1,0 +1,46 @@
+name: Key Vault Testing
+
+on:
+    workflow_dispatch:
+    push:
+        paths-ignore:
+          - 'scripts/**'
+    pull_request:
+      branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build and Lint Key Vault Bicep
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Run Bicep Linter
+        run: |
+          az bicep build --file ./keyvault.bicep
+
+  test-keyvault:
+    name: Validate and Dry Run Key Vault
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Dry Run Key Vault Deployment
+        run: |
+          az deployment group what-if \
+            --resource-group my-main-resource-group \
+            --template-file ./keyvault.bicep \
+            --parameters \
+              name="test-keyvault" \
+              location="eastus" \
+              enableSoftDelete=true \
+              enableVaultForDeployment=true \
+              enableVaultForTemplateDeployment=true \
+              enableRbacAuthorization=true \
+              sku="standard" \
+              roleAssignments=[]
+
+
