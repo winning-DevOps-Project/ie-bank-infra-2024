@@ -41,4 +41,3 @@ resource deploymentTokenSecret 'Microsoft.KeyVault/vaults/secrets@2021-06-01-pre
 }
 
 output staticWebAppUrl string = staticSite.properties.defaultHostname
-output staticWebAppId string = staticSite.id

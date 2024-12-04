@@ -2,10 +2,8 @@
 param sourceId string
 @sys.description('The location of the resource')
 param location string
-@sys.description('The resource ID of the Static Web App to monitor')
-param staticWebAppId string
 
-var workbookSerializedData = format('''
+var workbookSerializedData = '''
 {
   "version": "Notebook/1.0",
   "items": [
@@ -24,13 +22,6 @@ var workbookSerializedData = format('''
       "name": "slo-header"
     },
     {
-      "type": 1,
-      "content": {
-        "json": "### Current SLO Target: 99.99% Availability"
-      },
-      "name": "slo-target"
-    },
-    {
       "type": 10,
       "content": {
         "chartId": "workbook1234",
@@ -39,7 +30,7 @@ var workbookSerializedData = format('''
         "chartType": 2,
         "metricScope": 0,
         "resourceIds": [
-          "{0}"
+          "${sourceId}"
         ],
         "timeContext": {
           "durationMs": 2592000000,
@@ -52,25 +43,13 @@ var workbookSerializedData = format('''
         "metrics": [
           {
             "resourceMetadata": {
-              "id": "{0}"
+              "id": "${sourceId}"
             },
-            "name": "HttpServerErrors",
-            "aggregationType": 1,
+            "name": "Availability",
+            "aggregationType": 4,
             "namespace": "microsoft.web/staticsites",
             "metricVisualization": {
-              "displayName": "Server Errors (5xx)",
-              "color": "#FF0000"
-            }
-          },
-          {
-            "resourceMetadata": {
-              "id": "{0}"
-            },
-            "name": "HttpSuccessful",
-            "aggregationType": 1,
-            "namespace": "microsoft.web/staticsites",
-            "metricVisualization": {
-              "displayName": "Successful Requests (2xx)",
+              "displayName": "Availability",
               "color": "#47BF4F"
             }
           }
@@ -102,6 +81,15 @@ var workbookSerializedData = format('''
                 }
               ]
             }
+          },
+          "leftContent": {
+            "columnMatch": "Value",
+            "formatter": 2,
+            "formatOptions": {
+              "min": 99,
+              "max": 100,
+              "palette": "redGreen"
+            }
           }
         }
       },
@@ -118,7 +106,7 @@ var workbookSerializedData = format('''
   "styleSettings": {},
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
 }
-''', staticWebAppId)
+'''
 
 resource DevopsWorkbook 'Microsoft.Insights/workbooks@2022-04-01' = {
   name: guid('DevoppsWorkbook', resourceGroup().id)
