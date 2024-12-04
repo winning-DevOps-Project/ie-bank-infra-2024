@@ -2,8 +2,10 @@
 param sourceId string
 @sys.description('The location of the resource')
 param location string
+@sys.description('The resource ID of the Static Web App to monitor')
+param staticWebAppId string
 
-var workbookSerializedData = '''
+var workbookSerializedData = format('''
 {
   "version": "Notebook/1.0",
   "items": [
@@ -37,7 +39,7 @@ var workbookSerializedData = '''
         "chartType": 2,
         "metricScope": 0,
         "resourceIds": [
-          "${sourceId}"
+          "{0}"
         ],
         "timeContext": {
           "durationMs": 2592000000,
@@ -50,13 +52,25 @@ var workbookSerializedData = '''
         "metrics": [
           {
             "resourceMetadata": {
-              "id": "${sourceId}"
+              "id": "{0}"
             },
-            "name": "Availability",
-            "aggregationType": 4,
+            "name": "HttpServerErrors",
+            "aggregationType": 1,
             "namespace": "microsoft.web/staticsites",
             "metricVisualization": {
-              "displayName": "Availability",
+              "displayName": "Server Errors (5xx)",
+              "color": "#FF0000"
+            }
+          },
+          {
+            "resourceMetadata": {
+              "id": "{0}"
+            },
+            "name": "HttpSuccessful",
+            "aggregationType": 1,
+            "namespace": "microsoft.web/staticsites",
+            "metricVisualization": {
+              "displayName": "Successful Requests (2xx)",
               "color": "#47BF4F"
             }
           }
@@ -88,15 +102,6 @@ var workbookSerializedData = '''
                 }
               ]
             }
-          },
-          "leftContent": {
-            "columnMatch": "Value",
-            "formatter": 2,
-            "formatOptions": {
-              "min": 99,
-              "max": 100,
-              "palette": "redGreen"
-            }
           }
         }
       },
@@ -113,7 +118,7 @@ var workbookSerializedData = '''
   "styleSettings": {},
   "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
 }
-'''
+''', staticWebAppId)
 
 resource DevopsWorkbook 'Microsoft.Insights/workbooks@2022-04-01' = {
   name: guid('DevoppsWorkbook', resourceGroup().id)
