@@ -20,8 +20,8 @@
       "enableRbacAuthorization": {
         "value": true
       },
-      "sku": {
-        "value": "standard"
+      "sku": { 
+        "value": "Standard"
       },
       "roleAssignments": {
         "value": [
