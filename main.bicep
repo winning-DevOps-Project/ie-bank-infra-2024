@@ -93,11 +93,10 @@ module appInsights 'modules/app-insights.bicep' = {
 }
 
 module workbook 'modules/workbook.bicep' = {
-  name: 'devopsWorkbook'
+  name: 'DevoppsWorkbook'
   params: {
     sourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
     location: location
-    appInsightsId: appInsights.outputs.appInsightsId
   }
   dependsOn: [
     logAnalytics
