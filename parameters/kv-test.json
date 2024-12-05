@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "name": {
-        "value": "test-kv-devopps"
+        "value": "test-kv1-devopps"
       },
       "location": {
         "value": "North Europe"
@@ -38,7 +38,8 @@
         ]
       },
       "workspaceResourceId": {
-        "value": "/subscriptions/<your-subscription-id>/resourceGroups/<your-resource-group>/providers/Microsoft.OperationalInsights/workspaces/<your-workspace-name>"
+        
+      "value": "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.OperationalInsights/workspaces/devopps-law-dev"
       }
     }
   }  
