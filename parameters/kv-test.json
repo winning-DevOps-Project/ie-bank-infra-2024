@@ -21,7 +21,7 @@
         "value": true
       },
       "sku": {
-        "value": "Standard"
+        "value": "standard"
       },
       "roleAssignments": {
         "value": [

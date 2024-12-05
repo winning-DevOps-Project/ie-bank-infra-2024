@@ -21,7 +21,6 @@ param enableSoftDelete bool
 
 @description('Specifies the SKU for the vault.')
 param sku string
-
 param roleAssignments array = []
 
 var builtInRoleNames = {
