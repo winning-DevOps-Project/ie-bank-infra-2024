@@ -47,7 +47,12 @@ jobs:
               --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
               --template-file ./modules/key-vault.bicep \
               --parameters @parameters/kv-test.json
-  
+
+  deploy-keyvault:
+    name: Deploy Key Vault
+    runs-on: ubuntu-latest
+    needs: test-keyvault
+    steps:
       - name: Deploy Test Key Vault
         run: |
             az deployment group create \
