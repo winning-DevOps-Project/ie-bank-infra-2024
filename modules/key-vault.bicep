@@ -2,7 +2,7 @@ metadata name = 'Key Vaults'
 metadata description = 'This module deploys a Key Vault.'
 metadata owner = 'Azure/module-maintainers'
 
-// Parameters
+
 @description('Required. Name of the Key Vault. Must be globally unique.')
 param name string
 
