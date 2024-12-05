@@ -36,6 +36,9 @@
             "principalType": "Group"
           }
         ]
+      },
+      "workspaceResourceId": {
+        "value": "test-law"
       }
     }
   }  
