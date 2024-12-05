@@ -38,7 +38,7 @@
         ]
       },
       "workspaceResourceId": {
-        "value": "test"
+        "value": "/subscriptions/<your-subscription-id>/resourceGroups/<your-resource-group>/providers/Microsoft.OperationalInsights/workspaces/<your-workspace-name>"
       }
     }
   }  
