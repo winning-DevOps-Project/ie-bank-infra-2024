@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "name": {
-        "value": "test-kv1-devopps"
+        "value": "kv-devopps-test"
       },
       "location": {
         "value": "North Europe"
