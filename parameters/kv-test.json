@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "name": {
-        "value": "test-keyvault"
+        "value": "test-kv-devopps"
       },
       "location": {
         "value": "North Europe"
@@ -38,7 +38,7 @@
         ]
       },
       "workspaceResourceId": {
-        "value": "test-law"
+        "value": "test"
       }
     }
   }  
