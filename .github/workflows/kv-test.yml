@@ -3,9 +3,11 @@ name: Key Vault Testing
 on:
     workflow_dispatch:
     push:
-        paths:
-            - './modules/key-vault.bicep' 
-            - './parameters/kv-test.json'
+        paths-ignore:
+            - 'scripts/**'
+        # paths:
+        #     - './modules/key-vault.bicep' 
+        #     - './parameters/kv-test.json'
     pull_request:
         branches: [ "main" ]
 
