@@ -236,7 +236,7 @@ module actionGroupModule 'modules/action-group.bicep' = {
 module metricsAlertModule 'modules/metrics-alerts.bicep' = {
   name: 'Alerts'
   params: {
-    appServiceId: resourceId('Microsoft.Web/sites', appServiceWebsiteBEName)
+    appServiceApp: resourceId('Microsoft.Web/sites', appServiceWebsiteBEName)
     appInsightsId: appInsights.outputs.appInsightsId
     actionGroupId: actionGroupModule.outputs.actionGroupId
   }

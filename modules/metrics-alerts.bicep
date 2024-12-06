@@ -1,7 +1,7 @@
 @description('App Insights Resource ID')
 param appInsightsId string
 @description('App Service Resource ID')
-param appServiceId string
+param appServiceApp string
 
 @description('Action Group Resource ID')
 param actionGroupId string
@@ -53,7 +53,7 @@ resource cpuUsageAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
     severity: 3
     enabled: true
     scopes: [
-      appServiceId
+      appServiceApp
     ]
     evaluationFrequency: 'PT1M'
     windowSize: 'PT5M'

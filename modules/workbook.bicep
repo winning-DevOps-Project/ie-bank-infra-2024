@@ -152,46 +152,23 @@ var workbookSerializedData = '''
         "version": "MetricsItem/2.0",
         "size": 0,
         "chartType": 2,
+        "resourceType": "microsoft.keyvault/vaults",
         "metricScope": 0,
         "resourceIds": [
-          "${sourceId}"
+          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.KeyVault/vaults/devopps-kv-dev"
         ],
         "timeContext": {
-          "durationMs": 604800000,
-          "endTime": null,
-          "createdTime": "2024-03-20T10:00:00.000Z",
-          "isInitialTime": true,
-          "grain": 1,
-          "useDashboardTimeRange": false
+          "durationMs": 604800000
         },
         "metrics": [
           {
-            "resourceMetadata": {
-              "id": "${sourceId}"
-            },
-            "name": "Availability",
-            "aggregationType": 4,
             "namespace": "microsoft.keyvault/vaults",
-            "metricVisualization": {
-              "displayName": "Overall Vault Availability",
-              "color": "#47BF4F"
-            }
-          },
-          {
-            "resourceMetadata": {
-              "id": "${sourceId}"
-            },
-            "name": "ServiceApiLatency",
-            "aggregationType": 4,
-            "namespace": "microsoft.keyvault/vaults",
-            "metricVisualization": {
-              "displayName": "Overall Vault Latency",
-              "color": "#FF9900"
-            }
+            "metric": "microsoft.keyvault/vaults--Availability",
+            "aggregation": 4,
+            "splitBy": null
           }
         ],
         "title": "Key Vault Performance (7 Days)",
-        "visualization": "linechart",
         "gridFormatType": 1,
         "tileSettings": {
           "titleContent": {
@@ -210,6 +187,9 @@ var workbookSerializedData = '''
               ]
             }
           }
+        },
+        "gridSettings": {
+          "rowLimit": 10000
         }
       },
       "name": "keyvault-metrics"
