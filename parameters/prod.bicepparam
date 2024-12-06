@@ -48,7 +48,7 @@ param swaSku = 'Standard'
 // LAW
 param logAnalyticsWorkspaceName = 'devopps-law-prod'
 param logAnalyticsRetentionDays = 30
-param logAnalyticsSkuName = 'Standard'
+param logAnalyticsSkuName = 'PerGB2018'
 
 // Insights
 param appInsightsName = 'devopps-insights-prod'
