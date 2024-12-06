@@ -95,9 +95,9 @@ jobs:
           subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
           resourceGroupName: ${{ env.RESOURCE_GROUP_UAT }}
           template: ./main.bicep
-          parameters: ./parameters/uat.bicepparam  # backendContainerAPIEnvVarDBPASS='${{ secrets.DBPASS }}' backendContainerAPIEnvVarDBUSER='${{ secrets.DBUSER }}' backendContainerAPIEnvVarDBHOST='${{ vars.DBHOST }}' backendContainerAPIEnvVarDBNAME='${{ vars.DBNAME }}' backendContainerAPIEnvVarVarENV='${{ vars.ENV }}' backendContainerAPIEnvVarFLASK_APP='${{ vars.FLASK_APP }}' backendContainerAPIEnvVarFLASK_DEBUG='${{ vars.FLASK_DEBUG }}'
-          # frontendRepositoryUrl=https://github.com/DavidVart/ie-bank-fe-2024-final
-          
+          parameters: >
+            ./parameters/uat.bicepparam
+            slackWebhookUrl=${{ secrets.SLACK_WEBHOOK_URL }}
           deploymentName: ${{ env.USER_ALIAS }}-uat
 
       # Unit Test: Validate Key Vault Deployment and Configuration
