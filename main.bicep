@@ -236,14 +236,12 @@ module actionGroupModule 'modules/action-group.bicep' = {
 module metricsAlertModule 'modules/metrics-alerts.bicep' = {
   name: 'Alerts'
   params: {
-    appServiceApp: resourceId('Microsoft.Web/sites', appServiceWebsiteBEName)
     appInsightsId: appInsights.outputs.appInsightsId
     actionGroupId: actionGroupModule.outputs.actionGroupId
     keyVaultId: keyVault.outputs.resourceId
     postgreSQLServerId: postgresSQLServer.outputs.id
   }
   dependsOn: [
-    appServiceBE
     appInsights
     actionGroupModule
     keyVault
