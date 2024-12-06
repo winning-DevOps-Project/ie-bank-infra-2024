@@ -1,7 +1,7 @@
 @description('Location of the resource')
 param location string = resourceGroup().location
 @description('Name of the Logic App')
-param logicAppName string = 'DevoppsLogicApp'
+param logicAppName string 
 @description('Slack Webhook URL to send alerts')
 @secure()
 param slackWebhookUrl string

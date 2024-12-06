@@ -101,7 +101,7 @@ param appInsightsType = 'web'
 param appInsightsRetentionDays = 90
 
 
-param logicAppName = 'DevoppsLogicApp'
+param logicAppName = 'MyLogicApp'
 param slackWebhookUrl = 'https://example.com/placeholder' // Placeholder value
 
 
