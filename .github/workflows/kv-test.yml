@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
   push:
     paths:
-        - './modules/key-vault.bicep/**'
-        - './parameters/kv-test.json/**'
-#   pull_request:
-#     branches: [ "main" ]
+        - '../modules/key-vault.bicep'
+        - '../parameters/kv-test.json'
+  pull_request:
+    branches: [ "main" ]
 
 env:
   RESOURCE_GROUP_DEV: BCSAI2024-DEVOPS-STUDENTS-A-DEV
@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Bicep Linter
         run: |
-          az bicep build --file ./modules/key-vault.bicep
+          az bicep build --file ../modules/key-vault.bicep
 
   test-keyvault:
     name: Validate and Dry Run Key Vault
@@ -43,7 +43,7 @@ jobs:
         run: |
             az deployment group what-if \
               --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
-              --template-file ./modules/key-vault.bicep \
+              --template-file ../modules/key-vault.bicep \
               --parameters @parameters/kv-test.json
 
   deploy-keyvault:
@@ -63,7 +63,7 @@ jobs:
         run: |
             az deployment group create \
               --resource-group ${{ env.RESOURCE_GROUP_DEV }} \
-              --template-file ./modules/key-vault.bicep \
+              --template-file ../modules/key-vault.bicep \
               --parameters @parameters/kv-test.json 
 
 
