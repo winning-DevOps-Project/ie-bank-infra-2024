@@ -228,7 +228,7 @@ module logicAppModule 'modules/logic-app.bicep' = {
 module actionGroupModule 'modules/action-group.bicep' = {
   name: 'AlertActionGroup'
   params: {
-    actionGroupName: 'CpuUsageAlertGroup'
+    actionGroupName: 'AlertGroup'
     logicAppEndpointUri: logicAppModule.outputs.logicAppEndpointUri
   }
 }
