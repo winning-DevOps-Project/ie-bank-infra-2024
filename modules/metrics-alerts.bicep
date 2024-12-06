@@ -63,7 +63,7 @@ resource cpuUsageAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
         {
           name: 'CpuUsage'
           criterionType: 'StaticThresholdCriterion'
-          metricName: 'CpuPercentage'
+          metricName: 'CPU Time'
           operator: 'GreaterThan'
           threshold: 80
           timeAggregation: 'Average'
