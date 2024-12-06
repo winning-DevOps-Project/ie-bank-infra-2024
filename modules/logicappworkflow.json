@@ -1,28 +1,27 @@
 {
-  "definition": {
-    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-    "actions": {
-      "Send_to_Slack": {
-        "type": "Http",
-        "inputs": {
-          "method": "POST",
-          "uri": "@parameters('$connections')['slack']['connectionProperties']['webhookUrl']",
-          "headers": {
-            "Content-Type": "application/json"
-          },
-          "body": {
-            "text": "logic app triggered -> sending alert to slack!"
-          }
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "actions": {
+    "Send_to_Slack": {
+      "type": "Http",
+      "inputs": {
+        "method": "POST",
+        "uri": "@parameters('$connections')['slack']['connectionProperties']['webhookUrl']",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "text": "logic app triggered -> sending alert to slack!"
         }
       }
-    },
-    "triggers": {
-      "manual": {
-        "type": "Request",
-        "kind": "Http",
-        "inputs": {
-          "schema": {}
-        }
+    }
+  },
+  "triggers": {
+    "manual": {
+      "type": "Request",
+      "kind": "Http",
+      "inputs": {
+        "schema": {}
       }
     }
   },
