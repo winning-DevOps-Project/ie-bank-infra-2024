@@ -211,7 +211,7 @@ module staticWebApp 'modules/static-web-app.bicep' = {
 
 
 @description('Logic app name')
-param logicAppName string
+param logicAppName string = 'DevoppsLogicApp'
 @description('URL for alerts to Slack')
 @secure()
 param slackWebhookUrl string
