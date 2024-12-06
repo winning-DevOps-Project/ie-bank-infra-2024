@@ -239,10 +239,12 @@ module metricsAlertModule 'modules/metrics-alerts.bicep' = {
     //appServiceApp: resourceId('Microsoft.Web/sites', appServiceWebsiteBEName)
     appInsightsId: appInsights.outputs.appInsightsId
     actionGroupId: actionGroupModule.outputs.actionGroupId
+    keyVaultId: keyVault.outputs.resourceId
   }
   dependsOn: [
     appInsights
     actionGroupModule
+    keyVault
   ]
 }
 

@@ -1,10 +1,11 @@
 @description('App Insights Resource ID')
 param appInsightsId string
-// @description('App Service Resource ID')
-// param appServiceApp string
 
 @description('Action Group Resource ID')
 param actionGroupId string
+
+@description('Key Vault Resource ID')
+param keyVaultId string
 
 @description('Alert rule for page load time exceeding 7 seconds')
 resource pageLoadTimeAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
@@ -81,3 +82,42 @@ resource pageLoadTimeAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
 //     ]
 //   }
 // }
+
+
+@description('Alert rule for Key Vault availability below 99%')
+resource keyVaultAvailabilityAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
+  name: 'KeyVault-Availability-Alert'
+  location: 'global'
+  properties: {
+    description: 'Alert when Key Vault availability drops below 99%'
+    severity: 1
+    enabled: true
+    scopes: [
+      keyVaultId
+    ]
+    evaluationFrequency: 'PT1M'
+    windowSize: 'PT5M'
+    criteria: {
+      'odata.type': 'Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria'
+      allOf: [
+        {
+          name: 'KeyVaultAvailability'
+          criterionType: 'StaticThresholdCriterion'
+          metricName: 'Availability'
+          operator: 'LessThan'
+          threshold: 99
+          timeAggregation: 'Average'
+        }
+      ]
+    }
+    autoMitigate: true
+    actions: [
+      {
+        actionGroupId: actionGroupId
+        webHookProperties: {
+          customMessage: 'Key Vault availability has dropped below 99%. Immediate attention required.'
+        }
+      }
+    ]
+  }
+}
