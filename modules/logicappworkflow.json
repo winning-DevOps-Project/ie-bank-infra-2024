@@ -6,12 +6,12 @@
       "type": "Http",
       "inputs": {
         "method": "POST",
-        "uri": "@parameters('$connections')['slack']['connectionProperties']['webhookUrl']",
+        "uri": "@parameters('slackWebhookUrl')",
         "headers": {
           "Content-Type": "application/json"
         },
         "body": {
-          "text": "logic app triggered -> sending alert to slack!"
+          "text": "Logic App triggered -> sending alert to Slack!"
         }
       }
     }
@@ -26,6 +26,10 @@
     }
   },
   "parameters": {
+    "slackWebhookUrl": {
+      "type": "String",
+      "defaultValue": ""
+    },
     "$connections": {
       "defaultValue": {},
       "type": "Object"
