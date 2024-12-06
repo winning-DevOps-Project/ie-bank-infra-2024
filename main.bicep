@@ -236,6 +236,7 @@ module actionGroupModule 'modules/action-group.bicep' = {
 module metricsAlertModule 'modules/metrics-alerts.bicep' = {
   name: 'PageLoadTimeAlert'
   params: {
+    appServiceId: resourceId('Microsoft.Web/sites', appServiceWebsiteBEName)
     appInsightsId: appInsights.outputs.appInsightsId
     actionGroupId: actionGroupModule.outputs.actionGroupId
   }

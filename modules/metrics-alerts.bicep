@@ -1,5 +1,7 @@
 @description('App Insights Resource ID')
 param appInsightsId string
+@description('App Service Resource ID')
+param appServiceId string
 
 @description('Action Group Resource ID')
 param actionGroupId string
@@ -36,6 +38,44 @@ resource pageLoadTimeAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
         actionGroupId: actionGroupId
         webHookProperties: {
           customMessage: 'Page load time exceeded the threshold of 7 seconds. Please take action immediately.'
+        }
+      }
+    ]
+  }
+}
+
+@description('Alert rule for CPU usage exceeding 80%')
+resource cpuUsageAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
+  name: 'CPU-Usage-Alert'
+  location: 'global'
+  properties: {
+    description: 'Alert when CPU usage exceeds 80%'
+    severity: 3
+    enabled: true
+    scopes: [
+      appServiceId
+    ]
+    evaluationFrequency: 'PT1M'
+    windowSize: 'PT5M'
+    criteria: {
+      'odata.type': 'Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria'
+      allOf: [
+        {
+          name: 'CpuUsage'
+          criterionType: 'StaticThresholdCriterion'
+          metricName: 'Percentage CPU'
+          operator: 'GreaterThan'
+          threshold: 80
+          timeAggregation: 'Average'
+        }
+      ]
+    }
+    autoMitigate: true
+    actions: [
+      {
+        actionGroupId: actionGroupId
+        webHookProperties: {
+          customMessage: 'CPU usage exceeded the threshold of 80%. Immediate action is required.'
         }
       }
     ]
