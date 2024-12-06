@@ -6,7 +6,7 @@ param logicAppEndpointUri string
 
 resource actionGroup 'Microsoft.Insights/actionGroups@2022-06-01' = {
   name: actionGroupName
-  location: resourceGroup().location
+  location: 'global'
   properties: {
     enabled: true
     groupShortName: 'AlertGrp'
