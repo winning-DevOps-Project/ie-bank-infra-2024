@@ -1,14 +1,10 @@
 name: Key Vault Testing
 
 on:
-    workflow_dispatch:
     push:
-        paths:
-            - './modules/key-vault.bicep'       # Include changes to this file
-            - './parameters/kv-test.json'
-    
-    pull_request:
-        branches: [ "main" ]
+      paths:
+        - './modules/key-vault.bicep'  # Include changes to this file
+        - './parameters/kv-test.json'
 
 env:
   RESOURCE_GROUP_DEV: BCSAI2024-DEVOPS-STUDENTS-A-DEV
