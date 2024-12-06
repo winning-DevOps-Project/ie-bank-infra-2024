@@ -1,11 +1,16 @@
 @description('App Insights Resource ID')
 param appInsightsId string
+// @description('App Service Resource ID')
+// param appServiceApp string
 
 @description('Action Group Resource ID')
 param actionGroupId string
 
 @description('Key Vault Resource ID')
 param keyVaultId string
+
+@description('PostgreSQL Server Resource ID')
+param postgreSQLServerId string
 
 @description('Alert rule for page load time exceeding 7 seconds')
 resource pageLoadTimeAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
@@ -116,6 +121,44 @@ resource keyVaultAvailabilityAlert 'Microsoft.Insights/metricAlerts@2018-03-01' 
         actionGroupId: actionGroupId
         webHookProperties: {
           customMessage: 'Key Vault availability has dropped below 99%. Immediate attention required.'
+        }
+      }
+    ]
+  }
+}
+
+@description('Alert rule for PostgreSQL free memory below 5GB')
+resource postgresqlMemoryAlert 'Microsoft.Insights/metricAlerts@2018-03-01' = {
+  name: 'PostgreSQL-Memory-Alert'
+  location: 'global'
+  properties: {
+    description: 'Alert when PostgreSQL free memory drops below 5GB'
+    severity: 2
+    enabled: true
+    scopes: [
+      postgreSQLServerId
+    ]
+    evaluationFrequency: 'PT1M'
+    windowSize: 'PT5M'
+    criteria: {
+      'odata.type': 'Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria'
+      allOf: [
+        {
+          name: 'PostgreSQLMemory'
+          criterionType: 'StaticThresholdCriterion'
+          metricName: 'memory_percent'
+          operator: 'GreaterThan'
+          threshold: 90  // Alert when memory usage is above 90% (meaning less than 5% free)
+          timeAggregation: 'Average'
+        }
+      ]
+    }
+    autoMitigate: true
+    actions: [
+      {
+        actionGroupId: actionGroupId
+        webHookProperties: {
+          customMessage: 'PostgreSQL server free memory has dropped below 5GB. Please check database usage and optimize queries if needed.'
         }
       }
     ]

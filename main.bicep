@@ -240,11 +240,13 @@ module metricsAlertModule 'modules/metrics-alerts.bicep' = {
     appInsightsId: appInsights.outputs.appInsightsId
     actionGroupId: actionGroupModule.outputs.actionGroupId
     keyVaultId: keyVault.outputs.resourceId
+    postgreSQLServerId: postgresSQLServer.outputs.id
   }
   dependsOn: [
     appInsights
     actionGroupModule
     keyVault
+    postgresSQLServer
   ]
 }
 
