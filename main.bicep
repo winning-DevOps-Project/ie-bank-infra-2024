@@ -225,3 +225,25 @@ module logicAppModule 'modules/logic-app.bicep' = {
   }
 }
 
+module actionGroupModule 'modules/action-group.bicep' = {
+  name: 'AlertActionGroup'
+  params: {
+    actionGroupName: 'CpuUsageAlertGroup'
+    logicAppEndpointUri: logicAppModule.outputs.logicAppEndpointUri
+  }
+}
+
+module metricsAlertModule 'modules/metrics-alerts.bicep' = {
+  name: 'PageLoadTimeAlert'
+  params: {
+    appInsightsId: appInsights.outputs.appInsightsId
+    actionGroupId: actionGroupModule.outputs.actionGroupId
+  }
+  dependsOn: [
+    appInsights
+    actionGroupModule
+  ]
+}
+
+
+

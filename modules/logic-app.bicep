@@ -19,3 +19,5 @@ resource logicApp 'Microsoft.Logic/workflows@2019-05-01' = {
     }
   }
 }
+
+output logicAppEndpointUri string = logicApp.properties.accessEndpoint
