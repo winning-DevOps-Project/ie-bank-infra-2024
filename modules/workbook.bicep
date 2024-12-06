@@ -85,7 +85,7 @@ var workbookSerializedData = '''
     {
       "type": 1,
       "content": {
-        "json": "### HTTP Request Duration for Static Web App"
+        "json": "### HTTP Request Duration for Static Web App (Target: <=200ms)"
       },
       "name": "http-duration-header"
     },
@@ -107,8 +107,8 @@ var workbookSerializedData = '''
         "metrics": [
           {
             "namespace": "microsoft.web/staticsites",
-            "metric": "microsoft.web/staticsites--RequestDuration",
-            "aggregation": 4,
+            "metric": "microsoft.web/staticsites--CdnTotalLatency",
+            "aggregation": 1,
             "splitBy": null
           }
         ],
@@ -141,7 +141,7 @@ var workbookSerializedData = '''
     {
       "type": 1,
       "content": {
-        "json": "### Key Vault Availability (Last 7 Days)"
+        "json": "### Key Vault Availability (99.9%)"
       },
       "name": "kv-header"
     },
@@ -253,7 +253,7 @@ var workbookSerializedData = '''
     {
       "type": 1,
       "content": {
-        "json": "### Failed requests count in the last 30 days"
+        "json": "### Failed requests count in the last 30 days (Target: 5)"
       },
       "name": "failed-requests"
     },
@@ -309,7 +309,7 @@ var workbookSerializedData = '''
     {
       "type": 1,
       "content": {
-        "json": "### SLO Status Explanation\n\n**Static Web App Availability:**\n✅ **Meeting SLO (>=99.99%)**: Excellent availability\n⚠️ **Warning (>=99.9% and <99.99%)**: Needs attention\n❌ **Critical (<99.9%)**: Immediate action required\n\n**Key Vault Availability:**\n✅ **Meeting SLO (>=99.9%)**: Good availability\n❌ **Not Meeting SLO (<99.9%)**: Immediate attention required\n\n**Application Insights Data Availability:**\n✅ **Meeting SLO (>=99.9%)**: Data is available and accessible\n❌ **Not Meeting SLO (<99.9%)**: Data availability issues\n\n**Security Monitoring:**\n✅ **No failed requests**: Secure\n❌ **Too many failed requests at the same time(more than 5)**: Immediate action required"
+        "json": "### SLO Status Explanation\n\n**Static Web App Availability:**\n✅ **Meeting SLO (>=99.99%)**: Excellent availability\n⚠️ **Warning (>=99.9% and <99.99%)**: Needs attention\n❌ **Critical (<99.9%)**: Immediate action required\n\n**HTTP Request Duration:**\n✅ **Meeting SLO (<=200ms)**: Good performance\n❌ **Not Meeting SLO (>200ms)**: Performance needs immediate attention\n\n**Key Vault Availability:**\n✅ **Meeting SLO (>=99.9%)**: Good availability\n❌ **Not Meeting SLO (<99.9%)**: Immediate attention required\n\n**Application Insights Data Availability:**\n✅ **Meeting SLO (>=99.9%)**: Data is available and accessible\n❌ **Not Meeting SLO (<99.9%)**: Data availability issues\n\n**Security Monitoring:**\n✅ **No failed requests**: Secure\n❌ **Too many failed requests at the same time(more than 5)**: Immediate action required"
       },
       "name": "status-explanation"
     }
