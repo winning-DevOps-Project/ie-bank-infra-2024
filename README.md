@@ -299,91 +299,119 @@ By combining Azure Key Vault, Managed Identity, and Bicep, we have created a rob
 
 
 
-## 10 implemented guides in our Design Document
+## 10 Implemented Guides in Our Design Document
 
 To holistically secure our banking application, we adopted a dual framework approach, leveraging guidelines from the **Open Source Security Foundation (OpenSSF)** and practices from the **SAFECode framework**. This comprehensive strategy allowed us to address security at every level, including code, cloud infrastructure, database, and deployment. Collaborating with the Cloud Architect and development teams, we integrated 10 key security principles to minimize vulnerabilities and ensure adherence to industry best practices.
 
 ### OpenSSF Guidelines
 
-1. ***Use a Combination of Tools in CI Pipeline to Detect Vulnerabilities***
+#### 1. Use a Combination of Tools in CI Pipeline to Detect Vulnerabilities
 
 Integrating CodeQL and OSSF Scorecard into our CI/CD pipeline allowed us to continuously analyze code for vulnerabilities. CodeQL provides semantic analysis, while Scorecard evaluates adherence to open-source best practices, offering a thorough and multi-dimensional assessment of our codebase. This dual approach ensures comprehensive vulnerability detection, reducing risks early in the development lifecycle.
 
-*Links*: 
-https://github.com/winning-DevOps-Project/ie-bank-fe-2024/security/code-scanning  
-https://github.com/winning-DevOps-Project/ie-bank-infra-2024/security/code-scanning  
-https://github.com/winning-DevOps-Project/ie-bank-be-2024/security/code-scanning
+**Links:**
+- [Frontend Code Scanning](https://github.com/winning-DevOps-Project/ie-bank-fe-2024/security/code-scanning)
+- [Infrastructure Code Scanning](https://github.com/winning-DevOps-Project/ie-bank-infra-2024/security/code-scanning)
+- [Backend Code Scanning](https://github.com/winning-DevOps-Project/ie-bank-be-2024/security/code-scanning)
 
-2. ***Implement Automated Tests, Including Negative Tests***
+**Screenshot:** Below is an example screenshot of the Combination of Tools in CI Pipeline to Detect Vulnerabilities:
+
+![Azure Key Vault Configuration](images/openssf_1.png)
+
+#### 2. Implement Automated Tests, Including Negative Tests
 
 Automated security tests, including negative scenarios, were configured for both frontend and backend using CodeQL. These tests ensure that unintended behaviors are caught and prevented before deployment. This strategy enforces a “ship only if it passes the tests” rule, enhancing the robustness of our banking application by simulating adverse conditions.
 
-*Links*:
-https://github.com/winning-DevOps-Project/ie-bank-fe-2024/actions 
-https://github.com/winning-DevOps-Project/ie-bank-infra-2024/actions 
-https://github.com/winning-DevOps-Project/ie-bank-be-2024/actions
+**Links:**
+- [Frontend Tests](https://github.com/winning-DevOps-Project/ie-bank-fe-2024/actions)
+- [Infrastructure Tests](https://github.com/winning-DevOps-Project/ie-bank-infra-2024/actions)
+- [Backend Tests](https://github.com/winning-DevOps-Project/ie-bank-be-2024/actions)
 
-3. ***Monitor Known Vulnerabilities in Dependencies***
+**Screenshot:** Below is an example screenshot of the Implemented Automated Tests, Including Negative Tests:
+
+![Azure Key Vault Configuration](images/openssf_2_1.png)
+
+![Azure Key Vault Configuration](images/openssf_2_2.png)
+
+#### 3. Monitor Known Vulnerabilities in Dependencies
 
 **Dependabot** was implemented to monitor and alert us about vulnerabilities in dependencies. By identifying risks in both direct and transitive dependencies, we ensured timely updates to address potential threats. Keeping dependencies up to date reduces exposure to vulnerabilities that could arise from outdated libraries.
 
-*Links*:
-https://github.com/winning-DevOps-Project/ie-bank-fe-2024/security/dependabot 
-https://github.com/winning-DevOps-Project/ie-bank-infra-2024/security/dependabot 
-https://github.com/winning-DevOps-Project/ie-bank-be-2024/security/dependabot 
+**Links:**
+- [Frontend Dependabot](https://github.com/winning-DevOps-Project/ie-bank-fe-2024/security/dependabot)
+- [Infrastructure Dependabot](https://github.com/winning-DevOps-Project/ie-bank-infra-2024/security/dependabot)
+- [Backend Dependabot](https://github.com/winning-DevOps-Project/ie-bank-be-2024/security/dependabot)
 
-4. ***Do Not Push Secrets to a Repository***
+**Screenshot:** Below is an example screenshot of the Monitoring of Known Vulnerabilities in Dependencies:
+
+![Azure Key Vault Configuration](images/openssf_3.png)
+
+#### 4. Do Not Push Secrets to a Repository
 
 **GitHub Secret Scanning** was enabled to detect and block accidental inclusion of secrets in the codebase, supported by push protection to prevent sensitive information from being committed. These safeguards ensure that secrets remain out of public repositories, protecting against unauthorized access.
 
-*Links*:
-https://github.com/winning-DevOps-Project/ie-bank-fe-2024/security/secret-scanning 
-https://github.com/winning-DevOps-Project/ie-bank-infra-2024/security/secret-scanning
-https://github.com/winning-DevOps-Project/ie-bank-be-2024/security/secret-scanning 
+**Links:**
+- [Frontend Secret Scanning](https://github.com/winning-DevOps-Project/ie-bank-fe-2024/security/secret-scanning)
+- [Infrastructure Secret Scanning](https://github.com/winning-DevOps-Project/ie-bank-infra-2024/security/secret-scanning)
+- [Backend Secret Scanning](https://github.com/winning-DevOps-Project/ie-bank-be-2024/security/secret-scanning)
 
-5. ***Improve OpenSSF Scorecards Score***
+**Screenshot:** Below is an example screenshot of monitoring preventing Pushing Secrets to a Repository:
+
+![Azure Key Vault Configuration](images/openssf_4.png)
+
+#### 5. Improve OpenSSF Scorecards Score
 
 The **OpenSSF Scorecard workflow** was configured to evaluate our repository’s adherence to best practices such as branch protection and dependency management. By improving our Scorecard score, we continually enhance our security posture, aligning with industry standards and reinforcing our commitment to secure development.
 
-*Links*:
-https://github.com/winning-DevOps-Project/ie-bank-fe-2024/actions/workflows/scorecard.yml
-https://github.com/winning-DevOps-Project/ie-bank-infra-2024/actions/workflows/scorecard.yml
-https://github.com/winning-DevOps-Project/ie-bank-be-2024/actions/workflows/scorecard.yml
+**Links:**
+- [Frontend Scorecard Workflow](https://github.com/winning-DevOps-Project/ie-bank-fe-2024/actions/workflows/scorecard.yml)
+- [Infrastructure Scorecard Workflow](https://github.com/winning-DevOps-Project/ie-bank-infra-2024/actions/workflows/scorecard.yml)
+- [Backend Scorecard Workflow](https://github.com/winning-DevOps-Project/ie-bank-be-2024/actions/workflows/scorecard.yml)
 
 ### SAFECode Framework Practices
 
-1. ***Application Security Control Definition***
+#### 1. Application Security Control Definition
 
 In collaboration with the Cloud Architect, we identified and implemented **Application Security Controls (ASCs)** focused on authentication, data protection, and secure configurations. This ensured critical security requirements were systematically addressed, reducing risks during development.
 
-2. ***Secure Design Principles & Threat Modeling***
+#### 2. Secure Design Principles & Threat Modeling
 
 Threat modeling sessions with the Cloud Architect identified potential attack vectors and informed the design of security features. Incorporating secure design principles helped us create a resilient architecture that anticipates threats, minimizing the need for reactive fixes post-implementation.
 
-3. ***Develop an Encryption Strategy***
+#### 3. Develop an Encryption Strategy
 
 We used **Azure Key Vault** for secure storage of secrets and credentials, alongside a robust encryption strategy for data at rest and in transit. **Managed Identity** facilitated secure communication between services, ensuring sensitive data was consistently protected while meeting stringent financial industry standards.
 
-*Links*:
-https://github.com/winning-DevOps-Project/ie-bank-infra-2024/blob/main/modules/postgresql-server.bicep
-https://github.com/winning-DevOps-Project/ie-bank-infra-2024/blob/main/modules/docker-registry.bicep
+**Links:**
+- [PostgreSQL Server Bicep Module](https://github.com/winning-DevOps-Project/ie-bank-infra-2024/blob/main/modules/postgresql-server.bicep)
+- [Docker Registry Bicep Module](https://github.com/winning-DevOps-Project/ie-bank-infra-2024/blob/main/modules/docker-registry.bicep)
 
-4. ***Manage Security Risk Inherent in Third-Party Components***
+**Screenshot:** Below are screenshots of the files implementing the Encryption Strategies:
+
+![Azure Key Vault Configuration](images/safecode_3_1.png)
+
+![Azure Key Vault Configuration](images/safecode_3_2.png)
+
+#### 4. Manage Security Risk Inherent in Third-Party Components
 
 Dependabot’s alerts highlighted risks in third-party components, while our CI/CD pipeline performed automated security and compatibility testing. This proactive approach to dependency management mitigates supply chain risks and ensures the reliability of external libraries integrated into the application.
 
-*Links*:
-https://github.com/winning-DevOps-Project/ie-bank-fe-2024/security/dependabot 
-https://github.com/winning-DevOps-Project/ie-bank-infra-2024/security/dependabot 
-https://github.com/winning-DevOps-Project/ie-bank-be-2024/security/dependabot 
+**Links:**
+- [Frontend Dependabot](https://github.com/winning-DevOps-Project/ie-bank-fe-2024/security/dependabot)
+- [Infrastructure Dependabot](https://github.com/winning-DevOps-Project/ie-bank-infra-2024/security/dependabot)
+- [Backend Dependabot](https://github.com/winning-DevOps-Project/ie-bank-be-2024/security/dependabot)
 
-5. ***Secure Coding Practices & Code Analysis***
+#### 5. Secure Coding Practices & Code Analysis
 
 Secure coding standards were enforced with tools like CodeQL for static analysis, ensuring developers adhered to safe functions and robust error handling practices. These measures embedded security into the development process, minimizing the likelihood of vulnerabilities being introduced during coding.
 
-*Links*: 
-https://github.com/winning-DevOps-Project/ie-bank-fe-2024/security/code-scanning  
-https://github.com/winning-DevOps-Project/ie-bank-infra-2024/security/code-scanning  
-https://github.com/winning-DevOps-Project/ie-bank-be-2024/security/code-scanning 
+**Links:**
+- [Frontend Code Scanning](https://github.com/winning-DevOps-Project/ie-bank-fe-2024/security/code-scanning)
+- [Infrastructure Code Scanning](https://github.com/winning-DevOps-Project/ie-bank-infra-2024/security/code-scanning)
+- [Backend Code Scanning](https://github.com/winning-DevOps-Project/ie-bank-be-2024/security/code-scanning)
 
-# End Cyber Security
+---
+
+### Conclusion
+
+By combining OpenSSF guidelines and SAFECode practices, we ensured a comprehensive security framework that addresses vulnerabilities at all levels. This dual-framework approach aligns with industry standards, providing a secure foundation for the development, deployment, and operation of our banking application.
