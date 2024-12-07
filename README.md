@@ -122,7 +122,7 @@ Security in software begins with proactive identification of vulnerabilities dur
 
 *Screenshot:* Below is an example screenshot of CodeQL scanning results:
 
-![CodeQL Scanning Results](images/codeql_scanning_results.png)
+![CodeQL Scanning Results](images/code_scanning.png)
 
 ### Code Scanning with OSSF Scorecard
 
@@ -172,7 +172,7 @@ The integrity of the main codebase is critical in preventing accidental or malic
 
 Below is an example screenshot of Push Protection configuration:
 
-![Push Protection Configuration](images/push_protection_configuration.png)
+![Push Protection Configuration](images/pus_protection.png)
 
 ### CODEOWNERS Configuration
 
@@ -188,7 +188,7 @@ A robust security strategy also requires accountability, and the CODEOWNERS conf
 
 Below is an example screenshot of the CODEOWNERS file:
 
-![CODEOWNERS File Configuration](images/codeowners_file_configuration.png)
+![CODEOWNERS File Configuration](images/codeowners.png)
 
 ### Conclusion
 
@@ -206,15 +206,15 @@ The chosen GitHub hardening measures—CodeQL, OSSF Scorecard, Secret Scanning, 
 
 ### Checklist
 - [x] Enable CodeQL scanning for both frontend and backend.
-  - ![CodeQL Scanning Results](images/codeql_scanning_results.png)
+  - ![CodeQL Scanning Results](images/code_scanning.png)
 - [x] Configure OSSF Scorecard for regular checks.
   - ![OSSF Scorecard Metrics](images/openssf_2_2.png)
 - [x] Set up GitHub Secret Scanning.
   - ![GitHub Secret Scanning Alerts](images/openssf_4.png)
 - [x] Configure Push Protection for all repositories.
-  - ![Push Protection Configuration](images/push_protection_configuration.png)
+  - ![Push Protection Configuration](images/pus_protection.png)
 - [x] Define CODEOWNERS for specific repositories.
-  - ![CODEOWNERS File Configuration](images/codeowners_file_configuration.png)
+  - ![CODEOWNERS File Configuration](images/codeowners.png)
 
 
 ## Secrets Management Strategy
