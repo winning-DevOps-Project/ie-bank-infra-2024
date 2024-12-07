@@ -11,7 +11,7 @@
 |[Full Stack](#full-stack-development)| 4/5 |
 |[Infrastructure Development](#infrastructure-development)| 3/5 |
 |[Cyber-Security](#cyber-security)| 4/5 |
-|[Site-Reliability](#site-reliability)| 0/5 |
+|[Site-Reliability](#site-reliability)| 4/5 |
 |[Software Modeling - Cloud Architect](#software-modeling---cloud-architect)| 3/5 |
 |[Well-Architected-Framework](#well-architected-framework)||
 
@@ -422,21 +422,188 @@ Threat modeling sessions with the Cloud Architect identified potential attack ve
 
 ## Site-Reliability
 
--Mention the main strategies used for Site Reliability here and how some of our design decisions became implemented and what measure were taken to accomplish our goals for the application-
+# Service Level Objectives (SLOs)
 
-These measures include:
+### 1. Static Web App Availability
+- **Definition**: Ensure the Static Web App is available 99.99% of the time.
+- **Status Levels**:
+  - ✅ Meeting SLO (>=99.99%): Excellent availability.
+  - ⚠️ Warning (>=99.9% and <99.99%): Needs attention.
+  - ❌ Critical (<99.9%): Immediate action required.
 
-### Measure 1: 
--Add in the measure-
+### 2. HTTP Request Duration
+- **Definition**: Ensure that 95% of HTTP requests are completed within 200 milliseconds.
+- **Status Levels**:
+  - ✅ Meeting SLO (<=200ms): Good performance.
+  - ❌ Not Meeting SLO (>200ms): Performance needs immediate attention.
 
-### Measure 2: 
--Add in the measure-
+### 3. Key Vault Availability
+- **Definition**: Ensure Azure Key Vault maintains 99.9% availability.
+- **Status Levels**:
+  - ✅ Meeting SLO (>=99.9%): Good availability.
+  - ❌ Not Meeting SLO (<99.9%): Immediate action required.
 
-### Measure 3: 
--Add in the measure-
+### 4. Application Insights Data Availability
+- **Definition**: Ensure 99.9% of monitoring data is available and accessible through Application Insights.
+- **Status Levels**:
+  - ✅ Meeting SLO (>=99.9%): Data is available and accessible.
+  - ❌ Not Meeting SLO (<99.9%): Data availability issues detected.
 
-### Measure n: 
--Add in the measure-
+### 5. Security Monitoring
+- **Definition**: Ensure no more than 5 failed requests are detected simultaneously for security monitoring.
+- **Status Levels**:
+  - ✅ No Failed Requests: System is secure.
+  - ❌ Too Many Failed Requests (>5): Immediate action required.
+
+---
+
+
+# Service Level Indicators (SLIs)
+
+### 1. Static Web App Availability SLI
+- **Metric**: The percentage of uptime over a given time period, measured through Azure’s availability metrics for the Static Web App.
+- **Target**: >=99.99%.
+
+### 2. HTTP Request Duration SLI
+- **Metric**: The duration of HTTP requests processed by the app, specifically measuring the 95th percentile latency.
+- **Target**: <=200 milliseconds for 95% of requests.
+
+### 3. Key Vault Availability SLI
+- **Metric**: The percentage of successful connections to Azure Key Vault over a given time period.
+- **Target**: >=99.9%.
+
+### 4. Application Insights Data Availability SLI
+- **Metric**: The percentage of telemetry data successfully ingested and available in Application Insights within a specified time window.
+- **Target**: >=99.9%.
+
+### 5. Security Monitoring SLI
+- **Metric**: The count of failed requests to the monitored application, measured over a rolling 5-minute interval.
+- **Target**: No more than 5 failed requests simultaneously.
+
+---
+
+# Monitoring Strategy
+
+### 1. Observability Tools
+- **Azure Monitor/Application Insights**:
+  - Page load time tracking.
+  - Application performance monitoring.
+  - Data availability monitoring (99.9% target).
+- **Log Analytics Workspace**:
+  - Centralized logging.
+  - 30-day retention for logs.
+  - Custom workbook for visualization.
+- **Custom Workbook Dashboard**:
+  - Consolidated view of all metrics.
+  - Visual representation of SLOs.
+  - Real-time status monitoring.
+
+### 2. Alerting Strategy
+- **Action Groups**:
+  - Centralized alert management.
+  - Integration with Logic Apps.
+- **Logic Apps Integration**:
+  - Automated alert processing.
+  - Slack channel notifications.
+  - Real-time incident communication.
+- **Security Monitoring**:
+  - Failed requests monitoring.
+  - Threshold: Maximum 5 failed requests.
+  - Critical alerts for security incidents.
+
+### 3. Infrastructure Monitoring
+- **Key Vault**:
+  - Availability monitoring.
+  - Access and audit logging.
+  - Security metrics tracking.
+- **PostgreSQL Database**:
+  - Memory utilization.
+  - Performance metrics.
+  - Resource optimization alerts.
+- **Static Web App**:
+  - Availability metrics.
+  - Response time tracking.
+  - CDN performance monitoring.
+
+---
+
+# Incident Response Approach
+
+When an incident occurs (such as Key Vault availability dropping below 99%, PostgreSQL memory usage exceeding 90%, or page load times exceeding thresholds), our system automatically triggers alerts through a chain of Azure services. 
+
+- The incident is detected by **Azure Monitor metrics**, which triggers metric alerts routed through an **Action Group** to a **Logic App**.
+- The Logic App sends detailed notifications to the **Slack channel** (`azure-alerts-devopps`), ensuring rapid team awareness.
+- Alerts include:
+  - **Incident nature**: e.g., "PostgreSQL server free memory has dropped below 5GB."
+  - **Suggested actions**: e.g., "Please check database usage and optimize queries if needed."
+  
+This setup, combined with Azure Workbooks, ensures quick detection, assessment, and resolution of incidents, minimizing disruptions.
+
+---
+
+# Capacity Design
+
+### App Service Plan (BE)
+- **DEV/UAT Environment**:
+  - **SKU**: B1 (Basic).
+  - **Specs**: 1 Core, 1.75 GB RAM.
+  - **Purpose**: Development and testing with moderate traffic.
+
+### PostgreSQL Flexible Server
+- **DEV/UAT Environment**:
+  - **SKU**: Standard_B1ms (Burstable).
+  - **Specs**: 1 vCore, 32GB Storage.
+  - **Purpose**: Development workloads.
+
+### Static Web App (FE)
+- **DEV/UAT Environment**:
+  - **SKU**: Free.
+  - **Purpose**: Development and testing.
+
+### Azure Container Registry
+- **DEV/UAT Environment**:
+  - **SKU**: Standard.
+  - **Features**: 100 GB storage, webhooks, geo-replication.
+
+### Log Analytics Workspace
+- **DEV/UAT Environments**:
+  - **SKU**: PerGB2018.
+  - **Retention**: 30 days.
+
+### Application Insights
+- **DEV/UAT Environments**:
+  - **Type**: Web.
+  - **Retention**: 90 days.
+
+### Key Vault
+- **DEV/UAT Environments**:
+  - **SKU**: Standard.
+  - **Soft Delete**: Disabled in DEV, enabled in UAT.
+
+---
+
+# Performance Efficiency
+
+The performance efficiency design is built around carefully selected Azure resource tiers and monitoring thresholds. The infrastructure uses B1 App Service Plans for compute resources, Standard_B1ms PostgreSQL servers optimized with 32GB storage, and implements CDN capabilities through Static Web Apps. Performance monitoring is handled through Application Insights with custom HTTP duration thresholds set at 200ms, while database performance is monitored with memory utilization alerts triggering at 90% usage. Real-time performance metrics are collected at 1-minute intervals with 5-minute evaluation windows, enabling quick detection of performance degradation. The system leverages Azure Workbooks for performance visualization and tracks key metrics including CDN latency, database response times, and application response times. This design ensures optimal performance through automated monitoring and alerting, with different performance thresholds configured for development and UAT environments to match their specific requirements.
+
+---
+
+# Cost Optimization and FinOps
+
+Our Azure infrastructure implements a cost-optimized design across development and UAT environments, carefully balancing functionality with cost efficiency. The solution utilizes cost-effective resource tiers including B1 App Service Plans ($13/month) for compute resources, Standard_B1ms PostgreSQL Flexible Server with burstable performance and minimal 32GB storage, and leverages the Free tier for Static Web Apps which includes built-in CDN capabilities. Cost management is further enhanced through strategic retention policies: 30 days for Log Analytics, 90 days for Application Insights, and 7-day backup retention for PostgreSQL, minimizing storage costs while maintaining necessary data accessibility. The Standard tier Azure Container Registry ($20/month) provides essential features with 100GB storage. Our FinOps approach includes disabled soft delete in development, minimal backup retention, and metric alerts for resource consumption monitoring, particularly tracking memory usage with a 90% threshold. The infrastructure uses pay-as-you-go pricing models where applicable and implements resource right-sizing specific to development and UAT needs, ensuring predictable monthly expenses while maintaining the capability to scale when required.
+
+---
+
+# Operational Excellence and Release Engineering
+
+Our operational excellence and release engineering framework is built on Infrastructure as Code principles using Azure Bicep for resource definitions and GitHub Actions for automated deployments. The deployment pipeline (`ie-bank-infra.yml`) implements a structured release process across development and UAT environments, with automated Bicep linting, resource validation, and environment-specific configurations managed through parameter files (`dev.bicepparam` and `uat.bicepparam`). The release strategy incorporates automated testing including Key Vault deployment verification, RBAC permission validation, and access policy checks, while operational monitoring is handled through a comprehensive Azure Workbook dashboard that visualizes SLOs and metrics. Incident management is streamlined through Logic Apps integration with Slack, providing real-time alerts for service availability, performance issues, and resource utilization concerns. The deployment process follows a progressive pattern from development to UAT, with pull request-based deployments and environment-specific approvals ensuring controlled releases. This infrastructure automation, combined with modular Bicep templates and centralized logging with 30-day retention, enables consistent deployments, rapid incident response, and maintains high operational standards across all environments.
+
+---
+
+# Reliability Design
+
+Our comprehensive reliability design implements a robust strategy across all Azure resources, focusing on key reliability pillars. For Availability, we maintain strict SLOs with 99.99% target for Static Web App and 99.9% for Key Vault, utilizing Azure's built-in high-availability features and CDN capabilities to ensure consistent accessibility. Resiliency is achieved through our PostgreSQL Flexible Server configuration with Standard_B1ms tier and 32GB storage, complemented by a 7-day backup retention policy and automated failover capabilities. Our Monitoring and Alerting system combines Application Insights (90-day retention) with custom Azure Workbooks for real-time visibility, while Logic Apps integration enables instant Slack notifications for incidents, with severity-based alerting (levels 1-4) for different threshold violations including HTTP duration exceeding 200ms and memory utilization above 90%. Fault Tolerance is implemented through our modular Bicep-based infrastructure deployment, enabling quick recovery and consistent configuration across development and UAT environments, while our centralized Log Analytics workspace (30-day retention) provides comprehensive diagnostic data for rapid troubleshooting. The system's health is continuously monitored through automated checks, with specific thresholds for failed requests (maximum 5 concurrent) and performance metrics, ensuring rapid detection and response to any component failures while maintaining system stability and performance across all environments.
+
 
 ## Software Modeling - Cloud Architect
 
