@@ -10,19 +10,21 @@
 |[Team Members](#team-members) ||
 |[Assumptions and Constraints](#assumptions-and-constraints)||
 |[Full Stack](#full-stack-development)| 4/5 |
-|- [Functional Requirements](#functional-requirements)||
+|[Infrastructure Development](#infrastructure-development)| 3/5 |
+|[Cyber-Security](#cyber-security)| 4/5 |
+|[Site-Reliability](#site-reliability)| 0/5 |
+|[Software Modeling - Cloud Architect](#software-modeling---cloud-architect)| 3/5 |
+|[Well-Architected-Framework](#well-architected-framework)||
+<!--|- [Functional Requirements](#functional-requirements)||
 |--- [Admin Portal - Bank Users Management System](#admin-portal---bank-users-management-system)||
 |--- [User Portal - Bank Account Management System](#user-portal---bank-account-management-system)||
 |- [Non Functional Requirements](#non-functional-requirements)||
 |- [Development Strategy](#development-strategy)||
 |- [Frontend](#frontend)||
 |- [Backend](#backend)||
-|- [Testing](#testing)||
-|[Infrastructure Development](#infrastructure-development)| 3/5 |
-|[Cyber-Security](#cyber-security)| 4/5 |
-|[Site-Reliability](#site-reliability)| 0/5 |
-|[Software Modeling - Cloud Architect](#software-modeling---cloud-architect)| 3/5 |
-|[Well-Architected-Framework](#well-architected-framework)||
+|- [Testing](#testing)|| -->
+
+
 
 
 ## Product Description
@@ -39,7 +41,7 @@ The software in question is a banking system that allows users to register, crea
 
 ## Assumptions and Constraints
 ### Assumptions
-The necessary IaaS, SaaS, and PaaS services are provided to guarantee deployment and success. This principally refers to Azure.
+<!-- The necessary IaaS, SaaS, and PaaS services are provided to guarantee deployment and success. This principally refers to Azure.
 
 The software will be continuously maintained and upgraded using the established CI/CD pipeline in this repository.
 
@@ -72,7 +74,7 @@ Azure Application Insights must be used to enable monitoring of the application.
 
 The project must be deployed in the User Acceptance Testing (UAT) environment.
 
-The development costs must not exceed 3000 euros.
+The development costs must not exceed 3000 euros. -->
 
 
 
