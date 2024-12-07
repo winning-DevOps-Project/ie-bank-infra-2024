@@ -794,6 +794,8 @@ By combining OpenSSF guidelines and SAFECode practices, we ensured a comprehensi
 
 ## Site-Reliability
 
+[Service Level Agreement](SLA.md)
+
 # Service Level Objectives (SLOs)
 
 ### 1. Static Web App Availability
@@ -985,7 +987,7 @@ This setup, combined with Azure Workbooks, ensures quick detection, assessment, 
 - **Soft Delete**: Enabled  
 - **Purpose**: Secure secrets management for production  
 
-[SLA Agreement](SLA.md)
+
 
 ---
 
