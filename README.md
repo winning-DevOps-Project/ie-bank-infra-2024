@@ -10,7 +10,7 @@
 |[Team Members](#team-members) ||
 |[Full Stack](#full-stack-development)| 4/5 |
 |[Infrastructure Development](#infrastructure-development)| 3/5 |
-|[Cyber-Security](#cyber-security)| 4/5 |
+|[Cyber-Security](#cyber-security)| -  [Github Hardening Strategy](#github-hardening-strategy-for-banking-application) <br> - [Secrets Management](#secrets-management-strategy) <br> -  [Implemented guides](#10-implemented-guides-in-our-design-document)  |
 |[Site-Reliability](#site-reliability)| 4/5 |
 |[Software Modeling - Cloud Architect](#software-modeling---cloud-architect)| 3/5 |
 |[Well-Architected-Framework](#well-architected-framework)||
