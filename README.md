@@ -105,27 +105,116 @@ Variable name | Description | Learn more
 
 # Cyber Security
 
-## GitHub Hardening Strategy
+## GitHub Hardening Strategy for Banking Application
 
-***Code Scanning with CodeQL***
+### Code Scanning with CodeQL
 
 Security in software begins with proactive identification of vulnerabilities during development, and CodeQL plays a crucial role in achieving this. By analyzing both the frontend (Vue.js) and backend (Python) code, CodeQL enables the detection of common yet critical vulnerabilities, such as SQL injection, XSS, and command injection, before deployment. Its integration with GitHub Actions allows it to operate seamlessly within our development workflows, flagging issues as soon as code is pushed. This approach embodies "shift-left security," embedding security considerations into the earliest stages of development. With its powerful querying language and support for multiple languages, CodeQL ensures that security remains a fundamental part of the software lifecycle.
 
-***Code Scanning with OSSF Scorecard***
+#### Key Vulnerabilities Detected
+- SQL Injection
+- Cross-Site Scripting (XSS)
+- Command Injection
+
+| Tool   | Purpose                    | Key Benefits                 |
+|--------|----------------------------|------------------------------|
+| CodeQL | Detect code vulnerabilities | Proactive, detailed analysis |
+
+*Screenshot:* Below is an example screenshot of CodeQL scanning results:
+
+![CodeQL Scanning Results](images/codeql_scanning_results.png)
+
+### Code Scanning with OSSF Scorecard
 
 While CodeQL focuses on analyzing the code itself, maintaining the overall security posture of the repository requires adherence to best practices. The OSSF Scorecard complements CodeQL by evaluating key aspects of repository security, such as branch protection, two-factor authentication, and timely dependency updates. By running automated checks on a regular schedule, Scorecard ensures that our repository's security remains consistent and up to date. The detailed metrics it provides not only help identify areas for improvement but also establish a foundation for continuous compliance with open-source security standards. This is particularly critical for a financial application, where maintaining a high-security threshold is non-negotiable.
 
-***GitHub Secret Scanning***
+#### Key Aspects Evaluated
+- Branch Protection
+- Two-Factor Authentication
+- Dependency Updates
+
+| Tool          | Purpose                           | Key Benefits                 |
+|---------------|-----------------------------------|------------------------------|
+| OSSF Scorecard | Assess repo security posture       | Consistent compliance checks |
+
+Below is an example screenshot of OSSF Scorecard metrics:
+
+![OSSF Scorecard Metrics](images/openssf_2_2.png)
+
+### GitHub Secret Scanning
 
 In banking applications, safeguarding sensitive information such as API keys and tokens is vital. GitHub Secret Scanning acts as a defense mechanism against the accidental leakage of these credentials. Integrated directly into GitHub, it continuously monitors for any exposed secrets, ensuring immediate detection and resolution. This proactive approach mitigates the risk of unauthorized access, protecting both the application and its sensitive financial data. By pairing Secret Scanning with CodeQL and Scorecard, we create a multi-layered security strategy that addresses not only vulnerabilities but also operational risks.
 
-***Push Protection***
+#### Key Benefits
+- Continuous Monitoring
+- Immediate Detection and Resolution
+
+| Tool              | Purpose                        | Key Benefits                 |
+|-------------------|--------------------------------|------------------------------|
+| GitHub Secret Scanning | Detect accidental secret exposure | Protects sensitive info   |
+
+Below is an example screenshot of GitHub Secret Scanning alerts:
+
+![GitHub Secret Scanning Alerts](images/openssf_4.png)
+
+### Push Protection
 
 The integrity of the main codebase is critical in preventing accidental or malicious changes. Push Protection ensures this by blocking risky changes before they are merged. Configurations like requiring pull requests, restricting force pushes, and disallowing branch deletions provide an additional layer of control. These measures complement the outputs of CodeQL, Scorecard, and Secret Scanning by safeguarding the repository against unauthorized modifications. For a banking application, where the smallest oversight could have significant repercussions, such strict protections are indispensable.
 
-***CODEOWNERS Configuration***
+#### Configurations
+- Require Pull Requests Before Merging
+- Restrict Force Pushes
+- Disallow Branch Deletions
+
+| Tool           | Purpose                        | Key Benefits                 |
+|----------------|--------------------------------|------------------------------|
+| Push Protection | Prevent risky changes          | Safeguard code integrity     |
+
+Below is an example screenshot of Push Protection configuration:
+
+![Push Protection Configuration](images/push_protection_configuration.png)
+
+### CODEOWNERS Configuration
 
 A robust security strategy also requires accountability, and the CODEOWNERS configuration ensures that critical changes are reviewed by the right people. By assigning each developer to their corresponding repo, we ensure that every modification undergoes special supervision. This aligns with the outputs from CodeQL, Scorecard, and Push Protection, creating a cohesive workflow where expertise and automated tools work together to secure the codebase. In a high-stakes domain like banking, this combination of automation and human oversight is key to maintaining both quality and security.
+
+#### Benefits of CODEOWNERS
+- Accountability for Code Changes
+- Expertise-Based Review Process
+
+| Tool           | Purpose                      | Key Benefits                 |
+|----------------|------------------------------|------------------------------|
+| CODEOWNERS     | Ensure accountability        | Human oversight              |
+
+Below is an example screenshot of the CODEOWNERS file:
+
+![CODEOWNERS File Configuration](images/codeowners_file_configuration.png)
+
+### Conclusion
+
+The chosen GitHub hardening measures—CodeQL, OSSF Scorecard, Secret Scanning, Push Protection, and CODEOWNERS—create a well-rounded approach to safeguarding the code and infrastructure of our banking application. These tools and practices not only detect vulnerabilities but also ensure best practices for access control, accountability, and compliance with security standards. Implementing these controls significantly reduces the risk of vulnerabilities being introduced into the system, thereby enhancing the overall security of the application and protecting sensitive financial data from potential attacks.
+
+### Summary Table
+
+| Tool                 | Purpose                           | Key Benefits                 |
+|----------------------|-----------------------------------|------------------------------|
+| CodeQL               | Detect code vulnerabilities       | Proactive, detailed analysis |
+| OSSF Scorecard       | Assess repo security posture      | Consistent compliance checks |
+| GitHub Secret Scanning | Detect accidental secret exposure | Protects sensitive info      |
+| Push Protection      | Prevent risky changes             | Safeguard code integrity     |
+| CODEOWNERS           | Ensure accountability             | Human oversight              |
+
+### Checklist
+- [x] Enable CodeQL scanning for both frontend and backend.
+  - ![CodeQL Scanning Results](images/codeql_scanning_results.png)
+- [x] Configure OSSF Scorecard for regular checks.
+  - ![OSSF Scorecard Metrics](images/openssf_2_2.png)
+- [x] Set up GitHub Secret Scanning.
+  - ![GitHub Secret Scanning Alerts](images/openssf_4.png)
+- [x] Configure Push Protection for all repositories.
+  - ![Push Protection Configuration](images/push_protection_configuration.png)
+- [x] Define CODEOWNERS for specific repositories.
+  - ![CODEOWNERS File Configuration](images/codeowners_file_configuration.png)
 
 
 ## Secrets Management Strategy
