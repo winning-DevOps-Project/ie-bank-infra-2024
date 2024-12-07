@@ -7,14 +7,14 @@
 
 | Roles | Relevant Subsections |
 |-|-|
-|[Product Description](#product-description)||
-|[Team Members](#team-members) ||
-|[Full Stack](#full-stack-development) | |
-|[Infrastructure Development](#infrastructure-development)| |
+|[Product Description](#product-description)| 1|
+|[Team Members](#team-members) |1|
+|[Full Stack](#full-stack-development) | 1|
+|[Infrastructure Development](#infrastructure-development)| 1|
 |[Cyber-Security](#cyber-security) | -  [Github Hardening Strategy](#github-hardening-strategy-for-banking-application) <br> - [Secrets Management](#secrets-management-strategy) <br> -  [Implemented guides](#10-implemented-guides-in-our-design-document)  |
-|[Site-Reliability](#site-reliability) | |
+|[Site-Reliability](#site-reliability) | 1|
 |[Software Modeling - Cloud Architect](#software-modeling---cloud-architect) | 3/5 |
-|[Well-Architected-Framework](#well-architected-framework) | |
+|[Well-Architected-Framework](#well-architected-framework) | 1|
 
 <!--|[Assumptions and Constraints](#assumptions-and-constraints)|| -->
 <!--|- [Functional Requirements](#functional-requirements)||
