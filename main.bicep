@@ -71,7 +71,6 @@ param appInsightsType string
 param appInsightsRetentionDays int
 
 
-
  // Log Analytics Workspace and Application Insights
 module logAnalytics 'modules/log-analytics.bicep' = {
   name: logAnalyticsWorkspaceName
@@ -216,5 +215,46 @@ module staticWebApp 'modules/static-web-app.bicep' = {
     keyVault
   ]
 }
+
+
+@description('Logic app name')
+param logicAppName string 
+@description('URL for alerts to Slack')
+@secure()
+param slackWebhookUrl string
+
+module logicAppModule 'modules/logic-app.bicep' = {
+  name: 'logicAppDeployment'
+  params: {
+    logicAppName: logicAppName
+    location: location
+    slackWebhookUrl: slackWebhookUrl
+  }
+}
+
+module actionGroupModule 'modules/action-group.bicep' = {
+  name: 'AlertActionGroup'
+  params: {
+    actionGroupName: 'CpuUsageAlertGroup'
+    logicAppEndpointUri: logicAppModule.outputs.logicAppEndpointUri
+  }
+}
+
+module metricsAlertModule 'modules/metrics-alerts.bicep' = {
+  name: 'Alerts'
+  params: {
+    appInsightsId: appInsights.outputs.appInsightsId
+    actionGroupId: actionGroupModule.outputs.actionGroupId
+    keyVaultId: keyVault.outputs.resourceId
+    postgreSQLServerId: postgresSQLServer.outputs.id
+  }
+  dependsOn: [
+    appInsights
+    actionGroupModule
+    keyVault
+    postgresSQLServer
+  ]
+}
+
 
 
