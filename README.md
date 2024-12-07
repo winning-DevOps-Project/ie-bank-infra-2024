@@ -407,7 +407,7 @@ monitoring across all stages, ensuring reliable and smooth software delivery.
 
 | Dev | UAT | Prod |
 |-|-|-|
-|![Infrastructure Diagram](images/infrastructure_diagram_dev.png)| ![Infrastructure Diagram](images/infrastructure_diagram_uat.png) | ![Infrastructure Diagram](images/infrastructure_diagram_uat.png) |
+|![Infrastructure Diagram](images/infrastructure_diagram_dev.png)| ![Infrastructure Diagram](images/infrastructure_diagram_uat.png) | ![Infrastructure Diagram](images/infrastructure_diagram_prod.png) |
 
 
 | Service            | DEV Configuration | UAT Configuration | Production Configuration |
