@@ -219,30 +219,80 @@ The chosen GitHub hardening measures—CodeQL, OSSF Scorecard, Secret Scanning, 
 
 ## Secrets Management Strategy
 
-***Overview of Secrets Management Strategy***
+### Overview of Secrets Management Strategy
 
-Managing sensitive credentials such as API keys, passwords, and other secrets is critical in securing a financial application. To achieve this, our strategy leverages Azure Key Vault for centralized credential management and Azure Managed Identities for secure, seamless access to Azure resources. The integration of Azure Bicep ensures automated and consistent deployments. This cohesive approach secures credentials for critical resources, such as the Container Registry and PostgreSQL server, while minimizing risks and simplifying workflows.
+Managing sensitive credentials such as API keys, passwords, and other secrets is critical in securing a financial application. To achieve this, our strategy leverages **Azure Key Vault** for centralized credential management and **Azure Managed Identities** for secure, seamless access to Azure resources. The integration of **Azure Bicep** ensures automated and consistent deployments. This cohesive approach secures credentials for critical resources, such as the Container Registry and PostgreSQL server, while minimizing risks and simplifying workflows.
 
-***Azure Key Vault for Credential Management***
+![Overview Diagram](images/secrets_management_overview.png)
 
-At the heart of our strategy is Azure Key Vault, a centralized service for securely storing and managing secrets. By keeping credentials out of source control and application settings, it significantly reduces the risk of accidental exposure. Azure Key Vault’s robust encryption, compliance capabilities, and integration with other Azure services ensure that secrets are securely stored and easily retrievable by authorized applications. Its use simplifies secret management while maintaining the high level of security demanded in a banking application. By centralizing secret storage, Key Vault provides an efficient, auditable, and secure system for managing sensitive credentials.
+---
 
-***Azure Managed Identity for Secure Access***
+### Azure Key Vault for Credential Management
 
-To eliminate static credentials, we use Azure Managed Identity, which enables applications to authenticate directly with Azure resources like Key Vault. This approach ensures secure connectivity without the need for hard-coded secrets, reducing the risks associated with credential leaks. Managed Identity also automates credential rotation, providing a seamless and secure way to access resources such as the PostgreSQL server and Container Registry. This minimizes administrative overhead while maintaining a robust security posture, aligning with the compliance and operational requirements of the financial sector.
+At the heart of our strategy is **Azure Key Vault**, a centralized service for securely storing and managing secrets. By keeping credentials out of source control and application settings, it significantly reduces the risk of accidental exposure. Azure Key Vault’s robust encryption, compliance capabilities, and integration with other Azure services ensure that secrets are securely stored and easily retrievable by authorized applications.
 
-***Container Registry and PostgreSQL Credentials Protection***
+### Key Benefits:
+- Centralized management of secrets.
+- Strong encryption and compliance with industry standards.
+- Easy integration with Azure services like Managed Identity.
 
-For protecting Container Registry credentials, we rely on Azure Key Vault and Azure Bicep templates to securely store and manage admin usernames and passwords. These credentials are retrieved programmatically with strict access controls, ensuring consistent and secure practices across environments. This approach not only reduces human error but also facilitates automated credential rotation, further enhancing security.
-Similarly, the PostgreSQL server’s administrative credentials are stored in Azure Key Vault and accessed via Managed Identity. This ensures that sensitive secrets are never exposed in the codebase or shared manually among developers. With Bicep templates managing deployment, the workflow is automated and consistent, simplifying secret management while maintaining compliance and security.
+By centralizing secret storage, Key Vault provides an efficient, auditable, and secure system for managing sensitive credentials.
 
-***Key Rotation and Automation***
+**Screenshot:** Below is an example screenshot of Azure Key Vault’s secrets configuration:
 
-Automated key rotation is a critical aspect of our strategy, mitigating the risks associated with credential compromise over time. By leveraging Azure Key Vault’s rotation capabilities, credentials for the Container Registry and PostgreSQL server are updated automatically, adhering to security best practices. This approach reduces operational overhead and ensures that secrets are regularly refreshed, a crucial requirement in the highly regulated financial sector where compliance and frequent key updates are essential.
+![Azure Key Vault Configuration](images/safecode_3_2.png)
 
-***Collaboration with the Cloud and Infrastructure Teams***
+---
 
-The implementation of this strategy was a collaborative effort involving the Cloud Architect, Full Stack Developer, and Infrastructure Developer. By working together, we ensured that security was embedded at every stage of development and deployment, using best practices and Azure’s robust security features.
+### Azure Managed Identity for Secure Access
+
+To eliminate static credentials, we use **Azure Managed Identity**, which enables applications to authenticate directly with Azure resources like Key Vault. This approach ensures secure connectivity without the need for hard-coded secrets, reducing the risks associated with credential leaks.
+
+#### Key Benefits:
+- Eliminates the need for static credentials.
+- Automatically rotates credentials for seamless access.
+- Enhances security posture by removing hard-coded secrets.
+
+Managed Identity also automates credential rotation, providing a seamless and secure way to access resources such as the PostgreSQL server and Container Registry.
+
+---
+
+### Container Registry and PostgreSQL Credentials Protection
+
+### **Container Registry**
+For protecting Container Registry credentials, we rely on **Azure Key Vault** and **Azure Bicep templates** to securely store and manage admin usernames and passwords. These credentials are retrieved programmatically with strict access controls, ensuring consistent and secure practices across environments. This approach not only reduces human error but also facilitates automated credential rotation, further enhancing security.
+
+#### **PostgreSQL Server**
+Similarly, the PostgreSQL server’s administrative credentials are stored in **Azure Key Vault** and accessed via **Managed Identity**. This ensures that sensitive secrets are never exposed in the codebase or shared manually among developers. With Bicep templates managing deployment, the workflow is automated and consistent, simplifying secret management while maintaining compliance and security.
+
+---
+
+### Key Rotation and Automation
+
+Automated key rotation is a critical aspect of our strategy, mitigating the risks associated with credential compromise over time. By leveraging **Azure Key Vault’s rotation capabilities**, credentials for the Container Registry and PostgreSQL server are updated automatically, adhering to security best practices.
+
+#### Key Benefits:
+- Regularly refreshed secrets reduce the risk of compromise.
+- Reduces operational overhead through automation.
+- Ensures compliance with regulatory requirements.
+
+---
+
+### Collaboration with the Cloud and Infrastructure Teams
+
+The implementation of this strategy was a collaborative effort involving the **Cloud Architect**, **Full Stack Developer**, and **Infrastructure Developer**. By working together, we ensured that security was embedded at every stage of development and deployment, using best practices and Azure’s robust security features.
+
+#### Key Contributions:
+- **Cloud Architect:** Designed and audited the secure infrastructure.
+- **Full Stack Developer:** Integrated secrets management into application workflows.
+- **Infrastructure Developer:** Automated deployment with Azure Bicep.
+
+---
+
+### Conclusion
+
+By combining Azure Key Vault, Managed Identity, and Bicep, we have created a robust secrets management strategy that ensures the security and compliance of our financial application. This approach simplifies credential management, reduces risks, and aligns with the high-security standards required in the financial sector. The collaboration between teams further enhances the reliability and effectiveness of the implementation, ensuring security at every step.
+
 
 
 ## 10 implemented guides in our Design Document
