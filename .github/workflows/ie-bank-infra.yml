@@ -3,8 +3,8 @@ name: ie-bank-infra
 on:
   workflow_dispatch:
   push:
-      paths-ignore:
-        - 'scripts/**'
+    paths-ignore:
+      - 'scripts/**'
   pull_request:
     branches: [ "main" ]
 
@@ -26,6 +26,7 @@ jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     needs: build
+    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
     environment:
       name: 'Development'
 
@@ -34,8 +35,7 @@ jobs:
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      # Run ARM template deployment with parameters
-      - name: deploy
+      - name: Deploy ARM template to Development
         uses: azure/arm-deploy@v2
         with:
           subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
@@ -46,11 +46,10 @@ jobs:
             slackWebhookUrl=${{ secrets.SLACK_WEBHOOK_URL }}
           deploymentName: ${{ env.USER_ALIAS }}-dev
 
-
   deploy-uat:
-    if: (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main') || github.ref == 'refs/heads/main'
+    if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
-    needs: [build, deploy-dev]
+    needs: [build]
     environment:
       name: 'UAT'
 
@@ -59,9 +58,7 @@ jobs:
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      # Run ARM template deployment with parameters
-      - name: deploy
+      - name: Deploy ARM template to UAT
         uses: azure/arm-deploy@v2
         with:
           subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
@@ -70,35 +67,27 @@ jobs:
           parameters: >
             ./parameters/uat.bicepparam
             slackWebhookUrl=${{ secrets.SLACK_WEBHOOK_URL }}
-
           deploymentName: ${{ env.USER_ALIAS }}-uat
 
-
-
   deploy-prod:
-    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'refs/heads/main'
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     needs: [build, deploy-dev, deploy-uat]
     environment:
       name: 'Production'
-        
+
     steps:
       - uses: actions/checkout@v2
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
-     # Run ARM template deployment with parameters
-      - name: deploy
+      - name: Deploy ARM template to Production
         uses: azure/arm-deploy@v2
         with:
           subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
           resourceGroupName: ${{ env.RESOURCE_GROUP_PROD }}
           template: ./main.bicep
           parameters: >
-           ./parameters/prod.bicepparam
-           slackWebhookUrl=${{ secrets.SLACK_WEBHOOK_URL }}  
-                  
+            ./parameters/prod.bicepparam
+            slackWebhookUrl=${{ secrets.SLACK_WEBHOOK_URL }}
           deploymentName: ${{ env.USER_ALIAS }}-prod
-
-      
