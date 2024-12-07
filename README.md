@@ -229,6 +229,26 @@ performance, and scalability. GitHub handles version control, while
 Azure services like Key Vault and Log Analytics ensure security and 
 monitoring across all stages, ensuring reliable and smooth software delivery.
 
+### Modularisation Strategy
+
+#### CI/CD and DevOps Alignment
+-⁠  ⁠Modularization strategy integrates seamlessly with a Continuous Integration/Continuous Deployment (CI/CD) pipeline, enabling frequent, automated code deployments across environments.
+- ⁠By leveraging Container Registry for storing Docker images, Azure DevOps Pipelines or other CI/CD tools can automate builds, tests, and deployments.
+- Each module is represented as a reusable Bicep module enabling version control of infrastructure, automated validation and testing of IaC changes before applying them to higher environments and simplified rollbacks and updates with minimal downtime.
+
+#### Scalability: Independent Scaling of Modules
+-⁠  ⁠Modularized components such as Static Web Apps, Azure App Service, and Postgres SQL Server are independently deployed and managed using Bicep templates, allowing seamless scaling based on workload demands.
+-⁠  ⁠Azure App Service Plan enables horizontal or vertical scaling of backend services without impacting other layers, such as frontend static apps or monitoring systems.
+-  ⁠Container Registry ensures scalable deployment of containerized workloads, allowing new instances to spin up dynamically in response to traffic spikes.
+- For databases, Postgres SQL can scale vertically (adding CPU or memory) or horizontally (partitioning data) to meet demand.
+
+#### Security
+-⁠  ⁠Key Vault serves as a centralised and secure repository for managing sensitive credentials, API keys, and certificates. Environment-specific secrets, such as database connection strings or API tokens, are separated for environments.
+-  ⁠Security settings like firewall rules and private endpoints for Postgres SQL Server are managed through Bicep templates, restricting access to trusted networks and services.
+
+#### Flexibility: Modular Design for Independent Updates
+-  ⁠The architecture’s modular nature means individual components can be updated or replaced without requiring downtime for the entire system. Allows individual components to be updated, replaced, or scaled independently without requiring changes to the rest of the architecture. Facilitates rapid environment provisioning by reusing the same module definitions across DEV, UAT, and Production.
+-  ⁠Integration with CI/CD pipelines ensures that any updates to a specific module undergo automated testing and validation before deployment, minimizing risks of cascading failures and ensuring system reliability.
 
 ### Environment Specification
 
@@ -278,6 +298,29 @@ monitoring across all stages, ensuring reliable and smooth software delivery.
 | Key Vault           | Name: `devopps-kv-prod` <br>SKU: Standard <br>Purpose: Store secrets and keys securely |
 | Azure Log Analytics | Name: `devopps-law-prod` <br>SKU: PerGB2018 <br>Purpose: Centralized logging |
 | Azure Application Insights | Name: `devopps-insights-prod` <br>Purpose: Monitor backend and frontend telemetry metrics | -->
+
+
+### Infrastructure Release Strategy
+
+Our release strategy for the DevOpps Bank Infrastructure is designed to ensure seamless, automated, and secure deployment across multiple environments (Development, UAT, and Production). The following aspects describe our release strategy:
+
+#### Infrastructure as Code (IaC)
+The infrastructure is defined and managed using Bicep templates, ensuring consistent deployments and easy scalability.
+The main.bicep file orchestrates the deployment of resources, while modular templates located in the modules directory encapsulate reusable configurations for components such as the Key Vault, Azure Container Registry, Database Infrastructure, etc.
+
+#### CI/CD Pipeline
+Deployment workflows are automated using GitHub Actions enabling continuous integration and delivery of infrastructure changes. In particular, a workflow called "ie-bank-infra.yml" is ran upon different actions. When pushing to any branch, the build and deploy to development jobs are ran, while deployment to UAT is only done upon a pull request. Finally, deployment to Production is done after a pull request is merged successfully, following all the requirements imposed to do so, like a code review, passing the necessary tests, etc.
+
+#### Environment-Specific Configurations
+Parameter files located in the parameters directory allow environment-specific customizations for Development, UAT, and Production environments.
+This separation ensures that deployments are tailored to the specific requirements of each environment without modifying the core infrastructure templates.
+
+This means that we can scale our environments endlessly by just creating different parameter files with new conditions for new deployment settings.
+
+#### Testing and Validation
+The CI/CD pipeline created involves unit testing as well as linting. The workflow has a linting step integrated, which is used to guarantee that the main.bicep file is correctly structured. Also, a separate "kv-test.yml" is executed upon the actions previously mentioned, going through a dry run of the Key Vault deployment to ensure everything is working correctly.
+
+It is also important to highlight that the deployment steps (Development and UAT) also serve as tests before deploying to production.
 
 
 ## Cyber-Security 
@@ -377,7 +420,6 @@ Threat modeling sessions with the Cloud Architect identified potential attack ve
 ---
 
 
-
 ## Site-Reliability
 
 -Mention the main strategies used for Site Reliability here and how some of our design decisions became implemented and what measure were taken to accomplish our goals for the application-
@@ -395,7 +437,6 @@ These measures include:
 
 ### Measure n: 
 -Add in the measure-
-
 
 ## Software Modeling - Cloud Architect
 
@@ -440,22 +481,22 @@ These measures include:
 
 ### ***Cost Optimization Pillar***
 
-## Cost-Efficient Infrastructure Provisioning
+#### Cost-Efficient Infrastructure Provisioning
 - ⁠Infrastructure as Code (IaC): Leveraged Bicep IaC templates for deploying resources dynamically as a part of a CI/CD pipeline, removing the need for using more expensive PaaS alternatives.
 -⁠  ⁠Right-Sizing Resources: Apart from having chosen the adequate resources and proper SKUs for the power and output needed for the project, resource usage alerts are set in place to detect excessive use of resources and scale down if necessary, reducing costs effectively.
 
-## Cost Monitoring and Analysis (SHOULD BE DONE BY GUY)
+#### Cost Monitoring and Analysis (SHOULD BE DONE BY GUY)
 
-## Automation for Cost Reduction
+#### Automation for Cost Reduction
 -⁠  ⁠Auto-Scaling: Only configured auto-scaling for production, ensuring that the project does not incur in unnecessary charges for UAT and Development environments.
 -⁠  ⁠Automated Shutdown: In the future, set up the automatic shutdown of resources (like containers) on low-demand times using Azure Automations. Pairing this technique with automatic bootup would result in extremely efficient resource usage.
 -  ⁠Cleanup of Unused Resources: In the future, implement automated scripts for identifying and cleaning up unused resources to prevent unnecessary costs.
   
-## Continuous Cost Optimization
+#### Continuous Cost Optimization
 -  ⁠Monthly Cost Reviews: Monthly cost review sessions are set to be carried out between the members and different teams of DevOpps Bank. Led by the Infrastructure Team, these sessions are meant to give the team an overview of the monthly costs and decide if changes are needed.
 -⁠  ⁠Cost Forecasting: Create a forecast of the expected costs considering the resources and cloud services employed. This would be done by the Infrastructure Team with the Administrative departments of Devopps Bank.
 
-## Operational Processes
+#### Operational Processes
 - ⁠Cost-Effective Backup Strategy: Used Azure Backup for reliable and cost-efficient backup solutions, ensuring backups are stored with the least expensive options without sacrificing performance. Also, backups are only implemented in production, which allows the team to save costs on UAT and Development environments.
 
 ### ***Performance Optimization Pillar***
