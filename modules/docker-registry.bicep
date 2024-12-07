@@ -3,7 +3,7 @@ param registryName string
 @description('Location of the Azure Container Registry')
 param location string = resourceGroup().location
 @description('SKU for the Azure Container Registry')
-param sku string = 'Standard'
+param sku string 
 param keyVaultResourceId string
 #disable-next-line secure-secrets-in-params
 param keyVaultSecreNameAdminUsername string

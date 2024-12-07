@@ -9,7 +9,7 @@ param name string
 param location string = resourceGroup().location
 
 @description('Optional. The name of the SKU.')
-param skuName string = 'PerGB2018'
+param skuName string 
 
 @description('Optional. Number of days data will be retained for.')
 param dataRetention int = 30

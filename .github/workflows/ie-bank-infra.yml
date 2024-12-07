@@ -75,6 +75,7 @@ jobs:
             --query "[].{role: roleDefinitionName, principal: principalName}" \
             --output table
 
+
   deploy-uat:
     if: (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main') || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -98,35 +99,33 @@ jobs:
           parameters: >
             ./parameters/uat.bicepparam
             slackWebhookUrl=${{ secrets.SLACK_WEBHOOK_URL }}
+
           deploymentName: ${{ env.USER_ALIAS }}-uat
 
-      # Unit Test: Validate Key Vault Deployment and Configuration
-      - name: Test Key Vault Deployment
-        id: test-vault
-        run: |
-          az keyvault show --name devopps-kv-uat --resource-group ${{ env.RESOURCE_GROUP_UAT }}
-        continue-on-error: false
 
-      # Validate Key Vault Properties
-      - name: Verify Key Vault Properties
-        run: |
-          az keyvault show --name devopps-kv-uat --resource-group ${{ env.RESOURCE_GROUP_UAT }} \
-            --query "{location: location, enabledForDeployment: properties.enabledForDeployment, enabledForTemplateDeployment: properties.enabledForTemplateDeployment, publicNetworkAccess: properties.publicNetworkAccess}" \
-            --output json
 
-      # Validate Key Vault Access Policies
-      - name: Validate Key Vault Access Policies
-        run: |
-          az keyvault show --name devopps-kv-uat --resource-group ${{ env.RESOURCE_GROUP_UAT }} \
-            --query "properties.accessPolicies[].{principalId: principalId, permissions: permissions}" \
-            --output json
+  deploy-prod:
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    needs: [build, deploy-dev, deploy-uat]
+    environment:
+      name: 'Production'
+        
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+     # Run ARM template deployment with parameters
+      - name: deploy
+        uses: azure/arm-deploy@v2
+        with:
+          subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
+          resourceGroupName: ${{ env.RESOURCE_GROUP_PROD }}
+          template: ./main.bicep
+          parameters: ./parameters/prod.bicepparam  
+                  
+          deploymentName: ${{ env.USER_ALIAS }}-prod
 
-      # Validate RBAC Permissions
-      - name: Validate Key Vault RBAC Permissions
-        run: |
-          az role assignment list \
-            --scope /subscriptions/${{ env.SUBSCRIPTION_ID_DEV }}/resourceGroups/${{ env.RESOURCE_GROUP_UAT }}/providers/Microsoft.KeyVault/vaults/devopps-kv-uat \
-            --query "[].{role: roleDefinitionName, principal: principalName}" \
-            --output table
-
-     
+    

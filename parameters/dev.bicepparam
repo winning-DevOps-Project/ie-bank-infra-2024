@@ -64,9 +64,12 @@ param keyVaultRoleAssignments = [
 
 // Container Registry
 param containerRegistryName = 'DevoppsDevACR'
+param acrSku  = 'Basic'
 
 // postgresql server
 param postgreSQLServerName = 'devopps-dbsrv-dev'
+param SerskuName  = 'Standard_B1ms'
+param SerskuTier = 'Burstable'
 
 // postgresql db
 param postgreSQLDatabaseName = 'devopps-db-dev'
@@ -74,7 +77,7 @@ param postgreSQLDatabaseName = 'devopps-db-dev'
 
 // App service plan
 param appServicePlanName = 'devopps-asp-dev'
-param appServicePlanSku = 'B1'
+param appServicePlanSku = 'F1'
 param appServiceWebsiteBEName = 'devopps-be-dev'
 param dockerRegistryImageName = 'devopps-backend'
 param dockerRegistryImageVersion = 'latest'
@@ -89,6 +92,7 @@ param appServiceBeAppSettings = [
 
 // Static Web App
 param staticWebAppName = 'devopps-swa-dev'
+param swaSku = 'Free'
 
 // LAW
 param logAnalyticsWorkspaceName = 'devopps-law-dev'

@@ -2,10 +2,8 @@ metadata name = 'Key Vaults'
 metadata description = 'This module deploys a Key Vault.'
 metadata owner = 'Azure/module-maintainers'
 
-// Parameters
 @description('Required. Name of the Key Vault. Must be globally unique.')
 param name string
-
 @description('Enable RBAC authorization for Key Vault (default: true).')
 param enableRbacAuthorization bool = true
 
@@ -17,13 +15,12 @@ param enableVaultForDeployment bool = true
 
 @description('Specifies if the vault is enabled for a template deployment.')
 param enableVaultForTemplateDeployment bool = true
-
+ 
 @description('Enable Key Vault\'s soft delete feature.')
 param enableSoftDelete bool 
 
 @description('Specifies the SKU for the vault.')
-param sku string = 'standard'
-
+param sku string
 param roleAssignments array = []
 
 var builtInRoleNames = {
@@ -87,7 +84,7 @@ var builtInRoleNames = {
 @description('The shared Log Analytics Workspace Resource ID for diagnostics')
 param workspaceResourceId string
 
-// Key Vault Resource
+// Key Vault Resource...
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: name
   location: location

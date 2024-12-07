@@ -18,7 +18,7 @@ param enableSoftDelete bool
 param keyVaultRoleAssignments array 
 // Azure Container Registry SKU
 @sys.description('The Azure Container Registry SKU')
-param acrSku string = 'Standard'
+param acrSku string 
 @sys.description('The Azure Container Registry name')
 param containerRegistryName string
 
@@ -27,6 +27,10 @@ param containerRegistryName string
 param postgreSQLServerName string 
 @description('The PostgreSQL Database name')
 param postgreSQLDatabaseName string  
+@sys.description('The PostgreSQL SKU name')
+param SerskuName string
+@sys.description('The PostgreSQL SKU tier')
+param SerskuTier string
 
 // App Service
 param appServiceWebsiteBEName string 
@@ -48,6 +52,7 @@ param appServiceBeAppSettings array
 // Frontend repository details for Static Web App
 @sys.description('The name of the Static Web App')
 param staticWebAppName string
+param swaSku string
 
 
 // Log Analytics and App Insights configurations
@@ -179,6 +184,8 @@ module postgresSQLServer 'modules/postgresql-server.bicep' = {
     postgreSQLAdminServicePrincipalName: appServiceWebsiteBEName
     postgreSQLServerName: postgreSQLServerName
     workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
+    SerskuName: SerskuName
+    SerskuTier: SerskuTier
   }
   dependsOn: [
     appServiceBE
@@ -200,7 +207,7 @@ module staticWebApp 'modules/static-web-app.bicep' = {
   name: staticWebAppName
   params: {
     name: staticWebAppName
-    sku: 'Free'
+    sku: swaSku
     keyVaultResourceId: keyVault.outputs.resourceId
     keyVaultSecretName: 'SWATokenSecret'
   }
