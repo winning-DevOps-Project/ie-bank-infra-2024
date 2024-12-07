@@ -72,7 +72,7 @@ jobs:
   deploy-prod:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
-    needs: [build, deploy-dev, deploy-uat]
+    needs: [build]
     environment:
       name: 'Production'
 
