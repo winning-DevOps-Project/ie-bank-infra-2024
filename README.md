@@ -8,13 +8,14 @@
 |-|-|
 |[Product Description](#product-description)||
 |[Team Members](#team-members) ||
-|[Assumptions and Constraints](#assumptions-and-constraints)||
 |[Full Stack](#full-stack-development)| 4/5 |
 |[Infrastructure Development](#infrastructure-development)| 3/5 |
 |[Cyber-Security](#cyber-security)| 4/5 |
 |[Site-Reliability](#site-reliability)| 0/5 |
 |[Software Modeling - Cloud Architect](#software-modeling---cloud-architect)| 3/5 |
 |[Well-Architected-Framework](#well-architected-framework)||
+
+<!--|[Assumptions and Constraints](#assumptions-and-constraints)|| -->
 <!--|- [Functional Requirements](#functional-requirements)||
 |--- [Admin Portal - Bank Users Management System](#admin-portal---bank-users-management-system)||
 |--- [User Portal - Bank Account Management System](#user-portal---bank-account-management-system)||
