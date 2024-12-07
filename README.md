@@ -13,8 +13,7 @@
 |[Infrastructure Development](#infrastructure-development)| 1|
 |[Cyber-Security](#cyber-security) | -  [Github Hardening Strategy](#github-hardening-strategy-for-banking-application) <br> - [Secrets Management](#secrets-management-strategy) <br> -  [Implemented guides](#10-implemented-guides-in-our-design-document)  |
 |[Site-Reliability](#site-reliability) | 1|
-|[Software Modeling - Cloud Architect](#software-modeling---cloud-architect) | 3/5 |
-|[Well-Architected-Framework](#well-architected-framework) | 1|
+|[Cloud Architect](#cloud-architect) | - [Diagrams](#diagrams) <br> - [Well-Architected-Framework](#well-architected-framework) |
 
 <!--|[Assumptions and Constraints](#assumptions-and-constraints)|| -->
 <!--|- [Functional Requirements](#functional-requirements)||
@@ -824,7 +823,7 @@ Our operational excellence and release engineering framework is built on Infrast
 Our comprehensive reliability design implements a robust strategy across all Azure resources, focusing on key reliability pillars. For Availability, we maintain strict SLOs with 99.99% target for Static Web App and 99.9% for Key Vault, utilizing Azure's built-in high-availability features and CDN capabilities to ensure consistent accessibility. Resiliency is achieved through our PostgreSQL Flexible Server configuration with Standard_B1ms tier and 32GB storage, complemented by a 7-day backup retention policy and automated failover capabilities. Our Monitoring and Alerting system combines Application Insights (90-day retention) with custom Azure Workbooks for real-time visibility, while Logic Apps integration enables instant Slack notifications for incidents, with severity-based alerting (levels 1-4) for different threshold violations including HTTP duration exceeding 200ms and memory utilization above 90%. Fault Tolerance is implemented through our modular Bicep-based infrastructure deployment, enabling quick recovery and consistent configuration across development and UAT environments, while our centralized Log Analytics workspace (30-day retention) provides comprehensive diagnostic data for rapid troubleshooting. The system's health is continuously monitored through automated checks, with specific thresholds for failed requests (maximum 5 concurrent) and performance metrics, ensuring rapid detection and response to any component failures while maintaining system stability and performance across all environments.
 
 
-## Software Modeling - Cloud Architect
+## Cloud Architect
 
 ### Diagrams
 
