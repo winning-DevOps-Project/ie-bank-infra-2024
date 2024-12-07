@@ -7,7 +7,7 @@
 
 | Roles | Relevant Subsections |
 |-|-|
-|[Product Owner](#product-owner)| - [Product planning](#product-planning) <br> - [Scrum Methodology](#scrum-methodology) <br> - [DevOps Collaboration](#devops-collaboration)|
+|[Product Owner](#product-owner)| [- Product planning](#product-planning) <br> - [Scrum Methodology](#scrum-methodology) <br> - [DevOps Collaboration](#devops-collaboration)|
 |[Team Members](#team-members) ||
 |[Full Stack](#full-stack-development)| - [Continious Integration](#continious-integration) <br> - [Test Driven Development](#test-driven-development) <br> - [Continious Deployment](#continious-deployment) |
 |[Infrastructure Development](#infrastructure-development)| - [IaC Code](#infrastructure-as-code---modularization-strategy) <br> - [Hosting Infrastructure](#hosting-infrastructure---environment-specification) <br> - [Continious Integration/Continious Deployment](#infrastructure-release-strategy)|
@@ -984,6 +984,8 @@ This setup, combined with Azure Workbooks, ensures quick detection, assessment, 
 - **SKU**: Standard  
 - **Soft Delete**: Enabled  
 - **Purpose**: Secure secrets management for production  
+
+[SLA Agreement](SLA.md)
 
 ---
 
