@@ -95,7 +95,9 @@ jobs:
           subscriptionId: ${{ env.SUBSCRIPTION_ID_DEV }}
           resourceGroupName: ${{ env.RESOURCE_GROUP_PROD }}
           template: ./main.bicep
-          parameters: ./parameters/prod.bicepparam  
+          parameters: >
+           ./parameters/prod.bicepparam
+           slackWebhookUrl=${{ secrets.SLACK_WEBHOOK_URL }}  
                   
           deploymentName: ${{ env.USER_ALIAS }}-prod
 
