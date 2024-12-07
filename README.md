@@ -255,6 +255,10 @@ To eliminate static credentials, we use **Azure Managed Identity**, which enable
 
 Managed Identity also automates credential rotation, providing a seamless and secure way to access resources such as the PostgreSQL server and Container Registry.
 
+**Screenshot:** Below is an example screenshot of Azure Managed Identity’s secrets configuration:
+
+![Azure Key Vault Configuration](images/safecode_3_1.png)
+
 ---
 
 ### Container Registry and PostgreSQL Credentials Protection
