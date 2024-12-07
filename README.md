@@ -7,13 +7,14 @@
 
 | Roles | Relevant Subsections |
 |-|-|
-|[Product Description](#product-description)| 1|
-|[Team Members](#team-members) |1|
-|[Full Stack](#full-stack-development) | 1|
-|[Infrastructure Development](#infrastructure-development)| 1|
-|[Cyber-Security](#cyber-security) | -  [Github Hardening Strategy](#github-hardening-strategy-for-banking-application) <br> - [Secrets Management](#secrets-management-strategy) <br> -  [Implemented guides](#10-implemented-guides-in-our-design-document)  |
-|[Site-Reliability](#site-reliability) | 1|
-|[Cloud Architect](#cloud-architect) | - [Diagrams](#diagrams) <br> - [Well-Architected-Framework](#well-architected-framework) |
+|[Product Description](#product-description)| - [Product planning](#product-planning) <br> - [Scrum Methodology](#scrum-methodology) <br> - [DevOps Collaboration](#devops-collaboration)|
+|[Team Members](#team-members) ||
+|[Full Stack](#full-stack-development)| [Continious Integration](#continious-integration) <br> - [Test Driven Development](#test-driven-development) <br> - [Continious Deployment](#continious-deployment) |
+|[Infrastructure Development](#infrastructure-development)| - [IaC Code](#iac-code) <br> - [Hosting Infrastructure](#container-hosting-infrastructure) <br> - [Continious Integration/Continious Deployment](#continious-integration/continious-deployment)|
+|[Cyber-Security](#cyber-security)| -  [Github Hardening Strategy](#github-hardening-strategy-for-banking-application) <br> - [Secrets Management](#secrets-management-strategy) <br> -  [Implemented guides](#10-implemented-guides-in-our-design-document)  |
+|[Site-Reliability](#site-reliability)| [Monitoring Strategy](#monitoring-strategy) <br> - [Incident Response](#incident-management) <br> - [Reliability Design](#reliability-design) |
+|[Software Modeling - Cloud Architect](#software-modeling---cloud-architect)| - [Well Architected Framework](#well-architected-framework) <br> - [Sofware Modeling](#software-modeling---cloud-architect)  |
+
 
 <!--|[Assumptions and Constraints](#assumptions-and-constraints)|| -->
 <!--|- [Functional Requirements](#functional-requirements)||
