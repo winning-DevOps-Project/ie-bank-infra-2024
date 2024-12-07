@@ -223,7 +223,7 @@ The chosen GitHub hardening measures—CodeQL, OSSF Scorecard, Secret Scanning, 
 
 Managing sensitive credentials such as API keys, passwords, and other secrets is critical in securing a financial application. To achieve this, our strategy leverages **Azure Key Vault** for centralized credential management and **Azure Managed Identities** for secure, seamless access to Azure resources. The integration of **Azure Bicep** ensures automated and consistent deployments. This cohesive approach secures credentials for critical resources, such as the Container Registry and PostgreSQL server, while minimizing risks and simplifying workflows.
 
-![Overview Diagram](images/secrets_management_overview.png)
+![Overview Diagram](images/overview_diagram_cred.png)
 
 ---
 
