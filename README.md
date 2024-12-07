@@ -158,7 +158,21 @@ The IE Bank system will allow multiple bank users to access the account manageme
 | FR 4. | Bank users can log in to the web application using their username and password. Once logged in, they can view only their owned bank accounts and transactions. |
 | FR 5. | Bank users can transfer money to other existing accounts in the bank from the account management portal, by entering the recipient’s account number and the amount to be transferred. Amount to transfer cannot be more than the available amount in the account. |
 
+---
 
+PIETROS PART
+PIETROS PART
+PIETROS PART
+PIETROS PART
+PIETROS PART
+PIETROS PART
+PIETROS PART
+PIETROS PART
+PIETROS PART
+PIETROS PART
+PIETROS PART
+
+---
 <!-- ---
 #### Create Account Objects
 ---
@@ -186,33 +200,25 @@ For the expected MVP, the following non-functional requirements have been define
 
 | Requirements | Description |  
 |-|-|
-| NFR 1. | The web application should implement a basic user/admin authentication system that requires the users to enter their username and password to log in. The web application should not use any advanced or complex authentication methods, such as biometric, token, or OAuth. The web application should also encrypt and store the user credentials securely (hashed) in the database. |
+| NFR 1. | The web application should implement a basic user/admin authentication system that requires the users to enter their username and password to log in. The web application should not use any advanced or complex authentication methods, such as biometrics, token, or OAuth. The web application should also encrypt and store the user credentials securely (hashed) in the database. |
 | NFR 2. | The web application should have a simple frontend user interface. The web application should not necessarily focus on the aesthetic aspects of the frontend, such as colors, fonts, or animations, or ensure that the frontend is compatible and responsive with different browsers and devices. |
 
 ### Development Strategy
 -Trunk-Based / Feature-Based-
 
 ### Frontend
--Here we can add in some of the main design of the frontend-
+-Here we can add in some of the main designs of the front-
 
 ### Backend
 -Connecting the backend and the frontend for the database-
 
 ### Testing
 
-
-### Non-Functional Requirements
-
-#### NFR 1
-#### NFR 2
-#### NFR 3
-#### NFR N
-
 ## Infrastructure Development
 
 ### Design and Release Strategy Overview
-Our Three-Stage Deployment strategy, coupled with Trunk-Based Development, 
-ensures efficient and secure code transitions through DEV, UAT, and Prod. 
+Our three-stage deployment strategy and trunk-based development
+ensure efficient and secure code transitions through DEV, UAT, and production. 
 In the DEV stage, rapid iterations are enabled through trunk-based development, 
 where developers commit directly to the main branch for continuous integration. 
 This accelerates feature development and testing using minimal resources. 
@@ -229,8 +235,6 @@ monitoring across all stages, ensuring reliable and smooth software delivery.
 | Dev | UAT | Prod |
 |-|-|-|
 |![Infrastructure Diagram](images/infrastructure_diagram_dev.png)| ![Infrastructure Diagram](images/infrastructure_diagram_uat.png) | ![Infrastructure Diagram](images/infrastructure_diagram_uat.png) |
-
-
 
 
 | Service            | DEV Configuration | UAT Configuration | Production Configuration |
@@ -434,7 +438,7 @@ These measures include:
 
 ---
 
-### Cost Optimization Pillar
+### ***Cost Optimization Pillar***
 
 ### ***Performance Optimization in Our Architecture***
 
@@ -460,11 +464,13 @@ These measures include:
 - Sustainable Performance Practices: The current SKU choices for different environment accordingly provide a sustainable performance by utilising basic tiers for DEV and UAT to provide energy efficiency. For future, Use IaC to schedule automated shutdowns of DEV environments outside business hours to conserve resources.
 
 
-### Security Pillar
+### ***Security Pillar***
 
-## Reliability Pillar
+## ***Reliability Pillar***
 
 #### 
+
+<!--
 
 ## *Bank Users Functional Requirements*
 
@@ -558,4 +564,4 @@ The system shall allow bank users to transfer funds to other accounts within the
    - The sender's account balance is reduced by the transfer amount.
    - The recipient's account balance is increased by the same amount.
 2. *Transaction Record*:
-   - A *Transaction Object* is created to record the transaction details, including the sender, recipient, and transfer amount.
+   - A *Transaction Object* is created to record the transaction details, including the sender, recipient, and transfer amount. -->
