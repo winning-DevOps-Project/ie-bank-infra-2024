@@ -9,8 +9,8 @@
 |-|-|
 |[Product Owner](#product-owner)| - [Product planning](#product-planning) <br> - [Scrum Methodology](#scrum-methodology) <br> - [DevOps Collaboration](#devops-collaboration)|
 |[Team Members](#team-members) ||
-|[Full Stack](#full-stack-development)| [Continious Integration](#continious-integration) <br> - [Test Driven Development](#test-driven-development) <br> - [Continious Deployment](#continious-deployment) |
-|[Infrastructure Development](#infrastructure-development)| - [IaC Code](#iac-code) <br> - [Hosting Infrastructure](#container-hosting-infrastructure) <br> - [Continious Integration/Continious Deployment](#continious-integration/continious-deployment)|
+|[Full Stack](#full-stack-development)| - [Continious Integration](#continious-integration) <br> - [Test Driven Development](#test-driven-development) <br> - [Continious Deployment](#continious-deployment) |
+|[Infrastructure Development](#infrastructure-development)| - [IaC Code](#infrastructure-as-code---modularization-strategy) <br> - [Hosting Infrastructure](#hosting-infrastructure---environment-specification) <br> - [Continious Integration/Continious Deployment](#infrastructure-release-strategy)|
 |[Cyber-Security](#cyber-security)| -  [Github Hardening Strategy](#github-hardening-strategy-for-banking-application) <br> - [Secrets Management](#secrets-management-strategy) <br> -  [Implemented guides](#10-implemented-guides-in-our-design-document)  |
 |[Site-Reliability](#site-reliability)| [Monitoring Strategy](#monitoring-strategy) <br> - [Incident Response](#incident-management) <br> - [Reliability Design](#reliability-design) |
 |[Software Modeling - Cloud Architect](#software-modeling---cloud-architect)| - [Well Architected Framework](#well-architected-framework) <br> - [Sofware Modeling](#software-modeling---cloud-architect)  |
@@ -382,7 +382,8 @@ performance, and scalability. GitHub handles version control, while
 Azure services like Key Vault and Log Analytics ensure security and 
 monitoring across all stages, ensuring reliable and smooth software delivery.
 
-### ⁠Modularisation Strategy 
+### ⁠Infrastructure as Code - Modularization Strategy
+
 #### CI/CD and DevOps Alignment
 - Our modularisation strategy integrates seamlessly with a Continuous Integration/Continuous Deployment pipeline, enabling frequent, automated code deployments across all environments.
 - By leveraging Container Registry for storing Docker images, Azure DevOps Pipelines or other CI/CD tools can automate builds, tests, and deployments.
@@ -402,7 +403,7 @@ monitoring across all stages, ensuring reliable and smooth software delivery.
 - The architecture’s modular nature means individual components can be updated or replaced without requiring downtime for the entire system or need of major changes to the rest of the architecture. As well as ease of modificatiins to the system, the probability or error prone changes decreases due to the isolated nature where each module is independently defined, tested, and validated, ensuring that changes made to one component do not inadvertently affect others.
 - The architecture is tightly integrated with CI/CD pipelines, ensuring that any updates to a specific module are automatically validated through rigorous testing before deployment. These tests include syntax validation, integration tests, and environment-specific functional testing.
 
-### Environment Specification
+### Hosting Infrastructure - Environment Specification
 
 | Dev | UAT | Prod |
 |-|-|-|
