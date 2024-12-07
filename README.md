@@ -34,13 +34,14 @@
 The software in question is a banking system that allows users to register, create an account, and keep track of their accounts. Furthermore, implementations outside of the product itself include: unit testing for the software, GitHub flow as the branch-based flow strategy, monitoring using Azure Insights, and more.
 
 ## Team Members
-- Angel Lopez
-- Gloria Paraschivoiu
-- Guy Mazar
-- Jorge Vargas
-- Pietro Rodrigano
-- Ricardo Mendez
-- Sebastian Perilla
+- Angel Lopez (Product Owner)
+- Gloria Paraschivoiu (Full Stack)
+- Guy Mazar (Site Reliability Engineer)
+- Jorge Vargas (Cybersecurity Expert)
+- Pietro Rodrigano (Full Stack)
+- Ricardo Mendez (Infrastructure)
+- Sebastian Perilla (Cloud Architect)
+- Anna Shats (Infrastructure)
 
 ## Assumptions and Constraints
 ### Assumptions
