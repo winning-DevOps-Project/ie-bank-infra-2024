@@ -229,26 +229,25 @@ performance, and scalability. GitHub handles version control, while
 Azure services like Key Vault and Log Analytics ensure security and 
 monitoring across all stages, ensuring reliable and smooth software delivery.
 
-### Modularisation Strategy
-
+### ⁠Modularisation Strategy 
 #### CI/CD and DevOps Alignment
--⁠  ⁠Modularization strategy integrates seamlessly with a Continuous Integration/Continuous Deployment (CI/CD) pipeline, enabling frequent, automated code deployments across environments.
-- ⁠By leveraging Container Registry for storing Docker images, Azure DevOps Pipelines or other CI/CD tools can automate builds, tests, and deployments.
-- Each module is represented as a reusable Bicep module enabling version control of infrastructure, automated validation and testing of IaC changes before applying them to higher environments and simplified rollbacks and updates with minimal downtime.
+- Our modularisation strategy integrates seamlessly with a Continuous Integration/Continuous Deployment pipeline, enabling frequent, automated code deployments across all environments.
+- By leveraging Container Registry for storing Docker images, Azure DevOps Pipelines or other CI/CD tools can automate builds, tests, and deployments.
+-Each module is represented as a reusable Bicep module allowing version control of infrastructure through Github and automated validation in the workflows to ensure they are syntactically correct and free of configuration errors. Additionally, testing of IaC changes before applying them to higher environments and simplified rollbacks and updates with minimal downtime.
 
 #### Scalability: Independent Scaling of Modules
--⁠  ⁠Modularized components such as Static Web Apps, Azure App Service, and Postgres SQL Server are independently deployed and managed using Bicep templates, allowing seamless scaling based on workload demands.
--⁠  ⁠Azure App Service Plan enables horizontal or vertical scaling of backend services without impacting other layers, such as frontend static apps or monitoring systems.
--  ⁠Container Registry ensures scalable deployment of containerized workloads, allowing new instances to spin up dynamically in response to traffic spikes.
-- For databases, Postgres SQL can scale vertically (adding CPU or memory) or horizontally (partitioning data) to meet demand.
+- Modularized components such as Static Web Apps, Azure App Service, and Postgres SQL Server are independently deployed and managed using. Bicep templates, allowing seamless scaling based on workload demands.
+- Azure App Service Plan enables horizontal or vertical scaling of backend services without impacting other layers, such as frontend static apps or monitoring systems.
+- Container Registry ensures scalable deployment of containerized workloads, allowing new instances to spin up dynamically in response to traffic spikes.
+-For databases, Postgres SQL can scale vertically (adding CPU or memory) or horizontally (partitioning data) to meet demand. For future improvements, we will integrate replicas with load balancers like Azure Application Gateway to route queries appropriately and so handle increasing workloads.
 
 #### Security
--⁠  ⁠Key Vault serves as a centralised and secure repository for managing sensitive credentials, API keys, and certificates. Environment-specific secrets, such as database connection strings or API tokens, are separated for environments.
--  ⁠Security settings like firewall rules and private endpoints for Postgres SQL Server are managed through Bicep templates, restricting access to trusted networks and services.
+- Key Vault serves as a centralised and secure repository for managing sensitive credentials, API keys, and certificates. Environment-specific secrets, such as database connection strings or API tokens, are separated for environments. This allows for updates to secrets and key rotations to be managed centrally and be propagated to the respective modules, ensuring consistent security practices.
+- Security settings like firewall rules and private endpoints for Postgres SQL Server are managed through Bicep templates, restricting access to trusted networks and services to ensure a robust and scalable security structure.
 
 #### Flexibility: Modular Design for Independent Updates
--  ⁠The architecture’s modular nature means individual components can be updated or replaced without requiring downtime for the entire system. Allows individual components to be updated, replaced, or scaled independently without requiring changes to the rest of the architecture. Facilitates rapid environment provisioning by reusing the same module definitions across DEV, UAT, and Production.
--  ⁠Integration with CI/CD pipelines ensures that any updates to a specific module undergo automated testing and validation before deployment, minimizing risks of cascading failures and ensuring system reliability.
+- The architecture’s modular nature means individual components can be updated or replaced without requiring downtime for the entire system or need of major changes to the rest of the architecture. As well as ease of modificatiins to the system, the probability or error prone changes decreases due to the isolated nature where each module is independently defined, tested, and validated, ensuring that changes made to one component do not inadvertently affect others.
+- The architecture is tightly integrated with CI/CD pipelines, ensuring that any updates to a specific module are automatically validated through rigorous testing before deployment. These tests include syntax validation, integration tests, and environment-specific functional testing.
 
 ### Environment Specification
 
