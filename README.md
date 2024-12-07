@@ -7,7 +7,7 @@
 
 | Roles | Relevant Subsections |
 |-|-|
-|[Product Description](#product-description)| - [Product planning](#product-planning) <br> - [Scrum Methodology](#scrum-methodology) <br> - [DevOps Collaboration](#devops-collaboration)|
+|[Product Owner](#product-owner)| - [Product planning](#product-planning) <br> - [Scrum Methodology](#scrum-methodology) <br> - [DevOps Collaboration](#devops-collaboration)|
 |[Team Members](#team-members) ||
 |[Full Stack](#full-stack-development)| [Continious Integration](#continious-integration) <br> - [Test Driven Development](#test-driven-development) <br> - [Continious Deployment](#continious-deployment) |
 |[Infrastructure Development](#infrastructure-development)| - [IaC Code](#iac-code) <br> - [Hosting Infrastructure](#container-hosting-infrastructure) <br> - [Continious Integration/Continious Deployment](#continious-integration/continious-deployment)|
@@ -77,7 +77,13 @@ Azure Application Insights must be used to enable monitoring of the application.
 The project must be deployed in the User Acceptance Testing (UAT) environment.
 
 The development costs must not exceed 3000 euros. -->
+## Product Owner
 
+### Product Planning
+
+### Scrum Methodology
+
+### DevOps Collaboration
 
 
 ## Full-Stack Development
