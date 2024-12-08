@@ -6,10 +6,7 @@ description: "Sebastian Perilla"
 
 # [Home](index.md)
 
-# [Home](index.md)
-
 - [Well Architected Framework](#well-architected-framework)
-- [Software Design and Planning](#software-design-and-planning)
 - [Infrastructure Architecture Design](#infrastructure-architecture-design)
   - [Infrastructure Configuration by Environment](#infrastructure-configuration-by-environment)
 - [Environment Setup: DTAP Strategy](#environment-setup-dtap-strategy)
@@ -21,6 +18,7 @@ description: "Sebastian Perilla"
   - [Key Components of the Release Strategy](#key-components-of-the-release-strategy)
   - [Deployment Triggers Across Environments](#deployment-triggers-across-environments)
   - [Benefits of the Release Strategy](#benefits-of-the-release-strategy)
+- [Software Design and Planning](#software-design-and-planning)
 - [12-Factor App Design](#12-factor-app-design)
 
 
@@ -85,6 +83,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **1. App Service Plan**
 | **Environment** | **Name**               | **SKU**         | **Region**       | **Scaling**         |
+
 |------------------|------------------------|-----------------|------------------|---------------------|
 | DEV              | `devopps-asp-dev`     | Free (F1)       | Same as PROD     | Manual (1-2 instances) |
 | UAT              | `devopps-asp-uat`     | Free (F1)       | Same as PROD     | Manual (1-2 instances) |
@@ -92,6 +91,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **2. App Service**
 | **Environment** | **Name**               | **Purpose**                   | **Runtime**             |
+
 |------------------|------------------------|--------------------------------|-------------------------|
 | DEV              | `devopps-be-dev`      | Host backend API              | Python Flask (Docker)   |
 | UAT              | `devopps-be-uat`      | Host backend API              | Python Flask (Docker)   |
@@ -99,6 +99,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **3. Static Web App**
 | **Environment** | **Name**               | **SKU**       | **Framework**  | **Purpose**            |
+
 |------------------|------------------------|---------------|----------------|------------------------|
 | DEV              | `devopps-swa-dev`     | Free          | Vue.js         | Serve frontend code    |
 | UAT              | `devopps-swa-uat`     | Standard      | Vue.js         | Serve frontend code    |
@@ -106,6 +107,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **4. Azure Container Registry (ACR)**
 | **Environment** | **Name**               | **SKU**       | **Purpose**               |
+
 |------------------|------------------------|---------------|---------------------------|
 | DEV              | `devopps-dev-acr`     | Basic         | Store backend Docker images |
 | UAT              | `devopps-dev-uat`     | Basic         | Store backend Docker images |
@@ -113,6 +115,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **5. PostgreSQL Server**
 | **Environment** | **Name**               | **Deployment** | **Tier**                  | **Backup**          |
+
 |------------------|------------------------|----------------|---------------------------|---------------------|
 | DEV              | `devopps-dbsrv-dev`   | Single server  | Burstable Standard_B1ms   | Disabled            |
 | UAT              | `devopps-dbsrv-uat`   | Single server  | Burstable Standard_B1ms   | Enabled             |
@@ -120,6 +123,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **6. Azure Key Vault**
 | **Environment** | **Name**               | **SKU**       | **Purpose**               |
+
 |------------------|------------------------|---------------|---------------------------|
 | DEV              | `devopps-kv-dev`      | Standard      | Securely store secrets    |
 | UAT              | `devopps-kv-uat`      | Standard      | Securely store secrets    |
@@ -127,6 +131,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **7. Azure Log Analytics**
 | **Environment** | **Name**               | **SKU**       | **Purpose**               |
+
 |------------------|------------------------|---------------|---------------------------|
 | DEV              | `devopps-law-dev`     | PerGB2018     | Centralized logging       |
 | UAT              | `devopps-law-uat`     | PerGB2018     | Centralized logging       |
@@ -134,6 +139,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **8. Azure Application Insights**
 | **Environment** | **Name**               | **Purpose**                   |
+
 |------------------|------------------------|--------------------------------|
 | DEV              | `devopps-insights-dev`| Monitor backend/frontend telemetry |
 | UAT              | `devopps-insights-uat`| Monitor backend/frontend telemetry |
@@ -506,14 +512,87 @@ By adopting these strategies, the reliability design ensures robust system perfo
 
 ### Software Design and Planning
 
-#### Sequence Diagram/s
-<!-- ![Sequence Diagram](images/sequence_diagram.png) -->
+# **Sequence Diagram Descriptions**
 
-#### Data Flow
+Below are descriptions for the sequence diagrams provided, explaining their purpose and key interactions.
+
+---
+
+## **1. User Account: Registration**
+![User Registration Sequence Diagram](images/seq_user_reg.png)
+- **Purpose**: This diagram details the process of user registration, from entering details to storing them in the database.
+- **Flow**:
+  - The user submits registration details.
+  - The frontend sends the details to the backend via an API call.
+  - The backend processes the registration request and stores the user details in the database.
+  - A success or failure message is returned to the user.
+
+---
+
+## **2. User Account: Login**
+![User Login Sequence Diagram](images/seq_user_login.png)
+- **Purpose**: This diagram demonstrates the login process for a user.
+- **Flow**:
+  - The user submits login credentials.
+  - The frontend makes an API call to the backend to verify credentials.
+  - The backend checks the credentials against the database.
+  - If valid, a success message is sent to the user; otherwise, an error message is returned.
+
+---
+
+## **3. User Account: Transaction**
+![User Transaction Sequence Diagram](images/seq_user_trans.png)
+- **Purpose**: This diagram outlines the steps a user follows to initiate or view a transaction.
+- **Flow**:
+  - The user selects their account and submits transaction details.
+  - The backend retrieves account details from the database and validates the transaction.
+  - If the transaction is successful, balances are updated and a confirmation message is sent.
+  - In case of insufficient funds, an error message is returned.
+
+---
+
+## **4. Administrator Account: Login**
+![Admin Login Sequence Diagram](images/seq_admin_login.png)
+- **Purpose**: This diagram explains the login process for an administrator.
+- **Flow**:
+  - The admin submits credentials via the frontend.
+  - The backend verifies the credentials with the database.
+  - If valid, the admin is granted access and a welcome message is displayed; otherwise, an error message is shown.
+
+---
+
+## **5. Administrator Account: Checking User Transaction History**
+![Admin Transaction Management Sequence Diagram](images/seq_admin_trans.png)
+- **Purpose**: This diagram shows how an administrator retrieves a user's transaction history.
+- **Flow**:
+  - The admin requests transaction logs through the frontend.
+  - The backend fetches the logs from the database and sends them to the admin for review.
+
+---
+
+## **6. Administrator Account: Update Account Information**
+![Admin Update Sequence Diagram](images/seq_admin_update.png)
+- **Purpose**: This diagram describes the process of updating a user's account details by an administrator.
+- **Flow**:
+  - The admin submits a request to update user account information.
+  - The backend processes the request and updates the database with the new information.
+  - A confirmation message is sent to the admin upon successful completion.
+
+---
+
+These sequence diagrams visually represent the key processes and workflows for user and administrator interactions within the application. Each diagram ensures clarity and aligns with the system's functional requirements.
+
+---
+
+## Use Case Diagrams
+
+
+
+## Data Flow Diagram
 - The Data Flow Diagram (DFD) which illustrates the movement of data within the system, highlighting inputs, outputs, processing steps, and storage locations.
 ![Data Flow Diagram](images/dfd_diagram1.png)
 
-### Entity Relationship Diagram
+## Entity Relationship Diagram
 - The Entity Relationship Diagram (ERD) outlines the database schema and illustrates the relationships between entities within the database.
 ![Entity-Relationship Diagram](images/er_diagram.png)
 
