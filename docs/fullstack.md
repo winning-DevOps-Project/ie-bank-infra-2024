@@ -1,8 +1,8 @@
 ---
 layout: default
 title: "Full Stack Development"
----
-# [Home](index.md)  
+description: "[Home](index.md)"
+---  
 
 ## Functional Requirements: 
 
