@@ -1,3 +1,8 @@
+---
+layout: default
+title: "IE Bank Documentation"
+---
+
 # IE Bank Corp
 ### By DevOpps
 
