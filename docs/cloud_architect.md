@@ -510,9 +510,113 @@ By adopting these strategies, the reliability design ensures robust system perfo
 
 
 
-### Software Design and Planning
+# Software Design and Planning
 
-# **Sequence Diagram Descriptions**
+## **Use Case Diagrams**
+
+---
+
+## **1. Admin: Create Account**
+![uc_admin_ca](images/uc_admin_ca.png)
+- **Use Case**: This diagram depicts the process for an administrator to create a new user account.
+- **Admin Role**: 
+  - Initiates account creation by entering user details.
+  - Verifies and stores the information in the system.
+
+---
+
+## **2. Admin: Delete Account**
+![uc_admin_da](images/uc_admin_da.png)
+- **Use Case**: This diagram shows the process for an administrator to delete a user account.
+- **Admin Role**:
+  - Searches for the account to delete.
+  - Confirms the action and removes the account from the system.
+
+---
+
+## **3. Admin: Homepage Access**
+![uc_admin_hp](images/uc_admin_hp.png)
+- **Use Case**: This diagram illustrates how an administrator accesses the system's homepage.
+- **Admin Role**:
+  - Logs into the system.
+  - Navigates to the main dashboard to perform administrative actions.
+
+---
+
+## **4. Admin: Manage Transactions**
+![uc_admin_trans](images/uc_admin_trans.png)
+- **Use Case**: This diagram describes the process for an administrator to manage transactions.
+- **Admin Role**:
+  - Reviews, approves, or rejects transactions.
+  - Edits transaction details if necessary.
+
+---
+
+## **5. Admin: View User Accounts**
+![uc_admin_view](images/uc_admin_view.png)
+- **Use Case**: This diagram represents the process for an administrator to view user account details.
+- **Admin Role**:
+  - Searches for specific accounts.
+  - Reviews user details for management purposes.
+
+---
+
+## **6. Admin: View Transaction History**
+![uc_admin_viewtrans](images/uc_admin_viewtrans.png)
+- **Use Case**: This diagram shows the process for an administrator to view the transaction history of a user.
+- **Admin Role**:
+  - Accesses transaction logs for auditing or troubleshooting purposes.
+
+---
+
+## **7. User: Create Account**
+![uc_user_account_ca](images/uc_user_account_ca.png)
+- **Use Case**: This diagram illustrates the process for a user to create their account.
+- **User Role**:
+  - Submits required details for account creation.
+  - Confirms the action to complete the registration.
+
+---
+
+## **8. User: Registration**
+![uc_user_account_reg](images/uc_user_account_reg.png)
+- **Use Case**: This diagram describes how a new user registers on the platform.
+- **User Role**:
+  - Completes the registration process by providing information and verifying their credentials.
+
+---
+
+## **9. User: Perform Transactions**
+![uc_user_account_trans](images/uc_user_account_trans.png)
+- **Use Case**: This diagram represents the process for a user to perform financial transactions.
+- **User Role**:
+  - Selects an account and initiates a transaction.
+  - Confirms transaction details before execution.
+
+---
+
+## **10. User: View Transaction History**
+![uc_user_account_transhistory](images/uc_user_account_transhistory.png)
+- **Use Case**: This diagram shows how a user views their transaction history.
+- **User Role**:
+  - Logs into the system.
+  - Accesses past transactions for review.
+
+---
+
+## **11. User: Homepage Access**
+![us_user_account_hp](images/us_user_account_hp.png)
+- **Use Case**: This diagram explains how a user accesses the system's homepage.
+- **User Role**:
+  - Logs into the platform.
+  - Navigates the homepage to access account features.
+
+---
+These use case diagrams visually represent the key functionalities available to both users and administrators within the system. Each diagram focuses on specific actions, ensuring clarity and alignment with the roles and functional requirements of the system.
+
+
+
+## **Sequence Diagram Descriptions**
 
 Below are descriptions for the sequence diagrams provided, explaining their purpose and key interactions.
 
