@@ -358,14 +358,108 @@ For the expected MVP, the following non-functional requirements have been define
 | NFR 1. | The web application should implement a basic user/admin authentication system that requires the users to enter their username and password to log in. The web application should not use any advanced or complex authentication methods, such as biometrics, token, or OAuth. The web application should also encrypt and store the user credentials securely (hashed) in the database. |
 | NFR 2. | The web application should have a simple frontend user interface. The web application should not necessarily focus on the aesthetic aspects of the frontend, such as colors, fonts, or animations, or ensure that the frontend is compatible and responsive with different browsers and devices. |
 
-### Development Strategy
--Trunk-Based / Feature-Based-
+### FRONTEND -- CI STRATEGY
+### GitHub Branch Protection Rules
+
+### Main Branch
+- Must use **Pull Requests** before merging.
+- Requires at least **one code review approval**.
+- All **status checks** from CI pipelines must pass prior to merging
+---
+
+## Team Collaboration
+
+### Feature Branches
+- Use **feature branches** with nomenclature: `feature/<feature-name>`.
+- **Short-lived feature branches** are used for bug fixes and feature development/updates.
+- Regular **communication among team members** to prevent merge conflicts and maintain a smooth process.
+
+### Trunk-Based Development
+- All feature branches are merged back into the `main` branch promptly to avoid divergence.
+- Frequent integration is encouraged to catch issues early.
+
+---
+
+## Build Jobs Overview
+
+### Frontend CI Workflow
+
+#### Key Steps:
+1. **Code Checkout**: Utilize `actions/checkout@v4`.
+2. **Node.js Setup**: Use `actions/setup-node@v4`.
+3. **Dependency Installation and Build**:
+   - Install dependencies via `npm install`.
+   - Build the application for environments:
+     - `build-dev`: Development.
+     - `build-uat`: User Acceptance Testing.
+     - `build-prod`: Production.
+4. **Artifact Upload**:
+   - Use `actions/upload-artifact@v4` to store build artifacts for deployment.
+
+#### Trigger Events:
+- **Pushes** to feature branches deploy to the **development environment**.
+- **Pull Requests** to `main` trigger **UAT deployment**.
+- **Pushes** to `main` deploy to **production**.
+
+---
 
 ### Frontend
 -Here we can add in some of the main designs of the front-
 
+
+
 ### Backend
 -Connecting the backend and the frontend for the database-
+
+# Backend CI Workflow
+
+#### Key Steps:
+1. **Checkout Code**: Use `actions/checkout@v4`.
+2. **Setup Python**: Leverage `actions/setup-python@v5`.
+3. **Dependency Management**:
+   - Install required packages using `pip`.
+4. **Testing**:
+   - Execute **functional** and **unit tests**.
+5. **Save Docker Context**:
+   - Store Docker context as an artifact using `actions/upload-artifact@v4`.
+
+#### Trigger Events:
+- On **manual dispatch** via workflow triggers.
+- On **pull requests** to the `main` branch.
+- On **pushes** to any other branch.
+
+---
+
+### Deployment Environments
+
+1. **Development (DEV)**:
+   - Triggered by **feature branch pushes**.
+   - Hosted in Azure DEV resource group.
+2. **User Acceptance Testing (UAT)**:
+   - Triggered by **pull requests** to `main`.
+   - Validates features in the staging environment.
+3. **Production (PROD)**:
+   - Triggered by **successful merges** to `main`.
+   - Stable release for end-users.
+
+---
+
+## Automation Highlights
+
+### Frontend
+- YAML workflow ensures a **seamless build and deployment pipeline**.
+- Environment-specific build steps ensure compatibility and readiness for production.
+
+### Backend
+- Automated **testing and containerization** for consistent application deployment.
+- Workflow integrates Docker for seamless production deployments.
+
+---
+### Additional Notes
+- **Code Reviews**: Promote teamwork and ensure subgroups are aware of peers' contributions and issues faced.
+- **Testing Philosophy**: Aligns with TDD principles, integrating **unit** and **functional tests**.
+- **Communication Channels**: Mainly updates via **Slack integration**.
+---
 
 ### Testing
 
