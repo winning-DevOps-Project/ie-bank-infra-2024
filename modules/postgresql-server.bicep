@@ -2,9 +2,6 @@
 param postgreSQLServerName string
 @description('The location for the PostgreSQL server')
 param location string
-// // Optional: Define admin credentials for server
-// @secure()
-// param administratorLoginPassword string
 param postgreSQLAdminServicePrincipalObjectId string
 param postgreSQLAdminServicePrincipalName string
 param workspaceResourceId string
@@ -20,8 +17,6 @@ resource postgresSQLServer 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01
     tier: SerskuTier
   }
   properties: {
-    //administratorLogin: administratorLogin
-    // administratorLoginPassword: administratorLoginPassword
     createMode: 'Default'
     highAvailability: {
       mode: 'Disabled'
@@ -106,5 +101,5 @@ resource postgreSQLDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01
 // Outputs
 output id string = postgresSQLServer.id
 output postgreSQLServerName string = postgresSQLServer.name
-// output postgreSQLServerAdmin string = administratorLogin
+
  

@@ -18,7 +18,6 @@ param retentionInDays int  = 90
 param location string = resourceGroup().location
 
 
-//Application Insights Resource
 resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
   name: name
   location: location
