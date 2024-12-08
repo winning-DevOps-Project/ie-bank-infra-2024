@@ -278,7 +278,7 @@ Post-Sprint:
 -The connection of Slaack-Zoom was not working, so we used normal zoom, whatsapp and slack calls 
  to have meetings online.
 
--We couldnt connect azure with Slack
+-We connected Azure-alerts with slack, through slack webhooks.
 
 -The conexion github-azure devops, was not completed due to problems with azure devops, when we tryed to connect it, it appears a message saying that we arent part of a group that has the persmissions, but wevery member of devOpps is inside that group.
 
