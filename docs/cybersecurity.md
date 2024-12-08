@@ -4,11 +4,12 @@ title: "Cyber Security"
 description: "Jorge Vargas"
 ---
 
+## [Home](index.md)
+
 - [Github Hardening Strategy](#github-hardening-strategy-for-banking-application)
 - [Secrets Management](#secrets-management-strategy)
 - [Implemented guides](#10-implemented-guides-in-our-design-document) 
 
-# [Home](index.md)
 
 ## GitHub Hardening Strategy for Banking Application
 
