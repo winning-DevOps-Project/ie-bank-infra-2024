@@ -4,6 +4,8 @@ title: "Infrastructure Development"
 description: "Ricardo Mendez & Anna Shats"
 ---
 
+# [Home](index.md)
+
 - [IaC Code](#infrastructure-as-code---modularization-strategy)
 - [Hosting Infrastructure](#hosting-infrastructure---environment-specification)
 - [Continuous Integration/Continuous Deployment](#infrastructure-release-strategy)
