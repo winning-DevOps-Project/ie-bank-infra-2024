@@ -57,7 +57,7 @@ description: "Gloria Paraschivoiu & Pietro Rodrigano"
 
 ---
 
-# Backend CI Workflow
+### Backend CI Workflow
 
 #### Key Steps:
 1. **Checkout Code**: Use `actions/checkout@v4`.
