@@ -1,9 +1,16 @@
 ---
 layout: default
 title: "Cloud Architect"
+description: "Sebastian Perilla"
 ---
 
-### Diagrams
+# [Home](index.md)
+
+- [Well Architected Framework](#well-architected-framework)
+- [Software Design and Planning](#software-design-and-planning) 
+
+
+### Software Design and Planning
 
 #### Sequence Diagram/s
 <!-- ![Sequence Diagram](images/sequence_diagram.png) -->
@@ -17,7 +24,7 @@ title: "Cloud Architect"
 #### 12 Factor App
 <!-- ![12 Factor App](images/tfapp_diagram.png) -->
 
-## Well Architected Framework
+## Well-Architected Framework
 
 ### ***Operational Excellence Pillar***
 
