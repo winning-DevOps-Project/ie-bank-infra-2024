@@ -21,6 +21,9 @@ description: "Gloria Paraschivoiu & Pietro Rodrigano"
 - Must use **Pull Requests** before merging.
 - Requires at least **one code review approval**.
 - All **status checks** from CI pipelines must pass prior to merging
+- Restrict of deletions, so only allowed members can delete matching refs
+- Required deployment to succeed
+- Block force pushes, to prevent users with push access from force pushing to refs
 ---
 
 ## Team Collaboration
