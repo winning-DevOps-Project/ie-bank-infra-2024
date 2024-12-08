@@ -1,9 +1,13 @@
 ---
 layout: default
 title: "Site-Reliability"
+description: "Guy Mazar"
 ---
 
-## Site-Reliability
+- [Monitoring Strategy](#monitoring-strategy)
+- [Incident Response](#incident-response-approach)
+- [Reliability Design](#reliability-design)
+
 
 [Service Level Agreement](SLA.md)
 
