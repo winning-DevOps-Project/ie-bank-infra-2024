@@ -2,10 +2,7 @@
 layout: default
 title: "Full Stack Development"
 ---
-
-## Full-Stack Development
--mainly diagrams here and description of the important concepts related to the development and implementation of the front and backend that we are handling, also other relevant concepts such as the development strategy (trunk-based)-
-
+# [Home](index.md)  
 
 ## Functional Requirements: 
 
