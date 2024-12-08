@@ -269,12 +269,17 @@ Post-Sprint:
 - Plan the next sprint.
 
 ### DevOps Collaboration
+
 -We connected Slack with Github to have notifications on slack about our progress on the 
  advancement in github.
+
 -Slack was connnected also to Azure Devops, through some extensions of slack.
+
 -The connection of Slaack-Zoom was not working, so we used normal zoom, whatsapp and slack calls 
  to have meetings online.
+
 -We couldnt connect azure with Slack
+
 -The conexion github-azure devops, was not completed due to problems with azure devops, when we tryed to connect it, it appears a message saying that we arent part of a group that has the persmissions, but wevery member of devOpps is inside that group.
 
 
