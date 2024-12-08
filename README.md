@@ -11,7 +11,7 @@
 |[Product Owner](#product-owner)| [- Product planning](#product-planning) <br> - [Scrum Methodology](#scrum-methodology) <br> - [DevOps Collaboration](#devops-collaboration)|
 |[Team Members](#team-members) ||
 |[Full Stack](#full-stack-development)| - [Continuous Integration](#continious-integration) <br> - [Test Driven Development](#test-driven-development) <br> - [Continious Deployment](#continious-deployment) |
-|[Infrastructure Development](#infrastructure-development)| - [IaC Code](#infrastructure-as-code---modularization-strategy) <br> - [Hosting Infrastructure](#hosting-infrastructure---environment-specification) <br> - [Continious Integration/Continious Deployment](#infrastructure-release-strategy)|
+|[Infrastructure Development](#infrastructure-development)| - [IaC Code](#infrastructure-as-code---modularization-strategy) <br> - [Hosting Infrastructure](#hosting-infrastructure---environment-specification) <br> - [Continuous Integration/Continious Deployment](#infrastructure-release-strategy)|
 |[Cyber-Security](#cyber-security)| -  [Github Hardening Strategy](#github-hardening-strategy-for-banking-application) <br> - [Secrets Management](#secrets-management-strategy) <br> -  [Implemented guides](#10-implemented-guides-in-our-design-document)  |
 |[Site-Reliability](#site-reliability)| [Monitoring Strategy](#monitoring-strategy) <br> - [Incident Response](#incident-management) <br> - [Reliability Design](#reliability-design) |
 |[Software Modeling - Cloud Architect](#software-modeling---cloud-architect)| - [Well Architected Framework](#well-architected-framework) <br> - [Sofware Modeling](#software-modeling---cloud-architect)  |
