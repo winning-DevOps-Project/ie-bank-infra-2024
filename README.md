@@ -487,7 +487,57 @@ TDD is a repeated process where we write failing tests, write code that ensures 
 ### Benefits
 This integration ensures **high-quality code** throughout the development lifecycle, from development to deployment.
 
+---
+## Continuous Deployment (CD) Strategy
 
+### Frontend CD Workflow
+
+#### Key Steps:
+1. **Artifact Retrieval**:
+   - Retrieve build artifacts from the CI pipeline using `actions/download-artifact@v4`.
+2. **Static Web Deployment**:
+   - Deploy the application to **Azure Static Web Apps** for efficient and scalable hosting.
+3. **Environment-Specific Deployments**:
+   - **Development (DEV)**: Automatically deploy builds from feature branches.
+   - **User Acceptance Testing (UAT)**: Deploy builds from pull requests to `main`.
+   - **Production (PROD)**: Deploy finalized builds after successful merges to `main`.
+
+#### Deployment Automation:
+- **YAML Configuration**: Automates deployment steps for different environments.
+- **Validation**:
+  - Ensure UAT deployment succeeds before allowing production releases.
+
+---
+
+### Backend CD Workflow
+
+#### Key Steps:
+1. **Artifact Retrieval**:
+   - Fetch Docker images stored as artifacts from CI pipelines.
+2. **Dockerization**:
+   - Deploy the backend as a containerized application to **Azure App Service**.
+3. **Secrets Management**:
+   - Use **Azure Key Vault** to securely manage database credentials and other sensitive data.
+4. **Environment-Specific Deployments**:
+   - **Development (DEV)**: Triggered by feature branch pushes.
+   - **User Acceptance Testing (UAT)**: Triggered by pull requests to `main`.
+   - **Production (PROD)**: Triggered by successful merges to `main`.
+
+#### Deployment Automation:
+- **Docker Workflow**:
+  - Build and push Docker images to **Azure Container Registry**.
+  - Deploy containers to **App Service** instances for each environment.
+- **Validation**:
+  - Functional tests to make sure deployments are stable and meet acceptance criteria 
+---
+
+### Continuous Deployment Highlights
+- **End-to-End Validation**:
+  - Functional tests in UAT environments ensure production readiness.
+- **Monitoring**:
+  - Post-deployment, application health is monitored using **Azure Application Insights**.
+
+---
 
 ## Infrastructure Development
 
