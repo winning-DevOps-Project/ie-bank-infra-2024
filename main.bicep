@@ -255,7 +255,3 @@ module metricsAlertModule 'modules/metrics-alerts.bicep' = {
     postgresSQLServer
   ]
 }
-
-
-
-
