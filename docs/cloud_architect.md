@@ -6,8 +6,23 @@ description: "Sebastian Perilla"
 
 # [Home](index.md)
 
+# [Home](index.md)
+
 - [Well Architected Framework](#well-architected-framework)
-- [Software Design and Planning](#software-design-and-planning) 
+- [Software Design and Planning](#software-design-and-planning)
+- [Infrastructure Architecture Design](#infrastructure-architecture-design)
+  - [Infrastructure Configuration by Environment](#infrastructure-configuration-by-environment)
+- [Environment Setup: DTAP Strategy](#environment-setup-dtap-strategy)
+  - [Advantages of the DTAP Strategy](#advantages-of-the-dtap-strategy)
+  - [Environment Details](#environment-details)
+  - [CI/CD Workflow Across Environments](#cicd-workflow-across-environments)
+- [Release Strategy](#release-strategy)
+  - [Environment-Specific Design in the Release Strategy](#environment-specific-design-in-the-release-strategy)
+  - [Key Components of the Release Strategy](#key-components-of-the-release-strategy)
+  - [Deployment Triggers Across Environments](#deployment-triggers-across-environments)
+  - [Benefits of the Release Strategy](#benefits-of-the-release-strategy)
+- [12-Factor App Design](#12-factor-app-design)
+
 
 
 ---
