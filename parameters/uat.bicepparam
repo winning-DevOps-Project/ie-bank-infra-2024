@@ -71,7 +71,7 @@ param appServiceBeAppSettings = [
 
 // Static Web App
 param staticWebAppName = 'devopps-swa-uat'
-param swaSku = 'Free'
+param swaSku = 'Standard'
  
 // LAW
 param logAnalyticsWorkspaceName = 'devopps-law-uat'
