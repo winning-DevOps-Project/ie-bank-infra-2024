@@ -1,8 +1,9 @@
 ---
 layout: default
 title: "Full Stack Development"
-description: "[Home](index.md)"
+description: "Gloria Paraschivoiu & Pietro Rodrigano"
 ---  
+## [Home](index.md)
 
 ## Functional Requirements: 
 
