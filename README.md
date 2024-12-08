@@ -92,61 +92,106 @@ Minimum Viable Product(MVP):
 ->Admin Portal:
 
   -Default admin credentials.
+
   -CRUD functionalities for user management (view, create, update, delete users).
+
 ->User Portal:
 
   -Registration for new users (default account assigned).
+
   -Login functionality.
+  
   -Ability to view owned accounts and transactions.
+  
   -Transfer money to existing accounts with validation.
+
 ->Basic Authentication System:
+
   -User credentials securely hashed.
+
 ->Simple Frontend Interface:
+
   -Functional and minimalistic design.
+
+
 Requirements:
+
 ->Functional Requirements:
+
   -Default admin account creation.
+  
   -Admin portal for user management.
+  
   -User registration, login, and account management.
+  
   -Transaction functionalities (view, transfer).
+
 ->Non-Functional Requirements:
+
   -Secure storage for user credentials.
+  
   -Minimalistic and responsive user interface.
 
 
 Objectives and OKRs:
+
 Objective 1: Deliver a functional MVP within the next quarter.
+
 Key Results:
+
   -Admin portal completed and tested
+  
   -User registration and login functionalities deployed 
+  
   -Transaction features functional and deployed 
+  
   -Basic UI design finalized and integrated
 
+
 Objective 2: Ensure platform security and reliability.
+
 Key Results:
+
   -Implement secure credential storage by week 3.
+  
   -Test authentication systems with 100% success rate by week 6.
+  
   -Achieve uptime of 99.9% during MVP testing phase.
+  
   -Conduct three rounds of vulnerability assessments.
 
 Objective 3: Optimize development and collaboration processes.
+
 Key Results:
+
   -Conduct daily stand-ups with at least 90% participation.
+  
   -Reduce sprint backlog overflow to under 5% per sprint.
+  
   -Achieve a 10% reduction in deployment issues.
+  
   -Document all processes in GitHub pages.
 
 Objective 4: Enhance user experience.
+
 Key Results:
+
   -Achieve user feedback score of 4.5/5 for UI design.
+  
   -Reduce user flow navigation issues by 20% 
+  
   -Complete UX testing 
 
+
 Objective 5: Foster a collaborative team environment.
+
 Key Results:
+
   -Conduct a minimum of three sprint reviews with actionable feedback.
- -Organize at least two retrospective meetings to refine team practices.
- -Train team members on new tools and integrations.
+  
+  -Organize at least two retrospective meetings to refine team practices.
+  
+  -Train team members on new tools and integrations.
  
 ### Scrum Methodology
 1. Scrum Ceremonies
