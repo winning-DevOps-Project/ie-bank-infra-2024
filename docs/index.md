@@ -1,11 +1,12 @@
 ---
 layout: default
-title: "IE Bank Documentation"
+title: "IE Bank Project Documentation"
+description: "By DevOpps
 ---
 
-# IE Bank: Comprehensive Documentation and Design
+# IE Bank: Project Documentation
 
-Welcome to the **IE Bank Documentation and Design**. This site provides detailed insights into the design, requirements, and responsibilities of each team role in building the IE Bank application. Use the navigation below to explore key sections of the project.
+Welcome to the **IE Bank By Devopps**. This is a dedicated projected documentation page made to show the development and maintenance of the IE Bank Project. Read below for more information on the requirements
 
 ---
 
@@ -25,16 +26,16 @@ Explore the contributions of each team role to the development of IE Bank. Click
 - [Cloud Architect](cloud_architect.md)  
   *Designs the cloud infrastructure and ensures scalability, security, and alignment with best practices.*  
 
-- [Full Stack Developers](fullstack.md)  
+- [Full Stack Development](fullstack.md)  
   *Develops the frontend and backend systems, ensuring functionality and user experience.*  
 
-- [Infrastructure Developers](infra_dev.md)  
+- [Infrastructure Development](infra_dev.md)  
   *Implements and maintains the infrastructure using IaC and CI/CD pipelines.*  
 
-- [Cybersecurity Engineer](cybersecurity.md)  
+- [Cybersecurity](cybersecurity.md)  
   *Ensures the application is secure by implementing DevSecOps practices and safeguarding sensitive data.*  
 
-- [Site Reliability Engineer](site_reliability.md)  
+- [Site Reliability](site_reliability.md)  
   *Monitors and maintains system reliability, ensuring high availability and performance.*  
 
 <!-- TEAM, USE THIS LINE OF CODE TO ADD LINKS TO SECTION:
