@@ -16,106 +16,306 @@ description: "Sebastian Perilla"
 <!-- ![Sequence Diagram](images/sequence_diagram.png) -->
 
 #### Data Flow
-<!-- ![Data Flow Diagram](images/dfd_diagram.png) -->
+- The Data Flow Diagram (DFD) which illustrates the movement of data within the system, highlighting inputs, outputs, processing steps, and storage locations.
+![Data Flow Diagram](images/dfd_diagram.png)
 
 ### Entity Relationship Diagram
-<!-- ![Entity-Relationship Diagram](images/er_diagram.png) -->
+- The Entity Relationship Diagram (ERD) outlines the database schema and illustrates the relationships between entities within the database.
+![Entity-Relationship Diagram](images/er_diagram.png)
 
-#### 12 Factor App
-<!-- ![12 Factor App](images/tfapp_diagram.png) -->
+## **12-Factor App Design**
+
+### **Overview**  
+The 12-Factor App methodology provides a set of best practices for building modern, scalable, and maintainable cloud-native applications. The IE Bank MVP adheres to these principles to ensure reliability, scalability, and ease of deployment across environments. Below is how each of the 12 factors is applied in the design and implementation of the product.
+
+### Main Takeaways:
+1. **Scalability**:  
+   - Horizontal scaling and seamless transitions between environments are built into the architecture.  
+
+2. **Maintainability**:  
+   - Clear separation of concerns simplifies debugging, onboarding, and ongoing application updates.  
+
+3. **Resilience**:  
+   - Stateless processes and decoupled services ensure robust failover and recovery mechanisms.  
+
+---
+
+### **1. Codebase**  
+**A single codebase tracked in version control, with multiple deployments.**  
+- **Implementation**:  
+  - Two GitHub repositories host the code: one for the frontend (Vue.js) and one for the backend (Python Flask).  
+  - Modularized infrastructure code is stored in a separate repository, leveraging Azure Bicep.  
+  - Branching strategy: Feature branches for development; `main` branch for production deployments.  
+
+---
+
+### **2. Dependencies**  
+**Explicitly declare and isolate dependencies.**  
+- **Implementation**:  
+  - Backend dependencies are declared in `requirements.txt` and managed using `pip`.  
+  - Frontend dependencies are specified in `package.json` and managed via `npm`.  
+  - Docker ensures isolated environments with consistent dependencies for development and deployment.  
+
+---
+
+### **3. Configuration**  
+**Store configuration in the environment, not in the code.**  
+- **Implementation**:  
+  - Sensitive credentials (e.g., database connections, API keys) are securely managed using **Azure Key Vault**.  
+  - Environment-specific configurations are defined in **Bicep parameter files**.  
+  - Application settings, such as UAT vs. Production, are managed via **Azure App Service settings**.  
+
+---
+
+### **4. Backing Services**  
+**Treat backing services (e.g., databases, queues) as attached resources.**  
+- **Implementation**:  
+  - PostgreSQL is provisioned as a managed Azure service.  
+  - Database credentials and secrets for external services are securely stored in **Key Vault**.  
+  - Backend dynamically connects to resources based on environment-specific settings.  
+
+---
+
+### **5. Build, Release, Run**  
+**Separate the build and run stages for deployment.**  
+- **Implementation**:  
+  - **Build**: CI pipelines create Docker images for the frontend and backend.  
+  - **Release**: Artifacts are deployed to UAT for validation before production deployment.  
+  - **Run**: Production deployments are triggered automatically after successful UAT validation.  
+
+---
+
+### **6. Processes**  
+**Execute the app as one or more stateless processes.**  
+- **Implementation**:  
+  - Backend processes are stateless, with session data persisted in PostgreSQL.  
+  - Frontend interacts dynamically through APIs, with no local state storage.  
+
+---
+
+### **7. Port Binding**  
+**Expose services via port binding.**  
+- **Implementation**:  
+  - Backend is hosted on Azure App Services, exposing HTTP endpoints.  
+  - Frontend is served via Azure Static Web Apps, communicating with the backend using RESTful APIs.  
+
+---
+
+### **8. Concurrency**  
+**Scale out via the process model.**  
+- **Implementation**:  
+  - Autoscaling is enabled for both the backend App Service and PostgreSQL database in Production.  
+  - Azure’s built-in load balancer ensures support for concurrent requests without manual intervention.  
+
+---
+
+### **9. Disposability**  
+**Maximize robustness with fast startup and graceful shutdown.**  
+- **Implementation**:  
+  - Dockerized applications ensure fast and consistent startups across environments.  
+  - Graceful shutdown mechanisms protect active requests during service termination.  
+
+---
+
+### **10. Dev/Prod Parity**  
+**Keep development, staging, and production as similar as possible.**  
+- **Implementation**:  
+  - DTAP (Development, Test, Acceptance, Production) environments are provisioned using the same **Bicep templates** to ensure consistency.  
+  - Monitoring and telemetry are managed uniformly across all environments using **Application Insights** and **Log Analytics Workspace**.  
+
+---
+
+### **11. Logs**  
+**Treat logs as event streams.**  
+- **Implementation**:  
+  - Logs from applications and infrastructure are centralized in **Log Analytics Workspace**.  
+  - Performance and error telemetry for frontend and backend are captured using **Application Insights**.  
+
+---
+
+### **12. Admin Processes**  
+**Run admin/management tasks as one-off processes.**  
+- **Implementation**:  
+  - Database migrations are run as one-off commands during CI/CD pipeline executions.  
+  - Monitoring and incident response tasks are automated using **Azure CLI** and custom scripts.  
+
+---
+
+### **Summary**
+
+By aligning with the **12-Factor App principles**, the IE Bank MVP adopts a cloud-native design optimized for modern application development. These practices ensure scalability, maintainability, and operational efficiency, providing a solid foundation for continuous integration and delivery.  
+
+
+---
+
 
 ## Well-Architected Framework
 
 ### ***Operational Excellence Pillar***
 
-#### Deployment Strategies
-- Continuous Integration and Deployment: Adopted Git feature branch strategy with CI/CD pipelines on GitHub. Protected main branch with policies and integrated deployment workflows to Development, UAT, and Production environments.
-- Environment Provisioning: Provisioned environments using Bicep IaC with modularized templates for consistent deployments across Development, UAT, and Production.
-#### Monitoring and Diagnostics
-- Monitoring Tools: Implemented Azure Monitor and Application Insights for tracking application and infrastructure performance.
-- Custom Metrics: Configured SLIs and SLOs to make sure we complie with defined SLA targets.
-- Designed Azure Workbooks for log and metrics
-#### Incident Management
-- Integrated Azure Alerts with Slack so we get real-time incident notifications 
-- Azure Automation int he use of incident recovery to minimise the downtime of our implementation
-- Imade use of GitHub to record all our documentation, and workflows, and keep track of incident 
-#### Continuous Improvement
-- Regular retrospectives of post sprints and feedback loops to optimize our workflows. 
-<!-- #### Operational Processes
-- Daily backups automated and verified with Azure Backup. DO WE HAVE DAILY BACKUPS
-- Policy compliance enforced with Azure Policy and monitored for drift. DO WE HAVE THIS??? to a certain extent  -->
-#### Enhancing Reliability
-- Reliable and scalable practices to minimize the downtime.
+Focuses on automating operations and improving processes to deliver business value effectively.
+
+#### **Deployment Strategies**
+- **Continuous Integration and Deployment**:  
+  - Implemented a Git feature branch strategy with CI/CD pipelines on GitHub.  
+  - Protected the main branch with policies and integrated workflows for consistent deployments to Development, UAT, and Production environments.  
+- **Environment Provisioning**:  
+  - Used Bicep IaC with modular templates to provision consistent environments across all stages.  
+
+#### **Monitoring and Diagnostics**
+- **Monitoring Tools**:  
+  - Deployed Azure Monitor and Application Insights to track application and infrastructure performance.  
+- **Custom Metrics**:  
+  - Configured Service Level Indicators (SLIs) and Service Level Objectives (SLOs) to ensure compliance with SLA targets.  
+  - Designed Azure Workbooks for detailed logs and metrics visualization.  
+
+#### **Incident Management**
+- **Real-Time Notifications**:  
+  - Integrated Azure Alerts with Slack for instant incident notifications.  
+- **Automated Recovery**:  
+  - Leveraged Azure Automation for quick incident recovery, minimizing downtime.  
+- **Documentation and Tracking**:  
+  - Utilized GitHub for comprehensive documentation, workflows, and incident tracking.  
+
+#### **Continuous Improvement**
+- Conducted regular retrospectives after sprints and implemented feedback loops to optimize workflows and improve operational efficiency.  
+
+#### **Enhancing Reliability**
+- Adopted reliable and scalable practices to minimize downtime and ensure system availability.
 
 ---
 
 ### ***Cost Optimization Pillar***
 
-#### Cost-Efficient Infrastructure Provisioning
-- ⁠Infrastructure as Code (IaC): Leveraged Bicep IaC templates for deploying resources dynamically as a part of a CI/CD pipeline, removing the need for using more expensive PaaS alternatives.
--⁠  ⁠Right-Sizing Resources: Apart from having chosen the adequate resources and proper SKUs for the power and output needed for the project, resource usage alerts are set in place to detect excessive use of resources and scale down if necessary, reducing costs effectively.
+Minimizes costs by eliminating waste, using appropriate pricing models, and aligning resources with needs.
 
-#### Cost Monitoring and Analysis 
+#### **Cost-Efficient Infrastructure Provisioning**
+- **Infrastructure as Code (IaC)**: Used Bicep templates to dynamically deploy resources, avoiding expensive alternatives.  
+- **Right-Sizing Resources**: Selected appropriate SKUs and set usage alerts to detect and reduce excessive resource usage.  
 
-Our Azure infrastructure implements a comprehensive three-tier environment strategy (Development, UAT, and Production) with environment-specific optimizations. The infrastructure utilizes Azure App Services with B1 plans, PostgreSQL Flexible Server with Standard_B1ms/Burstable configurations, and Static Web Apps with built-in CDN capabilities. Security is managed through Azure Key Vault (Standard tier) with environment-appropriate soft delete policies. Container management is handled by Azure Container Registry (Standard tier, $20/month), providing essential features with 100GB storage. Monitoring and observability are implemented through Application Insights and Log Analytics, with retention periods of 30-90 days depending on the environment. The solution includes automated alerting through Logic Apps integrated with Slack for real-time monitoring. Cost optimization is achieved through strategic resource sizing, burstable compute options, and environment-specific retention policies. Production environment maintains higher reliability standards while development and UAT environments optimize for cost-efficiency. The infrastructure leverages Azure's pay-as-you-go pricing model where applicable, implementing right-sized resources specific to each environment's needs. This setup ensures a predictable monthly cost structure while maintaining the capability to scale when required, with total monthly costs varying from approximately $50-100 for development/UAT to $150-200 for production environments.
+#### **Cost Monitoring and Analysis**
+- Azure App Services (B1 plans), PostgreSQL Flexible Server (Standard_B1ms), and Static Web Apps with CDN ensure efficient resource allocation.  
+- Environment-specific retention policies for Application Insights and Log Analytics (30-90 days).  
+- Slack-integrated Logic Apps provide real-time alerts for cost monitoring.
 
-#### Automation for Cost Reduction
--⁠  ⁠Auto-Scaling: Only configured auto-scaling for production, ensuring that the project does not incur in unnecessary charges for UAT and Development environments.
--⁠  ⁠Automated Shutdown: In the future, set up the automatic shutdown of resources (like containers) on low-demand times using Azure Automations. Pairing this technique with automatic bootup would result in extremely efficient resource usage.
--  ⁠Cleanup of Unused Resources: In the future, implement automated scripts for identifying and cleaning up unused resources to prevent unnecessary costs.
-  
-#### Continuous Cost Optimization
--  ⁠Monthly Cost Reviews: Monthly cost review sessions are set to be carried out between the members and different teams of DevOpps Bank. Led by the Infrastructure Team, these sessions are meant to give the team an overview of the monthly costs and decide if changes are needed.
--⁠  ⁠Cost Forecasting: Create a forecast of the expected costs considering the resources and cloud services employed. This would be done by the Infrastructure Team with the Administrative departments of Devopps Bank.
+#### **Automation for Cost Reduction**
+- **Auto-Scaling**: Configured only for production to avoid unnecessary costs in Development and UAT environments.  
+- **Automated Shutdown**: Future plans include shutting down low-demand resources using Azure Automations.  
+- **Cleanup of Unused Resources**: Automated scripts will identify and remove unused resources to cut costs.
 
-#### Operational Processes
-- ⁠Cost-Effective Backup Strategy: Used Azure Backup for reliable and cost-efficient backup solutions, ensuring backups are stored with the least expensive options without sacrificing performance. Also, backups are only implemented in production, which allows the team to save costs on UAT and Development environments.
+#### **Continuous Cost Optimization**
+- **Monthly Cost Reviews**: Regular reviews with the Infrastructure Team to assess and adjust spending.  
+- **Cost Forecasting**: Develop cost projections to predict and manage expenses.
+
+#### **Operational Processes**
+- **Cost-Effective Backup Strategy**: Backups implemented only in production using Azure Backup, optimizing costs while maintaining reliability.
+
+---
 
 ### ***Performance Optimization Pillar***
 
-#### Efficient Resource Utilization
-- Right-Sizing Resources: Continuously monitor utilisation of Azure App Service, App Service Plan, and Postgres SQL Server to ensure resource allocation aligns with workload requirements. Avoid over-provisioning by scaling compute and memory allocations based on telemetry data collected via Azure Monitor and Log Analytics.
-- Auto-Scaling: For future implementation configure auto-scaling for both compute and storage resources to dynamically adjust based on demand, optimising resource allocation and ensuring performance during peak times.
-- Load Balancing: For future advances implement Azure Load Balancer and Application Gateway to evenly distribute traffic across multiple instances.
+Optimizes resource use by selecting the right configurations, scaling efficiently, and leveraging technology.
 
-#### Optimization for Scalability
-- Content Delivery Network (CDN): For future introduce Azure CDN for faster content delivery to users by caching static content closer to them, reducing latency and improving overall application responsiveness.
-- Microservices Architecture: For future, modularised IaC templates to define and provision independent components, such as authentication, data processing, and API services, enabling their horizontal scaling as needed.
+#### **Efficient Resource Utilization**
+- **Right-Sizing Resources**: Continuously monitor utilization of Azure App Service, App Service Plan, and Postgres SQL Server to ensure resource allocation aligns with workload requirements.  
+- **Auto-Scaling**: Configure auto-scaling for compute and storage resources to adjust dynamically based on demand, optimizing resource allocation.  
+- **Load Balancing**: Plan to implement Azure Load Balancer and Application Gateway to distribute traffic evenly across instances.  
 
-#### Cost-Effective Performance Improvements
-- Caching Mechanisms: For future, implemnt  caching strategies using Azure Cache for Redis to store frequently accessed data, reducing the need for repeated database queries and improving application performance.
-- Optimized Storage Solutions: Define Azure Blob Storage configurations in IaC, specifying Hot, Cool, and Archive tiers for storage efficiency based on data access patterns.
-- Efficient Data Transfer: For future, define Azure ExpressRoute configurations and bandwidth allocation in IaC for inter-region data transfer optimisation.
+#### **Optimization for Scalability**
+- **Content Delivery Network (CDN)**: Introduce Azure CDN for faster content delivery by caching static content closer to users, reducing latency.  
+- **Microservices Architecture**: Modularize IaC templates for independent components like authentication and API services, enabling horizontal scaling.
 
-#### Continuous Performance Optimization
-- Performance Testing: For future, use Azure Load Testing resources for simulating high user traffic and validating performance before deployment. Automate test environment provisioning via IaC to ensure consistent testing setups.
+#### **Cost-Effective Performance Improvements**
+- **Caching Mechanisms**: Implement caching strategies using Azure Cache for Redis to reduce database query load and improve performance.  
+- **Optimized Storage Solutions**: Define Azure Blob Storage configurations for efficient data management across Hot, Cool, and Archive tiers.  
+- **Efficient Data Transfer**: Configure Azure ExpressRoute for optimized inter-region data transfer.  
 
-#### Enhancing System Efficiency
-- Optimized Network Configuration: For future, define Azure Front Door configurations for efficient traffic routing and edge acceleration of static content. Use IaC to configure private endpoints, firewall rules, and network security groups (NSGs) for optimized backend communication.
-- Sustainable Performance Practices: The current SKU choices for different environment accordingly provide a sustainable performance by utilising basic tiers for DEV and UAT to provide energy efficiency. For future, Use IaC to schedule automated shutdowns of DEV environments outside business hours to conserve resources.
+#### **Continuous Performance Optimization**
+- **Performance Testing**: Use Azure Load Testing for high-traffic simulations and consistent testing setups via IaC.  
 
+#### **Enhancing System Efficiency**
+- **Optimized Network Configuration**: Define Azure Front Door configurations for efficient routing and edge acceleration of static content.  
+- **Sustainable Performance Practices**: Use basic SKUs for DEV/UAT environments and schedule automated shutdowns to conserve resources.
+
+---
 
 ### ***Security Pillar***
 
-## ***Reliability Pillar***
+Security ensures the protection of sensitive data and reduces vulnerabilities at every level, including code, infrastructure, and deployment.
 
-# Performance Efficiency
+#### **Design Features**
 
-The performance efficiency design is built around carefully selected Azure resource tiers and monitoring thresholds. The infrastructure uses B1 App Service Plans for compute resources, Standard_B1ms PostgreSQL servers optimized with 32GB storage, and implements CDN capabilities through Static Web Apps. Performance monitoring is handled through Application Insights with custom HTTP duration thresholds set at 200ms, while database performance is monitored with memory utilization alerts triggering at 90% usage. Real-time performance metrics are collected at 1-minute intervals with 5-minute evaluation windows, enabling quick detection of performance degradation. The system leverages Azure Workbooks for performance visualization and tracks key metrics including CDN latency, database response times, and application response times. This design ensures optimal performance through automated monitoring and alerting, with different performance thresholds configured for development , UAT and Production environments to match their specific requirements.
+- **Azure Key Vault**:  
+  - Manages secrets, connection strings, and sensitive credentials to safeguard sensitive information.  
+  - Integrated into all services for secure storage and encryption, ensuring data is protected during development and operations.  
+
+- **CI/CD Security Tools**:  
+  - **CodeQL**: Performs semantic analysis to identify vulnerabilities in backend and frontend codebases.  
+  - **OSSF Scorecard**: Monitors repositories for compliance with open-source security best practices, improving overall security posture.  
+
+- **Dependency Management**:  
+  - **Dependabot**: Automatically scans and identifies vulnerabilities in both direct and transitive dependencies, ensuring critical updates are applied promptly.  
+
+- **Secrets Management**:  
+  - GitHub Secret Scanning prevents accidental inclusion of secrets in the codebase.  
+  - Push protection adds an additional layer to block sensitive information from being committed.  
+
+- **Encryption**:  
+  - Ensures sensitive data is always hashed and never stored in plain text, both in frontend and backend systems.  
+  - Protects data in transit with industry-standard HTTPS and TLS protocols for secure communication between components.  
+
+- **Threat Modeling**:  
+  - Collaborated with architects to conduct threat modeling sessions, identifying potential attack vectors and incorporating resilient design principles.  
+
+- **Secure Coding Practices**:  
+  - Enforced coding standards to ensure the consistent use of secure functions and robust error handling mechanisms throughout the development process.  
+
+This robust security framework incorporates industry best practices to ensure the protection of sensitive data, mitigate vulnerabilities, and maintain the integrity of the system across all stages of development and deployment.
 
 ---
 
+### ***Reliability Pillar***
 
-# Operational Excellence and Release Engineering
+Ensures systems can recover from failures and meet operational demands through resilient design.
 
-Our operational excellence and release engineering framework is built on Infrastructure as Code principles using Azure Bicep for resource definitions and GitHub Actions for automated deployments. The deployment pipeline (`ie-bank-infra.yml`) implements a structured release process across development , UAT and Production environments, with automated Bicep linting, resource validation, and environment-specific configurations managed through parameter files (`dev.bicepparam` , `uat.bicepparam` and `prod.bicepparam`). The release strategy incorporates automated testing including Key Vault deployment verification, RBAC permission validation, and access policy checks, while operational monitoring is handled through a comprehensive Azure Workbook dashboard that visualizes SLOs and metrics. Incident management is streamlined through Logic Apps integration with Slack, providing real-time alerts for service availability, performance issues, and resource utilization concerns. The deployment process follows a structured pattern where development deployments are triggered by both push events and workflow dispatch, while UAT deployments occur either on pull requests to main or direct pushes to the main branch. Production deployments are strictly controlled, triggering only when a pull request is merged into the main branch. Each environment (Development, UAT, and Production) is configured with its own environment protection rules, ensuring appropriate governance through GitHub environments. The infrastructure is deployed using Bicep templates with environment-specific parameters, and all deployments are preceded by a Bicep linting check in the build stage to ensure template validity. This infrastructure automation, combined with modular Bicep templates and centralized logging with 90-day retention, enables consistent deployments, rapid incident response, and maintains high operational standards across all environments.
+#### **Ensuring System Availability**
+- **High-Availability Targets**:  
+  - Define and maintain strict Service Level Objectives (SLOs):  
+    - **99.99%** for Azure Static Web Apps (Standard tier).  
+    - **99.9%** for Azure Key Vault (Standard tier).  
+  - Leverage Azure's built-in high-availability features, including **CDN capabilities**, to provide consistent and dependable service accessibility.  
+  - Use redundancy strategies to mitigate the impact of resource failures.
 
----
+#### **Resilience through Backup and Recovery**
+- **PostgreSQL Configuration**:  
+  - Configure PostgreSQL Flexible Server with the **Standard_B1ms tier** in Burstable configuration for cost-effective, resilient database operations.  
+  - Implement automated **backup retention policies** and **failover mechanisms** to ensure rapid recovery in case of failure.  
+- **Soft Delete for Data Protection**:  
+  - Enable **soft delete** for Azure Key Vault to safeguard critical data against accidental deletion.
 
-# Reliability Design
+#### **Monitoring and Alerting**
+- **Real-Time Observability**:  
+  - Combine Application Insights and Log Analytics Workspace for comprehensive monitoring:  
+    - Application Insights with **90-day retention** for application metrics.  
+    - Log Analytics Workspace with **30-day retention** for operational logs.  
+  - Implement metric-based alerting for key performance indicators (KPIs), including:  
+    - HTTP response time thresholds.  
+    - CPU and memory usage alerts for PostgreSQL.  
+- **Incident Notifications**:  
+  - Use Azure Logic Apps for **Slack integration**, ensuring instant notifications for incidents and outages via webhooks.
 
-Our comprehensive reliability design implements a robust strategy across all Azure resources, focusing on key reliability pillars. For Availability, we maintain strict SLOs with 99.99% target for Static Web App (Standard tier) and 99.9% for Key Vault (Standard tier), utilizing Azure's built-in high-availability features and CDN capabilities to ensure consistent accessibility. Resiliency is achieved through our PostgreSQL Flexible Server configuration with Standard_B1ms tier in Burstable configuration, complemented by our backup retention policies and automated failover capabilities. Our Monitoring and Alerting system combines Application Insights with 90-day retention and Log Analytics workspace with 30-day retention periods, while Logic Apps integration enables instant Slack notifications for incidents through our configured webhook. The infrastructure leverages B1 App Service Plan for compute resources, and Standard tier Azure Container Registry for container management. Fault Tolerance is implemented through our modular Bicep-based infrastructure deployment, with soft delete enabled for Key Vault data protection. The system's health is continuously monitored through automated checks and metric alerts, ensuring rapid detection and response to any component failures while maintaining system stability and performance. This approach provides a balanced combination of reliability features while maintaining cost-effectiveness in the production environment.
+#### **Fault Tolerance Mechanisms**
+- **Infrastructure Resilience**:  
+  - Deploy modular infrastructure using **Azure Bicep templates** for consistent and reliable provisioning.  
+  - Include redundancy in design with fail-safe mechanisms and automated checks to ensure infrastructure stability.  
+- **Graceful Degradation**:  
+  - Build services that can gracefully degrade performance rather than fail outright under unexpected load or partial resource outages.
 
+#### **Cost-Efficiency in Reliability**
+- **Right-Sizing Resources**:  
+  - Choose resource tiers like **B1 App Service Plan** for compute resources and **Standard tier Azure Container Registry** to balance performance and cost in production environments.  
+- **Scalable Reliability**:  
+  - Ensure scaling strategies align with production demands while minimizing over-provisioning.
 
+By adopting these strategies, the reliability design ensures robust system performance, proactive issue detection, and a resilient infrastructure capable of handling failures without compromising user experience.
 
-#### 
