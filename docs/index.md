@@ -8,38 +8,29 @@ description: "Project Documentation"
 
 Welcome to the **IE Bank By Devopps**. This is a dedicated projected documentation page made to show the development and maintenance of the IE Bank Project. Read below for more information on the requirements
 
-
-
-## **Project Requirements**
-Gain a clear understanding of the functional and non-functional requirements that shape the IE Bank application.
-
 - [Functional and Non-Functional Requirements](requirements.md)
 
-
 ## **Team Roles and Responsibilities**
-Explore the contributions of each team role to the development of IE Bank. Click on a role to view its specific documentation and deliverables:
+Discover how each team role contributes to the creation of IE Bank. Click on a role to view detailed documentation and deliverables:
 
 - [Product Owner](product_owner.md)  
-  *Oversees the product vision, backlog, and stakeholder alignment.*  
+  *Manages the product vision, backlog, and alignment with stakeholders.*
 
 - [Cloud Architect](cloud_architect.md)  
-  *Designs the cloud infrastructure and ensures scalability, security, and alignment with best practices.*  
+  *Designs the cloud infrastructure, ensuring scalability, security, and adherence to best practices.*
 
 - [Full Stack Development](fullstack.md)  
-  *Develops the frontend and backend systems, ensuring functionality and user experience.*  
+  *Builds both frontend and backend systems to ensure seamless functionality and a positive user experience.*
 
 - [Infrastructure Development](infra_dev.md)  
-  *Implements and maintains the infrastructure using IaC and CI/CD pipelines.*  
+  *Implements and manages the infrastructure using Infrastructure as Code (IaC) and CI/CD pipelines.*
 
 - [Cybersecurity](cybersecurity.md)  
-  *Ensures the application is secure by implementing DevSecOps practices and safeguarding sensitive data.*  
+  *Focuses on securing the application by implementing DevSecOps practices and protecting sensitive data.*
 
 - [Site Reliability](site_reliability.md)  
-  *Monitors and maintains system reliability, ensuring high availability and performance.*  
+  *Monitors and ensures system reliability, maintaining high availability and optimal performance.*
 
-<!-- TEAM, USE THIS LINE OF CODE TO ADD LINKS TO SECTION:
-    - [SECTION NAME](section.file.md)
- -->
 
 ---
 
