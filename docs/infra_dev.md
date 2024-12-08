@@ -1,5 +1,8 @@
-
 ---
+layout: default
+title: "Infrastructure Development"
+---
+
 ## Infrastructure Development
 
 ### Design and Release Strategy Overview
