@@ -1,4 +1,4 @@
-remote_theme: pages-themes/minimal
+theme: minimal
 title: "IE BANK"
 description: "DevOpps: Project Documentation"
 # repositories:
