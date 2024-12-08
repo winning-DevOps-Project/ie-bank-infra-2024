@@ -53,7 +53,7 @@ param swaSku = 'Free'
 
 // LAW
 param logAnalyticsWorkspaceName = 'devopps-law-dev'
-param logAnalyticsRetentionDays = 30
+param logAnalyticsRetentionDays = 30 
 param logAnalyticsSkuName = 'PerGB2018'
 
 // Insights
