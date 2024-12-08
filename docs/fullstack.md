@@ -5,90 +5,12 @@ description: "Gloria Paraschivoiu & Pietro Rodrigano"
 ---  
 ## [Home](index.md)
 
-## Functional Requirements: 
-
-## Admin Portal - Bank Users Management System 
-The IE Bank system will include a bank user's management system that can be accessed and controlled by a bank administrator. A bank users management portal will allow an admin user to view, create, update, and delete bank users.
-
-| Requirements | Description |  
-|-|-|
-| FR 1. | The application must provide a default administrator account (user, password). The admin account must be able to access the users management portal once logged in successfully. |
-| FR 2. | Once logged into the bank users management portal, a bank administrator can list, create, update, and delete bank users and passwords. |
+- [Continuous Integration](#frontend---ci-strategy)
+- [Test Driven Development](#test-driven-development)
+- [Continuous Deployment](#continuous-deployment-strategy) 
 
 
-### Administrator Login  
----
-The system shall allow the administrator at the bank to log into the admin portal with the default administrator account that will be created once
-
-- **`Admin Account Name`:** A unique identifier for the administrator account
-- **`Admin Account Password`:** A unique password for the administrator account
-
-### Administrator List Accounts
----
-The system shall allow the administrator to list the account objects which allows the administrator to see their information with their following attributes.
-
-- **`User Account ID`:**   A unique identifier for the account object.
-
-The objects displayed to the administrator will be the following: 
-1. ***User History***
-2. ***User Balance***
-3. ***User Account ID***
-4. ***User Account Name***
-5. ***User Account Number***
-6. ***User Country***
-7. ***User Balance***
-8. ***User Currency***
-9. ***User Status***
-10. ***User Created At***
-
-### Administrator Update Accounts
----
-The system shall allow the administrator to update the all user account objects after listing the accounts with the following attributes.
- 
-- **`User Account Name`:** A unique name of the account holder
-- **`User Account Password`:** A unique password for the user account
-- **`User Country`:** The country where the user account is registered
-- **`User Balance`:** The current balance of the user account
-- **`User Currency`:** The currency used for the account
-- **`User Status`:** The date and time when the user account was created
-
-The objects can be updated to other values, but cannot be deleted or null within the database.
-
-### Administrator Create Accounts
----
-The system shall allow the administrator to create/register new user accounts by adding in new attributes through a frontend register page.
-
-- **`User Account Name`:** The name of the account holder
-- **`User Account Password`:** A unique password for the account holder 
-
-A unique ***User Account ID*** will be added to the database upon successfully inputting the attributes outlined.   
-
-### Administrator Delete Accounts
----
-The system shall allow the administrator to delete user accounts on a separate page with the following attributes:
-
-- **`User Account ID`:** A unique identifier for the account object
-- **`User Account Name`:** The name of the account holder
-- **`User Account Password`:** A unique password for the account holder
-
-## User Portal - Bank Account Management System
-The IE Bank system will allow multiple bank users to access the account management portal that is currently implemented. Bank users can have one or more bank accounts associated with their user profile. Bank users can use the account management portal to perform various banking operations.
-
-| Requirements | Description |  
-|-|-|
-| FR 3. | New bank users can register on IE bank in the bank with a register for accessible form (username, password, password confirmation). When a new user is registered, a new account will be provided by default, with a random account number. |
-| FR 4. | Bank users can log in to the web application using their username and password. Once logged in, they can view only their owned bank accounts and transactions. |
-| FR 5. | Bank users can transfer money to other existing accounts in the bank from the account management portal, by entering the recipient’s account number and the amount to be transferred. Amount to transfer cannot be more than the available amount in the account. |
-
-## Non Functional Requirements
-For the expected MVP, the following non-functional requirements have been defined:
-
-| Requirements | Description |  
-|-|-|
-| NFR 1. | The web application should implement a basic user/admin authentication system that requires the users to enter their username and password to log in. The web application should not use any advanced or complex authentication methods, such as biometrics, token, or OAuth. The web application should also encrypt and store the user credentials securely (hashed) in the database. |
-| NFR 2. | The web application should have a simple frontend user interface. The web application should not necessarily focus on the aesthetic aspects of the frontend, such as colors, fonts, or animations, or ensure that the frontend is compatible and responsive with different browsers and devices. |
-
-### FRONTEND -- CI STRATEGY
+### FRONTEND - CI STRATEGY
 ### GitHub Branch Protection Rules
 
 ### Main Branch
@@ -183,9 +105,8 @@ For the expected MVP, the following non-functional requirements have been define
 - **Communication Channels**: Mainly updates via **Slack integration**.
 ---
 
-### Test Driven Development (TDD)
 
-## Test-Driven Development (TDD)
+## Test-Driven Development
 
 ### TDD Workflow
 TDD is a repeated process where we write failing tests, write code that ensures the test passes, and refactor.
@@ -210,7 +131,7 @@ TDD is a repeated process where we write failing tests, write code that ensures 
 This integration ensures **high-quality code** throughout the development lifecycle, from development to deployment.
 
 ---
-## Continuous Deployment (CD) Strategy
+## Continuous Deployment Strategy
 
 ### Frontend CD Workflow
 
