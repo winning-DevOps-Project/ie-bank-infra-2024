@@ -90,9 +90,11 @@ Product vision board.
 
 Minimum Viable Product(MVP):
 ->Admin Portal:
+
   -Default admin credentials.
   -CRUD functionalities for user management (view, create, update, delete users).
 ->User Portal:
+
   -Registration for new users (default account assigned).
   -Login functionality.
   -Ability to view owned accounts and transactions.
