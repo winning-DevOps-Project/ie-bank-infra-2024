@@ -1,4 +1,7 @@
-## Cloud Architect
+---
+layout: default
+title: "Cloud Architect"
+---
 
 ### Diagrams
 
