@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "IE Bank Project Documentation"
-description: "By DevOpps"
+title: "IE Bank"
+description: "Project Documentation"
 ---
 
 # IE Bank: Project Documentation
