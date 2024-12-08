@@ -8,6 +8,7 @@ description: "Gloria Paraschivoiu & Pietro Rodrigano"
 
 - [Continuous Integration Frontend](#frontend-ci-strategy)
 - [Continuous Integration Backend](#backend-ci-workflow)
+- [Branching Strategy](#team-collaboration)
 - [Test Driven Development](#test-driven-development)
 - [Continuous Deployment Frontend](#continuous-deployment-strategy)
 - [Continuous Deployment Backend](#backend-cd-workflow)
