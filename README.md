@@ -732,7 +732,7 @@ monitoring across all stages, ensuring reliable and smooth software delivery.
 |-------------------------|-----------------------------------------------------------------------------------------------------------------------|
 | App Service Plan    | Name: `devopps-asp-uat` <br>SKU: Free tier (F1)<br>Region: Same as production for consistency<br>Scaling: Manual scaling with 1-2 instances |
 | App Service         | Name: `devopps-be-uat` <br>Purpose: Host backend API (Docker containers)<br>Runtime: Node.js/Python/DotNet |
-| Static Web App      | Name: `devopps-swa-uat`<br>SKU: Free <br>Framework: Vue.js<br>Purpose: Serve the frontend code                          |
+| Static Web App      | Name: `devopps-swa-uat`<br>SKU: Standard<br>Framework: Vue.js<br>Purpose: Serve the frontend code                          |
 | Azure Container Registry (ACR) | Name: `devopps-dev-uat`<br>SKU: Basic <br>Purpose: Store backend Docker images                                    |
 | PostgreSQL Database | Name: `devopps-dbsrv-uat` <br>Deployment: Single server<br>Tier: Burstable Standard_B1ms <br>Backup: Enabled              |
 | Key Vault           | Name: `devopps-kv-uat` <br>SKU: Standard <br>Purpose: Store secrets and keys securely                                           |
