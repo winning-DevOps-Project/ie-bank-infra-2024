@@ -6,9 +6,11 @@ description: "Gloria Paraschivoiu & Pietro Rodrigano"
 
 ## [Home](index.md)
 
-- [Continuous Integration](#frontend---ci-strategy)
+- [Continuous Integration Frontend](#frontend---ci-strategy)
+- [Continuous Integration Backend](#backend--ci-workflow)
 - [Test Driven Development](#test-driven-development)
-- [Continuous Deployment](#continuous-deployment-strategy) 
+- [Continuous Deployment Frontend](#continuous-deployment-strategy)
+- [Continuous Deployment Backend](#continuous-deployment-strategy)  
 
 ### FRONTEND - CI STRATEGY
 ### GitHub Branch Protection Rules
