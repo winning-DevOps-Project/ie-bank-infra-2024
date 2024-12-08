@@ -1,9 +1,16 @@
 ---
 layout: default
 title: "Product Owner"
+description: "Angel Lopez"
 ---
 
-## Product Owner
+# [Home](index.md)
+
+
+- [Product planning](#product-planning)
+- [Scrum Methodology](#scrum-methodology)
+- [DevOps Collaboration](#devops-collaboration)
+
 
 ### Product Planning
 Product vision: Provide a secure, intuitive, and efficient digital banking solution for managing accounts, transactions, and personal finances, prioritizing user convenience and operational transparency.
