@@ -83,6 +83,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **1. App Service Plan**
 | **Environment** | **Name**               | **SKU**         | **Region**       | **Scaling**         |
+
 |------------------|------------------------|-----------------|------------------|---------------------|
 | DEV              | `devopps-asp-dev`     | Free (F1)       | Same as PROD     | Manual (1-2 instances) |
 | UAT              | `devopps-asp-uat`     | Free (F1)       | Same as PROD     | Manual (1-2 instances) |
@@ -90,6 +91,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **2. App Service**
 | **Environment** | **Name**               | **Purpose**                   | **Runtime**             |
+
 |------------------|------------------------|--------------------------------|-------------------------|
 | DEV              | `devopps-be-dev`      | Host backend API              | Python Flask (Docker)   |
 | UAT              | `devopps-be-uat`      | Host backend API              | Python Flask (Docker)   |
@@ -97,6 +99,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **3. Static Web App**
 | **Environment** | **Name**               | **SKU**       | **Framework**  | **Purpose**            |
+
 |------------------|------------------------|---------------|----------------|------------------------|
 | DEV              | `devopps-swa-dev`     | Free          | Vue.js         | Serve frontend code    |
 | UAT              | `devopps-swa-uat`     | Standard      | Vue.js         | Serve frontend code    |
@@ -104,6 +107,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **4. Azure Container Registry (ACR)**
 | **Environment** | **Name**               | **SKU**       | **Purpose**               |
+
 |------------------|------------------------|---------------|---------------------------|
 | DEV              | `devopps-dev-acr`     | Basic         | Store backend Docker images |
 | UAT              | `devopps-dev-uat`     | Basic         | Store backend Docker images |
@@ -111,6 +115,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **5. PostgreSQL Server**
 | **Environment** | **Name**               | **Deployment** | **Tier**                  | **Backup**          |
+
 |------------------|------------------------|----------------|---------------------------|---------------------|
 | DEV              | `devopps-dbsrv-dev`   | Single server  | Burstable Standard_B1ms   | Disabled            |
 | UAT              | `devopps-dbsrv-uat`   | Single server  | Burstable Standard_B1ms   | Enabled             |
@@ -118,6 +123,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **6. Azure Key Vault**
 | **Environment** | **Name**               | **SKU**       | **Purpose**               |
+
 |------------------|------------------------|---------------|---------------------------|
 | DEV              | `devopps-kv-dev`      | Standard      | Securely store secrets    |
 | UAT              | `devopps-kv-uat`      | Standard      | Securely store secrets    |
@@ -125,6 +131,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **7. Azure Log Analytics**
 | **Environment** | **Name**               | **SKU**       | **Purpose**               |
+
 |------------------|------------------------|---------------|---------------------------|
 | DEV              | `devopps-law-dev`     | PerGB2018     | Centralized logging       |
 | UAT              | `devopps-law-uat`     | PerGB2018     | Centralized logging       |
@@ -132,6 +139,7 @@ The infrastructure for the IE Bank MVP is designed to ensure scalability, securi
 
 ### **8. Azure Application Insights**
 | **Environment** | **Name**               | **Purpose**                   |
+
 |------------------|------------------------|--------------------------------|
 | DEV              | `devopps-insights-dev`| Monitor backend/frontend telemetry |
 | UAT              | `devopps-insights-uat`| Monitor backend/frontend telemetry |
@@ -572,15 +580,19 @@ Below are descriptions for the sequence diagrams provided, explaining their purp
 
 ---
 
-### **Summary**
 These sequence diagrams visually represent the key processes and workflows for user and administrator interactions within the application. Each diagram ensures clarity and aligns with the system's functional requirements.
 
+---
 
-#### Data Flow
+## Use Case Diagrams
+
+
+
+## Data Flow Diagram
 - The Data Flow Diagram (DFD) which illustrates the movement of data within the system, highlighting inputs, outputs, processing steps, and storage locations.
 ![Data Flow Diagram](images/dfd_diagram1.png)
 
-### Entity Relationship Diagram
+## Entity Relationship Diagram
 - The Entity Relationship Diagram (ERD) outlines the database schema and illustrates the relationships between entities within the database.
 ![Entity-Relationship Diagram](images/er_diagram.png)
 
