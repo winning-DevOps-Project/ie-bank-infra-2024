@@ -8,14 +8,13 @@ description: "Project Documentation"
 
 Welcome to the **IE Bank By Devopps**. This is a dedicated projected documentation page made to show the development and maintenance of the IE Bank Project. Read below for more information on the requirements
 
----
+
 
 ## **Project Requirements**
 Gain a clear understanding of the functional and non-functional requirements that shape the IE Bank application.
 
 - [Functional and Non-Functional Requirements](requirements.md)
 
----
 
 ## **Team Roles and Responsibilities**
 Explore the contributions of each team role to the development of IE Bank. Click on a role to view its specific documentation and deliverables:
