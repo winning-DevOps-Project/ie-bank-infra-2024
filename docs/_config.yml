@@ -1,5 +1,12 @@
 remote_theme: pages-themes/minima
 title: "IE BANK"
 description: "DevOpps: Project Documentation"
+repositories:
+  - name: "GitHub Frontend Repository"
+    url: "https://github.com/winning-DevOps-Project/ie-bank-fe-2024"
+  - name: "GitHub Backend Repository"
+    url: "https://github.com/winning-DevOps-Project/ie-bank-be-2024"
+  - name: "GitHub Infrastructure Repository"
+    url: "https://github.com/winning-DevOps-Project/ie-bank-infra-2024"
 
 
