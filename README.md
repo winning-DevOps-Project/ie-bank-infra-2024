@@ -767,8 +767,9 @@ Our release strategy for the DevOpps Bank Infrastructure is designed to ensure s
 The infrastructure is defined and managed using Bicep templates, ensuring consistent deployments and easy scalability.
 The main.bicep file orchestrates the deployment of resources, while modular templates located in the modules directory encapsulate reusable configurations for components such as the Key Vault, Azure Container Registry, Database Infrastructure, etc.
 
+
 #### CI/CD Pipeline
-Deployment workflows are automated using GitHub Actions enabling continuous integration and delivery of infrastructure changes. In particular, a workflow called "ie-bank-infra.yml" is ran upon different actions. When pushing to any branch, the build and deploy to development jobs are ran, while deployment to UAT is only done upon a pull request. Finally, deployment to Production is done after a pull request is merged successfully, following all the requirements imposed to do so, like a code review, passing the necessary tests, etc.
+Deployment workflows are automated using GitHub Actions enabling continuous integration and delivery of infrastructure changes. In particular, a workflow called "ie-bank-infra.yml" is ran upon different actions. When pushing to any branch, the build and deploy to development jobs are ran, while deployment to UAT is only done upon a pull request. Finally, deployment to Production is done after a pull request is merged successfully, following all the requirements imposed to do so, like a code review, passing the necessary tests, etc. Finally, deployment to Production is triggered automatically when new commits are pushed to the main branch, following all prerequisites such as a successful build and other defined pipeline steps like code review, passing the necessary tests. This ensures that only validated and approved changes are deployed to the production environment after having DEV and UAT environments tested successfully the pull request.
 
 #### Environment-Specific Configurations
 Parameter files located in the parameters directory allow environment-specific customizations for Development, UAT, and Production environments.
@@ -777,7 +778,7 @@ This separation ensures that deployments are tailored to the specific requiremen
 This means that we can scale our environments endlessly by just creating different parameter files with new conditions for new deployment settings.
 
 #### Testing and Validation
-The CI/CD pipeline created involves unit testing as well as linting. The workflow has a linting step integrated, which is used to guarantee that the main.bicep file is correctly structured. Also, a separate "kv-test.yml" is executed upon the actions previously mentioned, going through a dry run of the Key Vault deployment to ensure everything is working correctly.
+The CI/CD pipeline created involves unit testing as well as linting. The workflow has a linting step integrated, which is used to guarantee that the main.bicep file is correctly structured. Also, a separate "kv-test.yml" is executed upon the actions previously mentioned, going through a specific linting test for Key Vault module, a dry run of the Key Vault and testing deployment to DEV environment. The dry run validates the infrastructure configuration and simulates the changes that would be made without actually applying them. The testing deployment deploys an actual testing Key Vault Module based on the configuration of testing parameters. For future implementation, we would need to carry out deployment testing in a specific, isolated resource group which is set up for testing purposes.
 
 It is also important to highlight that the deployment steps (Development and UAT) also serve as tests before deploying to production.
 
