@@ -13,6 +13,12 @@
         "body": {
           "text": "Logic App triggered -> sending alert to Slack!"
         }
+      },
+      "runAfter": {},
+      "retryPolicy": {
+        "type": "default",
+        "count": 2,
+        "interval": "PT20S"
       }
     }
   },
