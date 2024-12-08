@@ -25,16 +25,16 @@ Explore the contributions of each team role to the development of IE Bank. Click
 - [Cloud Architect](cloud_architect.md)  
   *Designs the cloud infrastructure and ensures scalability, security, and alignment with best practices.*  
 
-- [Full Stack Developers](full_stack_developers.md)  
+- [Full Stack Developers](fullstack.md)  
   *Develops the frontend and backend systems, ensuring functionality and user experience.*  
 
-- [Infrastructure Developers](infrastructure_developers.md)  
+- [Infrastructure Developers](infra_dev.md)  
   *Implements and maintains the infrastructure using IaC and CI/CD pipelines.*  
 
-- [Cybersecurity Engineer](cybersecurity_engineer.md)  
+- [Cybersecurity Engineer](cybersecurity.md)  
   *Ensures the application is secure by implementing DevSecOps practices and safeguarding sensitive data.*  
 
-- [Site Reliability Engineer](site_reliability_engineers.md)  
+- [Site Reliability Engineer](site_reliability.md)  
   *Monitors and maintains system reliability, ensuring high availability and performance.*  
 
 <!-- TEAM, USE THIS LINE OF CODE TO ADD LINKS TO SECTION:
