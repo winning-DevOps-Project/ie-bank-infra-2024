@@ -8,6 +8,7 @@ description: "Gloria Paraschivoiu & Pietro Rodrigano"
 
 - [Continuous Integration Frontend](#frontend-ci-strategy)
 - [Continuous Integration Backend](#backend-ci-workflow)
+- [Branching Protection Rules](#github-branch-protection-rules)
 - [Branching Strategy](#team-collaboration)
 - [Test Driven Development](#test-driven-development)
 - [Continuous Deployment Frontend](#continuous-deployment-strategy)
