@@ -461,7 +461,33 @@ For the expected MVP, the following non-functional requirements have been define
 - **Communication Channels**: Mainly updates via **Slack integration**.
 ---
 
-### Testing
+### Test Driven Development (TDD)
+
+## Test-Driven Development (TDD)
+
+### TDD Workflow
+TDD is a repeated process where we write failing tests, write code that ensures the test passes, and refactor.
+
+
+### Testing & Implementation Details
+- **Unit Tests**:
+  - Developed using **Pytest**, which verifies components of the implementation.
+- **Functional Tests**:
+  - This was done using **Postman**, with **Postbot**, to verifiy the end-to-end scenarios in the **User Acceptance Testing (UAT)** environment. This includes the overall management of a bank accpunt, the respective transactions, as well as the user's authorised login.
+
+---
+
+### Workflow Integration
+- Functional tests are integrated into the **build and deployment workflows**.
+- **GitHub Status Checks** ensure:
+  - Only **pull requests** that pass all the tests can continue, and be successfully merged into `main`
+
+---
+
+### Benefits
+This integration ensures **high-quality code** throughout the development lifecycle, from development to deployment.
+
+
 
 ## Infrastructure Development
 
