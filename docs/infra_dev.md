@@ -46,9 +46,11 @@ monitoring across all stages, ensuring reliable and smooth software delivery.
 
 ### Hosting Infrastructure - Environment Specification
 
-| Dev | UAT | Prod |
-|-|-|-|
-|![Infrastructure Diagram](images/infrastructure_diagram_ddev.png)| ![Infrastructure Diagram](images/infrastructure_diagram_uuat.png) | ![Infrastructure Diagram](images/infrastructure_diagram_prod.png) |
+| Environments | Architecture Diagrams |
+|-|-|
+| **DEV** | ![Infrastructure Diagram](images/infrastructure_diagram_ddev.png) |
+| **UAT** | ![Infrastructure Diagram](images/infrastructure_diagram_uuat.png) | 
+| **Prod** | ![Infrastructure Diagram](images/infrastructure_diagram_prod.png) |
 
 
 | Service            | DEV Configuration | UAT Configuration | Production Configuration |
