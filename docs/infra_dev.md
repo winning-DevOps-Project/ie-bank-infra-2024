@@ -1,9 +1,12 @@
 ---
 layout: default
 title: "Infrastructure Development"
+description: "Ricardo Mendez & Anna Shats"
 ---
 
-## Infrastructure Development
+- [IaC Code](#infrastructure-as-code---modularization-strategy)
+- [Hosting Infrastructure](#hosting-infrastructure---environment-specification)
+- [Continuous Integration/Continuous Deployment](#infrastructure-release-strategy)
 
 ### Design and Release Strategy Overview
 Our three-stage deployment strategy and trunk-based development
