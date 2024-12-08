@@ -84,7 +84,6 @@ var builtInRoleNames = {
 @description('The shared Log Analytics Workspace Resource ID for diagnostics')
 param workspaceResourceId string
 
-// Key Vault Resource...
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: name
   location: location
@@ -139,7 +138,7 @@ resource keyVaultDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-p
   }
 }
 
-// Outputs
+
 @description('The resource ID of the key vault.')
 output resourceId string = keyVault.id
 

@@ -1,11 +1,3 @@
-// @sys.description('The environment type (nonprod or prod)')
-// param environmentType string = 'nonprod'
-// @sys.description('The PostgreSQL Server name')
-// param postgreSQLServerName string = 'ie-bank-db-server-dev'
-// @sys.description('The PostgreSQL Database name')
-// param postgreSQLDatabaseName string = 'ie-bank-db'
-
-
 @sys.description('The Azure location where the resources will be deployed')
 param location string = resourceGroup().location
 // Key Vault
@@ -44,9 +36,6 @@ var adminPasswordSecretName0 = 'adminPasswordSecretName0'
 var adminPasswordSecretName1 = 'adminPasswordSecretName1'
 var adminUsernameSecretName = 'adminUsernameSecretName'
 param appServiceBeAppSettings array 
-// param postgreSQLAdminServicePrincipalObjectId string
-// // App Settings (environment variables)
-// param backendAppSettings array = []
 
 
 // Frontend repository details for Static Web App

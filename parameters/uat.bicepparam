@@ -1,31 +1,5 @@
 using '../main.bicep'
 
-// param environmentType = 'nonprod'
-// // posgtresql
-
-
-// // app service
-// param appServiceBackendName = 'devopps-be-uat' // Name of the backend App Service
-// param backendDockerImageName = 'devopps-backend' // Docker image name
-// param backendDockerImageVersion = 'latest' // Docker image version
-// param backendAppSettings = [
-//   { name: 'ENV', value: 'uat' }
-//   { name: 'DBHOST', value: 'devopps-dbsrv-uat.postgres.database.azure.com' } // PostgreSQL FQDN
-//   { name: 'DBNAME', value: 'devopps-db-uat' } // Database name
-//   { name: 'DBUSER', value: 'iebankdbadmin' } // Database user
-//   { name: 'DEFAULT_ADMIN_USERNAME', value: 'devoppsuser' } // Admin username
-// ]
-// param appServiceAPIAppName = 'devopps-be-uat'
-// param appServiceAPIDBHostFLASK_APP =  'iebank_api\\__init__.py'
-// param appServiceAPIDBHostFLASK_DEBUG =  '1'
-// param appServiceAPIDBHostDBUSER = 'github-secret-replaced-in-workflow'
-// param appServiceAPIEnvVarDBPASS =  'github-secret-replaced-in-workflow'
-// param appServiceAPIEnvVarDBHOST =  'devopps-dbsrv-uat.postgres.database.azure.com'
-// param appServiceAPIEnvVarDBNAME =  'devopps-db-uat'
-// param appServiceAPIEnvVarENV =  'uat'
-
-
-
 
 param location = 'North Europe'
 
