@@ -6,147 +6,330 @@ description: "Sebastian Perilla"
 
 # [Home](index.md)
 
+# [Home](index.md)
+
 - [Well Architected Framework](#well-architected-framework)
-- [Software Design and Planning](#software-design-and-planning) 
+- [Software Design and Planning](#software-design-and-planning)
+- [Infrastructure Architecture Design](#infrastructure-architecture-design)
+  - [Infrastructure Configuration by Environment](#infrastructure-configuration-by-environment)
+- [Environment Setup: DTAP Strategy](#environment-setup-dtap-strategy)
+  - [Advantages of the DTAP Strategy](#advantages-of-the-dtap-strategy)
+  - [Environment Details](#environment-details)
+  - [CI/CD Workflow Across Environments](#cicd-workflow-across-environments)
+- [Release Strategy](#release-strategy)
+  - [Environment-Specific Design in the Release Strategy](#environment-specific-design-in-the-release-strategy)
+  - [Key Components of the Release Strategy](#key-components-of-the-release-strategy)
+  - [Deployment Triggers Across Environments](#deployment-triggers-across-environments)
+  - [Benefits of the Release Strategy](#benefits-of-the-release-strategy)
+- [12-Factor App Design](#12-factor-app-design)
 
 
-### Software Design and Planning
-
-#### Sequence Diagram/s
-<!-- ![Sequence Diagram](images/sequence_diagram.png) -->
-
-#### Data Flow
-- The Data Flow Diagram (DFD) which illustrates the movement of data within the system, highlighting inputs, outputs, processing steps, and storage locations.
-![Data Flow Diagram](images/dfd_diagram.png)
-
-### Entity Relationship Diagram
-- The Entity Relationship Diagram (ERD) outlines the database schema and illustrates the relationships between entities within the database.
-![Entity-Relationship Diagram](images/er_diagram.png)
-
-## **12-Factor App Design**
-
-### **Overview**  
-The 12-Factor App methodology provides a set of best practices for building modern, scalable, and maintainable cloud-native applications. The IE Bank MVP adheres to these principles to ensure reliability, scalability, and ease of deployment across environments. Below is how each of the 12 factors is applied in the design and implementation of the product.
-
-### Main Takeaways:
-1. **Scalability**:  
-   - Horizontal scaling and seamless transitions between environments are built into the architecture.  
-
-2. **Maintainability**:  
-   - Clear separation of concerns simplifies debugging, onboarding, and ongoing application updates.  
-
-3. **Resilience**:  
-   - Stateless processes and decoupled services ensure robust failover and recovery mechanisms.  
 
 ---
 
-### **1. Codebase**  
-**A single codebase tracked in version control, with multiple deployments.**  
-- **Implementation**:  
-  - Two GitHub repositories host the code: one for the frontend (Vue.js) and one for the backend (Python Flask).  
-  - Modularized infrastructure code is stored in a separate repository, leveraging Azure Bicep.  
-  - Branching strategy: Feature branches for development; `main` branch for production deployments.  
+# **Infrastructure Architecture Design**
+
+The infrastructure for the IE Bank MVP is designed to ensure scalability, security, and cost-effectiveness, adhering to the functional and non-functional requirements of the application. Following a cloud-native approach, we leverage Microsoft Azure services to implement a robust DTAP (Development, Testing, Acceptance, Production) environment strategy. This design aligns with the Azure Well-Architected Framework and incorporates industry best practices.
 
 ---
 
-### **2. Dependencies**  
-**Explicitly declare and isolate dependencies.**  
-- **Implementation**:  
-  - Backend dependencies are declared in `requirements.txt` and managed using `pip`.  
-  - Frontend dependencies are specified in `package.json` and managed via `npm`.  
-  - Docker ensures isolated environments with consistent dependencies for development and deployment.  
+## **Key Azure Services and Architecture Components**
+
+### **Frontend Hosting: Azure Static Web Apps**
+- **Purpose**: Hosts the Vue.js frontend application.
+- **Features**:
+  - Lightweight and cost-effective hosting solution.
+  - Integrated CI/CD via GitHub Actions for streamlined deployments.
+  - Supports global scalability and fast delivery of frontend assets.
+
+### **Backend Hosting: Azure App Service**
+- **Purpose**: Hosts the backend Python Flask application as a containerized service.
+- **Features**:
+  - Reliable and scalable hosting for API services.
+  - Seamless integration with Azure monitoring tools.
+  - Efficient container management and manual scaling.
+
+### **Database: Azure Database for PostgreSQL**
+- **Purpose**: Provides secure and scalable relational data storage.
+- **Features**:
+  - Utilizes Flexible Server mode for optimized cost and performance.
+  - Offers robust backup and disaster recovery configurations for UAT and Production.
+
+### **Container Management: Azure Container Registry (ACR)**
+- **Purpose**: Stores Docker images for backend services.
+- **Features**:
+  - Basic SKU for Development and UAT; Standard SKU for Production.
+  - Integrated with Azure Key Vault for secure credential management.
+
+### **Secrets Management: Azure Key Vault**
+- **Purpose**: Stores sensitive information such as PostgreSQL credentials and ACR authentication keys securely.
+- **Features**:
+  - Integrated into backend and CI/CD pipelines for automated secret retrieval.
+  - Standard SKU across all environments for consistency and security.
+
+### **Monitoring and Logging**
+- **Azure Log Analytics**:
+  - Centralized logging for infrastructure and applications.
+  - Uses PerGB2018 SKU for scalable logging and analysis.
+- **Azure Application Insights**:
+  - Provides in-depth telemetry and performance monitoring for both frontend and backend applications.
+  - Unified across all environments to maintain parity.
+- **Azure Workbooks**:
+  - Visualize log and metric data for actionable insights.
+- **Azure Alerts**:
+  - Real-time incident notifications for proactive issue resolution.
 
 ---
 
-### **3. Configuration**  
-**Store configuration in the environment, not in the code.**  
-- **Implementation**:  
-  - Sensitive credentials (e.g., database connections, API keys) are securely managed using **Azure Key Vault**.  
-  - Environment-specific configurations are defined in **Bicep parameter files**.  
-  - Application settings, such as UAT vs. Production, are managed via **Azure App Service settings**.  
+## **Infrastructure Configuration by Environment**
+
+### **1. App Service Plan**
+| **Environment** | **Name**               | **SKU**         | **Region**       | **Scaling**         |
+|------------------|------------------------|-----------------|------------------|---------------------|
+| DEV              | `devopps-asp-dev`     | Free (F1)       | Same as PROD     | Manual (1-2 instances) |
+| UAT              | `devopps-asp-uat`     | Free (F1)       | Same as PROD     | Manual (1-2 instances) |
+| PROD             | `devopps-asp-prod`    | Standard (B1)   | Same as PROD     | Manual (1-2 instances) |
+
+### **2. App Service**
+| **Environment** | **Name**               | **Purpose**                   | **Runtime**             |
+|------------------|------------------------|--------------------------------|-------------------------|
+| DEV              | `devopps-be-dev`      | Host backend API              | Python Flask (Docker)   |
+| UAT              | `devopps-be-uat`      | Host backend API              | Python Flask (Docker)   |
+| PROD             | `devopps-be-prod`     | Host backend API              | Python Flask (Docker)   |
+
+### **3. Static Web App**
+| **Environment** | **Name**               | **SKU**       | **Framework**  | **Purpose**            |
+|------------------|------------------------|---------------|----------------|------------------------|
+| DEV              | `devopps-swa-dev`     | Free          | Vue.js         | Serve frontend code    |
+| UAT              | `devopps-swa-uat`     | Standard      | Vue.js         | Serve frontend code    |
+| PROD             | `devopps-swa-prod`    | Standard      | Vue.js         | Serve frontend code    |
+
+### **4. Azure Container Registry (ACR)**
+| **Environment** | **Name**               | **SKU**       | **Purpose**               |
+|------------------|------------------------|---------------|---------------------------|
+| DEV              | `devopps-dev-acr`     | Basic         | Store backend Docker images |
+| UAT              | `devopps-dev-uat`     | Basic         | Store backend Docker images |
+| PROD             | `devopps-dev-prod`    | Standard      | Store backend Docker images |
+
+### **5. PostgreSQL Server**
+| **Environment** | **Name**               | **Deployment** | **Tier**                  | **Backup**          |
+|------------------|------------------------|----------------|---------------------------|---------------------|
+| DEV              | `devopps-dbsrv-dev`   | Single server  | Burstable Standard_B1ms   | Disabled            |
+| UAT              | `devopps-dbsrv-uat`   | Single server  | Burstable Standard_B1ms   | Enabled             |
+| PROD             | `devopps-dbsrv-prod`  | Single server  | Burstable Standard_B1ms   | Enabled             |
+
+### **6. Azure Key Vault**
+| **Environment** | **Name**               | **SKU**       | **Purpose**               |
+|------------------|------------------------|---------------|---------------------------|
+| DEV              | `devopps-kv-dev`      | Standard      | Securely store secrets    |
+| UAT              | `devopps-kv-uat`      | Standard      | Securely store secrets    |
+| PROD             | `devopps-kv-prod`     | Standard      | Securely store secrets    |
+
+### **7. Azure Log Analytics**
+| **Environment** | **Name**               | **SKU**       | **Purpose**               |
+|------------------|------------------------|---------------|---------------------------|
+| DEV              | `devopps-law-dev`     | PerGB2018     | Centralized logging       |
+| UAT              | `devopps-law-uat`     | PerGB2018     | Centralized logging       |
+| PROD             | `devopps-law-prod`    | PerGB2018     | Centralized logging       |
+
+### **8. Azure Application Insights**
+| **Environment** | **Name**               | **Purpose**                   |
+|------------------|------------------------|--------------------------------|
+| DEV              | `devopps-insights-dev`| Monitor backend/frontend telemetry |
+| UAT              | `devopps-insights-uat`| Monitor backend/frontend telemetry |
+| PROD             | `devopps-insights-prod`| Monitor backend/frontend telemetry |
 
 ---
 
-### **4. Backing Services**  
-**Treat backing services (e.g., databases, queues) as attached resources.**  
-- **Implementation**:  
-  - PostgreSQL is provisioned as a managed Azure service.  
-  - Database credentials and secrets for external services are securely stored in **Key Vault**.  
-  - Backend dynamically connects to resources based on environment-specific settings.  
+With chosen infrastructure, IE Bank MVP's infrastructure architecture leverages Azure services to provide a robust, scalable, and cost-efficient environment. The use of a consistent DTAP strategy ensures that the application adheres to industry best practices while maintaining operational parity across all environments. This design delivers the scalability, security, and monitoring capabilities essential for modern cloud-native applications.
+
+# **Environment Setup: DTAP Strategy**
+
+The IE Bank MVP employs a structured DTAP (Development, Testing, Acceptance, Production) strategy to streamline the application lifecycle. By segregating environments, we ensure that each stage operates independently, supporting iterative development, thorough validation, and secure production releases. Leveraging Azure's cloud-native tools, this approach emphasizes reliability, scalability, and security.
 
 ---
 
-### **5. Build, Release, Run**  
-**Separate the build and run stages for deployment.**  
-- **Implementation**:  
-  - **Build**: CI pipelines create Docker images for the frontend and backend.  
-  - **Release**: Artifacts are deployed to UAT for validation before production deployment.  
-  - **Run**: Production deployments are triggered automatically after successful UAT validation.  
+
+## **Advantages of the DTAP Strategy**
+1. **Predictable Deployments**:  
+   - Standardized workflows ensure consistent results across environments.  
+
+2. **Risk Mitigation**:  
+   - Isolated stages prevent bugs or instability in Development from affecting Production.  
+
+3. **Scalability**:  
+   - Resources can be scaled incrementally as the application moves toward Production.  
+
+4. **Enhanced Stakeholder Engagement**:  
+   - UAT offers a preview of new features, enabling informed feedback and approval.
 
 ---
 
-### **6. Processes**  
-**Execute the app as one or more stateless processes.**  
-- **Implementation**:  
-  - Backend processes are stateless, with session data persisted in PostgreSQL.  
-  - Frontend interacts dynamically through APIs, with no local state storage.  
+## **Environment Details**
+
+### **Development Environment**
+- **Resource Group**: `BCSAI2024-DEVOPS-STUDENTS-A-DEV`.  
+- **Focus**:  
+  - Accelerates feature development with minimal resource usage.  
+  - Allows experimentation and real-time integration of new features through trunk-based development.  
+- **Setup**:  
+  - Continuous integration is triggered by feature branch commits, deploying directly to this environment.  
+  - Azure Key Vault securely manages secrets like database credentials and API keys.
+
+### **Testing/UAT Environment**
+- **Resource Group**: `BCSAI2024-DEVOPS-STUDENTS-A-UAT`.  
+- **Focus**:  
+  - Provides a production-like environment to validate features and identify potential issues.  
+  - Supports user acceptance testing (UAT) to confirm application readiness for deployment.  
+- **Setup**:  
+  - Integrated with automated testing workflows via GitHub Actions.  
+  - Simulates production conditions, enabling stakeholders to review near-live functionality.
+
+### **Production Environment**
+- **Resource Group**: `BCSAI2024-DEVOPS-STUDENTS-A-PROD`.  
+- **Focus**:  
+  - Delivers a stable and highly secure environment optimized for end-user performance.  
+  - Supports consistent uptime and scalability under varying workloads.  
+- **Setup**:  
+  - Deployments proceed only after rigorous validation in UAT.  
+  - Enforces strict access controls and uses Key Vault for robust secrets management.
 
 ---
 
-### **7. Port Binding**  
-**Expose services via port binding.**  
-- **Implementation**:  
-  - Backend is hosted on Azure App Services, exposing HTTP endpoints.  
-  - Frontend is served via Azure Static Web Apps, communicating with the backend using RESTful APIs.  
+## **CI/CD Workflow Across Environments**
+
+### **Development**
+- Commits to feature branches initiate CI pipelines that deploy changes to the Development environment.  
+- Real-time deployment provides immediate feedback, enabling iterative development.
+
+### **UAT**
+- Pull requests trigger testing pipelines, deploying to UAT after automated checks.  
+- Stakeholders use this environment to test functionality in a setting that closely resembles Production.
+
+### **Production**
+- Merging into the `main` branch initiates automated workflows for deploying to Production.  
+- Deployments require successful validation in UAT and adherence to security protocols.
 
 ---
 
-### **8. Concurrency**  
-**Scale out via the process model.**  
-- **Implementation**:  
-  - Autoscaling is enabled for both the backend App Service and PostgreSQL database in Production.  
-  - Azure’s built-in load balancer ensures support for concurrent requests without manual intervention.  
+## **Security and Environment Isolation**
+- Each stage is hosted in a dedicated **Azure Resource Group**, ensuring complete isolation.  
+- **Access Management**:  
+  - Development is accessible to the team for flexibility.  
+  - UAT and Production environments have tighter access controls to protect data and resources.  
+- **Secret Management**:  
+  - Secrets are securely stored and managed using Azure Key Vault.  
+  - Automated key rotation and environment-specific permissions minimize security risks.
+---
+
+Given that the IE Bank MVP leverages a refined DTAP strategy to maintain a secure and reliable development pipeline. Supported by Azure's robust services and trunk-based development, this setup delivers a seamless, scalable, and efficient approach to application deployment while minimizing risks at every stage of the process.
+
+
+# **Release Strategy**
+
+The IE Bank MVP employs a comprehensive release strategy that ensures secure, reliable, and efficient deployments across Development, UAT, and Production environments. This strategy integrates environment-specific configurations, aligns with Azure DevOps best practices, and incorporates DevSecOps principles using GitHub Security.
 
 ---
 
-### **9. Disposability**  
-**Maximize robustness with fast startup and graceful shutdown.**  
-- **Implementation**:  
-  - Dockerized applications ensure fast and consistent startups across environments.  
-  - Graceful shutdown mechanisms protect active requests during service termination.  
+## **Environment-Specific Design in the Release Strategy**
+
+The release strategy adheres to the DTAP (Development, Testing, Acceptance, Production) model, creating isolated and purpose-driven environments. Each environment serves a distinct role in the application lifecycle:
+
+### **Development Environment**
+- **Purpose**:  
+  - Active development, experimentation, and unit testing.  
+- **Configuration**:  
+  - Utilizes lightweight App Service plans and database tiers to minimize costs.  
+  - Integrated with CI pipelines triggered by non-main branch commits.  
+- **Deployment Trigger**:  
+  - Pushes to any branch except `main` automatically trigger deployments to the Development environment.  
+
+### **UAT Environment**
+- **Purpose**:  
+  - Validates functionality, gathers stakeholder feedback, and performs pre-production testing.  
+- **Configuration**:  
+  - Mimics Production configurations, including App Service scaling and database settings, for parity.  
+  - Runs automated functional tests and supports manual quality assurance (QA) processes.  
+- **Deployment Trigger**:  
+  - Pull Requests (PRs) to the `main` branch initiate deployments to the UAT environment.  
+
+### **Production Environment**
+- **Purpose**:  
+  - Serves as the live, end-user-facing environment.  
+- **Configuration**:  
+  - Employs high-availability services and redundancy, such as zone-redundant PostgreSQL configurations.  
+  - Enforces secure configurations and monitoring with tools like Key Vault and Log Analytics Workspace.  
+- **Deployment Trigger**:  
+  - Pushes to the `main` branch initiate Production deployments, which can only occur after all UAT workflows, tests, and validations pass, and the PR is approved.
 
 ---
 
-### **10. Dev/Prod Parity**  
-**Keep development, staging, and production as similar as possible.**  
-- **Implementation**:  
-  - DTAP (Development, Test, Acceptance, Production) environments are provisioned using the same **Bicep templates** to ensure consistency.  
-  - Monitoring and telemetry are managed uniformly across all environments using **Application Insights** and **Log Analytics Workspace**.  
+## **Key Components of the Release Strategy**
+
+### **Source Control**
+- All application code, including Infrastructure as Code (IaC), is stored in GitHub repositories.  
+- Feature branching strategy with branch policies, including PR reviews and status checks, ensures code quality and governance.
+
+### **Continuous Integration/Continuous Delivery**
+- **CI Pipelines**: Automate building, testing, and deploying applications.  
+- **Environment-Specific Pipelines**:  
+  - Feature branches → Development.  
+  - PRs → UAT.  
+  - Merges into `main` → Production.  
+- Deployment to Production requires successful completion of all preceding workflows, tests, and validations.
+
+### **Testing**
+- **Unit Tests**: Implemented for the backend (using `pytest`) and APIs (using Postman).  
+- **Automated Functional Tests**: Mandatory for UAT deployments to ensure application functionality and reliability.  
+- **Deployment Strategies**: Future updates may include canary or blue-green deployment approaches for critical Production changes.  
+
+### **Infrastructure as Code (IaC)**
+- Infrastructure is modularized and defined using Azure Bicep.  
+- Parameterized templates are used for environment-specific configurations, ensuring consistency and scalability.
+
+### **Monitoring and Logging**
+- **Centralized Logging**: Application and infrastructure logs are aggregated in Azure Log Analytics Workspace.  
+- **Proactive Monitoring**: Alerts and dashboards provide real-time insights and detect issues before they impact users.  
+- **Azure Workbooks**: Visualizations are available to support operational monitoring and incident response.
 
 ---
 
-### **11. Logs**  
-**Treat logs as event streams.**  
-- **Implementation**:  
-  - Logs from applications and infrastructure are centralized in **Log Analytics Workspace**.  
-  - Performance and error telemetry for frontend and backend are captured using **Application Insights**.  
+## **Deployment Triggers Across Environments**
+
+1. **Development**:  
+   - Triggered by pushes to any branch other than `main`.  
+   - Enables rapid feedback loops for developers.  
+
+2. **UAT**:  
+   - Triggered by Pull Requests (PRs) to the `main` branch.  
+   - Deployments validate application functionality and serve as the final stage for stakeholder reviews.  
+
+3. **Production**:  
+   - Triggered by pushes to the `main` branch, which can only occur via approved PRs.  
+   - For a PR to be merged, all prior workflows and tests must be completed successfully, including CI and UAT validations.
 
 ---
 
-### **12. Admin Processes**  
-**Run admin/management tasks as one-off processes.**  
-- **Implementation**:  
-  - Database migrations are run as one-off commands during CI/CD pipeline executions.  
-  - Monitoring and incident response tasks are automated using **Azure CLI** and custom scripts.  
+## **Benefits of the Release Strategy**
+
+1. **Secure Deployments**:  
+   - Isolation of environments and strict access controls reduce risks of unauthorized changes.  
+
+2. **Reliability**:  
+   - Automated testing and gated workflows ensure only validated code is deployed.  
+
+3. **Efficiency**:  
+   - Streamlined CI/CD pipelines minimize manual interventions and accelerate releases.  
+
+4. **Stakeholder Engagement**:  
+   - The UAT environment provides a near-live preview for feedback and approval, ensuring alignment with expectations.
 
 ---
 
-### **Summary**
+## **Conclusion**
 
-By aligning with the **12-Factor App principles**, the IE Bank MVP adopts a cloud-native design optimized for modern application development. These practices ensure scalability, maintainability, and operational efficiency, providing a solid foundation for continuous integration and delivery.  
+The release strategy for the IE Bank MVP ensures a robust, secure, and streamlined deployment process. By leveraging GitHub workflows, Azure services, and DTAP principles, the application achieves consistent quality and operational reliability across all stages of its lifecycle.
 
-
----
 
 
 ## Well-Architected Framework
@@ -318,4 +501,142 @@ Ensures systems can recover from failures and meet operational demands through r
   - Ensure scaling strategies align with production demands while minimizing over-provisioning.
 
 By adopting these strategies, the reliability design ensures robust system performance, proactive issue detection, and a resilient infrastructure capable of handling failures without compromising user experience.
+
+
+
+### Software Design and Planning
+
+#### Sequence Diagram/s
+<!-- ![Sequence Diagram](images/sequence_diagram.png) -->
+
+#### Data Flow
+- The Data Flow Diagram (DFD) which illustrates the movement of data within the system, highlighting inputs, outputs, processing steps, and storage locations.
+![Data Flow Diagram](images/dfd_diagram1.png)
+
+### Entity Relationship Diagram
+- The Entity Relationship Diagram (ERD) outlines the database schema and illustrates the relationships between entities within the database.
+![Entity-Relationship Diagram](images/er_diagram.png)
+
+## **12-Factor App Design**
+
+### **Overview**  
+The 12-Factor App methodology provides a set of best practices for building modern, scalable, and maintainable cloud-native applications. The IE Bank MVP adheres to these principles to ensure reliability, scalability, and ease of deployment across environments. Below is how each of the 12 factors is applied in the design and implementation of the product.
+
+### Main Takeaways:
+1. **Scalability**:  
+   - Horizontal scaling and seamless transitions between environments are built into the architecture.  
+
+2. **Maintainability**:  
+   - Clear separation of concerns simplifies debugging, onboarding, and ongoing application updates.  
+
+3. **Resilience**:  
+   - Stateless processes and decoupled services ensure robust failover and recovery mechanisms.  
+
+---
+
+### **1. Codebase**  
+**A single codebase tracked in version control, with multiple deployments.**  
+- **Implementation**:  
+  - Two GitHub repositories host the code: one for the frontend (Vue.js) and one for the backend (Python Flask).  
+  - Modularized infrastructure code is stored in a separate repository, leveraging Azure Bicep.  
+  - Branching strategy: Feature branches for development; `main` branch for production deployments.  
+
+---
+
+### **2. Dependencies**  
+**Explicitly declare and isolate dependencies.**  
+- **Implementation**:  
+  - Backend dependencies are declared in `requirements.txt` and managed using `pip`.  
+  - Frontend dependencies are specified in `package.json` and managed via `npm`.  
+  - Docker ensures isolated environments with consistent dependencies for development and deployment.  
+
+---
+
+### **3. Configuration**  
+**Store configuration in the environment, not in the code.**  
+- **Implementation**:  
+  - Sensitive credentials (e.g., database connections, API keys) are securely managed using **Azure Key Vault**.  
+  - Environment-specific configurations are defined in **Bicep parameter files**.  
+  - Application settings, such as UAT vs. Production, are managed via **Azure App Service settings**.  
+
+---
+
+### **4. Backing Services**  
+**Treat backing services (e.g., databases, queues) as attached resources.**  
+- **Implementation**:  
+  - PostgreSQL is provisioned as a managed Azure service.  
+  - Database credentials and secrets for external services are securely stored in **Key Vault**.  
+  - Backend dynamically connects to resources based on environment-specific settings.  
+
+---
+
+### **5. Build, Release, Run**  
+**Separate the build and run stages for deployment.**  
+- **Implementation**:  
+  - **Build**: CI pipelines create Docker images for the frontend and backend.  
+  - **Release**: Artifacts are deployed to UAT for validation before production deployment.  
+  - **Run**: Production deployments are triggered automatically after successful UAT validation.  
+
+---
+
+### **6. Processes**  
+**Execute the app as one or more stateless processes.**  
+- **Implementation**:  
+  - Backend processes are stateless, with session data persisted in PostgreSQL.  
+  - Frontend interacts dynamically through APIs, with no local state storage.  
+
+---
+
+### **7. Port Binding**  
+**Expose services via port binding.**  
+- **Implementation**:  
+  - Backend is hosted on Azure App Services, exposing HTTP endpoints.  
+  - Frontend is served via Azure Static Web Apps, communicating with the backend using RESTful APIs.  
+
+---
+
+### **8. Concurrency**  
+**Scale out via the process model.**  
+- **Implementation**:  
+  - Autoscaling is enabled for both the backend App Service and PostgreSQL database in Production.  
+  - Azure’s built-in load balancer ensures support for concurrent requests without manual intervention.  
+
+---
+
+### **9. Disposability**  
+**Maximize robustness with fast startup and graceful shutdown.**  
+- **Implementation**:  
+  - Dockerized applications ensure fast and consistent startups across environments.  
+  - Graceful shutdown mechanisms protect active requests during service termination.  
+
+---
+
+### **10. Dev/Prod Parity**  
+**Keep development, staging, and production as similar as possible.**  
+- **Implementation**:  
+  - DTAP (Development, Test, Acceptance, Production) environments are provisioned using the same **Bicep templates** to ensure consistency.  
+  - Monitoring and telemetry are managed uniformly across all environments using **Application Insights** and **Log Analytics Workspace**.  
+
+---
+
+### **11. Logs**  
+**Treat logs as event streams.**  
+- **Implementation**:  
+  - Logs from applications and infrastructure are centralized in **Log Analytics Workspace**.  
+  - Performance and error telemetry for frontend and backend are captured using **Application Insights**.  
+
+---
+
+### **12. Admin Processes**  
+**Run admin/management tasks as one-off processes.**  
+- **Implementation**:  
+  - Database migrations are run as one-off commands during CI/CD pipeline executions.  
+  - Monitoring and incident response tasks are automated using **Azure CLI** and custom scripts.  
+
+---
+
+### **Summary**
+
+By aligning with the **12-Factor App principles**, the IE Bank MVP adopts a cloud-native design optimized for modern application development. These practices ensure scalability, maintainability, and operational efficiency, providing a solid foundation for continuous integration and delivery.  
+
 

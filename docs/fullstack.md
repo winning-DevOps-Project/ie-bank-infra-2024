@@ -11,6 +11,7 @@ description: "Gloria Paraschivoiu & Pietro Rodrigano"
 - [Branching Protection Rules](#github-branch-protection-rules)
 - [Branching Strategy](#team-collaboration)
 - [Test Driven Development](#test-driven-development)
+- [Inner and Outer Loop](#inner-and-outer-loop)
 - [Continuous Deployment Frontend](#continuous-deployment-strategy)
 - [Continuous Deployment Backend](#backend-cd-workflow)
 - [Release Strategy](#release-strategy)
@@ -118,6 +119,16 @@ description: "Gloria Paraschivoiu & Pietro Rodrigano"
 
 ### TDD Workflow
 TDD is a repeated process where we write failing tests, write code that ensures the test passes, and refactor.
+
+### Inner and Outer Loop
+- **Inner Loop**: Focus on iterative local development, testing, and debugging.
+- Key activities include writing and editing code to implement features, running unit tests with tools like Pytest to validate functionality, and using Postman locally to test API endpoints (such as registration, login, and transactions). 
+
+- **Outer Loop:** Focus on team-based integration, CI/CD processes, and environment-specific deployments.
+- It integrates automated workflows to test, deploy, and validate changes across multiple environments.
+- Includes automated CI pipelines triggered by GitHub Actions, which handle tasks such as dependency installation, environment-specific builds (build-dev, build-uat, build-prod), and running comprehensive unit and functional tests.
+- Environment-specific deployments to DEV, UAT, and PROD environments are automated, for robust testing at each stage.
+- Post-deployment, monitoring tools like Azure Application Insights track application performance
 
 ### User Stories and Acceptance Criteria
 We collaborated closely with the Product Owner and Cloud Architect to document the user stories, each with clear and testable acceptance criteria.
