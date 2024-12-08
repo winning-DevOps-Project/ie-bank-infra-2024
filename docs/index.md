@@ -10,6 +10,19 @@ Welcome to the **IE Bank By Devopps**. This is a dedicated projected documentati
 
 - [Functional and Non-Functional Requirements](requirements.md)
 
+## **Relevant GitHub Repositories**
+Explore the following repositories that are part of the IE Bank project. Click on each name to view its contents and contributions:
+
+- [GitHub Frontend Repository](https://github.com/winning-DevOps-Project/ie-bank-fe-2024)  
+  *Contains the frontend code and resources for the IE Bank application.*
+
+- [GitHub Backend Repository](https://github.com/winning-DevOps-Project/ie-bank-be-2024)  
+  *Holds the backend services and logic for the IE Bank application.*
+
+- [GitHub Infrastructure Repository](https://github.com/winning-DevOps-Project/ie-bank-infra-2024)  
+  *Manages the infrastructure configurations and related code for the project.*
+
+
 ## **Team Roles and Responsibilities**
 Discover how each team role contributes to the creation of IE Bank. Click on a role to view detailed documentation and deliverables:
 
