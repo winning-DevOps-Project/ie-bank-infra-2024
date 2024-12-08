@@ -38,7 +38,7 @@ var workbookSerializedData = '''
         "resourceType": "microsoft.web/staticsites",
         "metricScope": 0,
         "resourceIds": [
-          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.Web/staticSites/devopps-swa-dev"
+          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-PROD/providers/Microsoft.Web/staticSites/devopps-swa-prod"
         ],
         "timeContext": {
           "durationMs": 2592000000
@@ -99,7 +99,7 @@ var workbookSerializedData = '''
         "resourceType": "microsoft.web/staticsites",
         "metricScope": 0,
         "resourceIds": [
-          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.Web/staticSites/devopps-swa-dev"
+          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-PROD/providers/Microsoft.Web/staticSites/devopps-swa-prod"
         ],
         "timeContext": {
           "durationMs": 2592000000
@@ -155,7 +155,7 @@ var workbookSerializedData = '''
         "resourceType": "microsoft.keyvault/vaults",
         "metricScope": 0,
         "resourceIds": [
-          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.KeyVault/vaults/devopps-kv-dev"
+          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-PROD/providers/Microsoft.KeyVault/vaults/devopps-kv-prod"
         ],
         "timeContext": {
           "durationMs": 604800000
@@ -211,7 +211,7 @@ var workbookSerializedData = '''
         "resourceType": "microsoft.insights/components",
         "metricScope": 0,
         "resourceIds": [
-          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.Insights/components/devopps-insights-dev"
+          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-PROD/providers/Microsoft.Insights/components/devopps-insights-prod"
         ],
         "timeContext": {
           "durationMs": 2592000000
@@ -267,7 +267,7 @@ var workbookSerializedData = '''
         "resourceType": "microsoft.insights/components",
         "metricScope": 0,
         "resourceIds": [
-          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-DEV/providers/Microsoft.Insights/components/devopps-insights-dev"
+          "/subscriptions/e0b9cada-61bc-4b5a-bd7a-52c606726b3b/resourceGroups/BCSAI2024-DEVOPS-STUDENTS-A-PROD/providers/Microsoft.Insights/components/devopps-insights-prod"
         ],
         "timeContext": {
           "durationMs": 2592000000
