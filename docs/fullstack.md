@@ -113,12 +113,33 @@ description: "Gloria Paraschivoiu & Pietro Rodrigano"
 ### TDD Workflow
 TDD is a repeated process where we write failing tests, write code that ensures the test passes, and refactor.
 
+### User Stories and Acceptance Criteria
+We collaborated closely with the Product Owner and Cloud Architect to document the user stories, each with clear and testable acceptance criteria.
+
+**User Story 1: Password Complexity**
+The acceptance criteria required a user to register with a password meeting specific complexity requirements. the functional test for this story validated that a user could only register with a password meeting the criteria. It checked for a 201 status code, access tokens, and a success message. The password validation logic was implemented in the backend after writing this test, ensuring that the development alignd to TDD principles.
+
+**User Story 2: Register and Manage Bank Accounts**
+The acceptance criteria for this story required users to register and access their dashboard, where they could manage their bank accounts. The functional tests, such as creating and getting accounts, ensured that new accounts were created correctly and that users could retrieve account details, including balances and transaction histories. The development process was guided by these tests, ensuring features like unique account numbers and access control were fully functional.
+
+**User Story 3: View Transactions in the Dashboard**
+This story required the dashboard to display all transactions, with details such as dates, amounts. Functional tests like test_deposit_money and test_transfer_money validated that transaction operations were correctly logged and reflected in the account balance. The test to get accounts made sure that the dashboard displayed accurate summaries. 
+
 
 ### Testing & Implementation Details
 - **Unit Tests**:
   - Developed using **Pytest**, which verifies components of the implementation.
+  - Default Balance: Checked that new accounts were initialized with a balance of 0.0.
+  - Unique Account Numbers: Ensured that account numbers were unique to avoid conflicts.
+  - Default Account Status: Confirmed that newly created accounts had an "Active" status.
 - **Functional Tests**:
   - This was done using **Postman**, with **Postbot**, to verifiy the end-to-end scenarios in the **User Acceptance Testing (UAT)** environment. This includes the overall management of a bank accpunt, the respective transactions, as well as the user's authorised login.
+  - Register Endpoint: Validated that users could register successfully and receive tokens.
+  - Login Endpoint: Confirmed that users could log in with valid credentials and retrieve access and refresh tokens.
+  - Create Account: Tested the creation of accounts with proper authentication headers.
+  - Deposit Money: Verified that depositing money updated the account balance correctly.
+  - Transfer Money: Tested the transfer, ensuring sender and recipient balances were updated accurately.
+  - Get Accounts: Checked that authenticated users could retrieve their accounts and transaction summaries.
 
 ---
 
