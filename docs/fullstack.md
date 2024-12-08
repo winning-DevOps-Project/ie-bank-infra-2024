@@ -3,12 +3,12 @@ layout: default
 title: "Full Stack Development"
 description: "Gloria Paraschivoiu & Pietro Rodrigano"
 ---  
+
 ## [Home](index.md)
 
 - [Continuous Integration](#frontend---ci-strategy)
 - [Test Driven Development](#test-driven-development)
 - [Continuous Deployment](#continuous-deployment-strategy) 
-
 
 ### FRONTEND - CI STRATEGY
 ### GitHub Branch Protection Rules
