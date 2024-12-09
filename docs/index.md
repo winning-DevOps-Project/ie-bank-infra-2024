@@ -22,7 +22,6 @@ Explore the following repositories that are part of the IE Bank project. Click o
 - [GitHub Infrastructure Repository](https://github.com/winning-DevOps-Project/ie-bank-infra-2024)  
   *Manages the infrastructure configurations and related code for the project.*
 
-
 ## **Team Roles and Responsibilities**
 Discover how each team role contributes to the creation of IE Bank. Click on a role to view detailed documentation and deliverables:
 
