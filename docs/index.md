@@ -8,7 +8,7 @@ description: "Project Documentation"
 
 Welcome to the **IE Bank By Devopps**. This is a dedicated projected documentation page made to show the development and maintenance of the IE Bank Project. Read below for more information on the requirements
 
-- [Functional and Non-Functional Requirements](fandnfreq.md)
+- [Functional and Non-Functional Requirements](frnr.md)
 
 ## **Relevant GitHub Repositories**
 Explore the following repositories that are part of the IE Bank project. Click on each name to view its contents and contributions:
