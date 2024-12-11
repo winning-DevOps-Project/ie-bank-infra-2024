@@ -70,6 +70,9 @@ param appInsightsType string
 @description('The retention period for Application Insights in days')
 param appInsightsRetentionDays int
 
+// INCLUDING DEPENDENCIES ON dependsOn kept giving us
+// bicep linter errors. Thus, we removed them from the workflows
+
 
  // Log Analytics Workspace and Application Insights
 module logAnalytics 'modules/log-analytics.bicep' = {
@@ -92,7 +95,6 @@ module appInsights 'modules/app-insights.bicep' = {
     location: location
   }
   dependsOn: [
-    logAnalytics
   ]
 }
 
@@ -103,7 +105,6 @@ module workbook 'modules/workbook.bicep' = {
     location: location
   }
   dependsOn: [
-    logAnalytics
     appInsights
   ]
 }
@@ -134,7 +135,6 @@ module containerRegistry 'modules/docker-registry.bicep' = {
     workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
   }
   dependsOn: [
-    keyVault 
   ]  
 }
 
@@ -169,10 +169,8 @@ resource keyVaultReference 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
       workspaceResourceId: logAnalytics.outputs.logAnalyticsWorkspaceId
     }
     dependsOn: [
-    appServicePlan
     containerRegistry
     keyVault
-    appInsights
     ]
     }
 
@@ -188,7 +186,6 @@ module postgresSQLServer 'modules/postgresql-server.bicep' = {
     SerskuTier: SerskuTier
   }
   dependsOn: [
-    appServiceBE
   ]
 }
 
@@ -199,7 +196,6 @@ module postgresSQLDatabase 'modules/postgresql-db.bicep' = {
     serverName: postgresSQLServer.outputs.postgreSQLServerName 
   }
   dependsOn: [
-    postgresSQLServer
   ]
 }
 
@@ -212,7 +208,6 @@ module staticWebApp 'modules/static-web-app.bicep' = {
     keyVaultSecretName: 'SWATokenSecret'
   }
   dependsOn: [
-    keyVault
   ]
 }
 
@@ -249,9 +244,6 @@ module metricsAlertModule 'modules/metrics-alerts.bicep' = {
     postgreSQLServerId: postgresSQLServer.outputs.id
   }
   dependsOn: [
-    appInsights
-    actionGroupModule
-    keyVault
-    postgresSQLServer
+
   ]
 }
